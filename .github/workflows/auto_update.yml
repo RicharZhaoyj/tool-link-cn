@@ -1,0 +1,20 @@
+name: 24H Auto Curator
+on:
+  schedule:
+    - cron: '0 0 * * *' # 每天北京时间早上 8 点自动运行
+  workflow_dispatch: # 也允许手动点一下运行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Curator Script
+        run: python scripts/update_site.py
+      - name: Commit Changes
+        run: |
+          git config --local user.email "bot@link.cn"
+          git config --local user.name "Link-Bot"
+          git add .
+          git commit -m "Auto-curated new AI tools" || exit 0
+          git push
