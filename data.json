@@ -1,0 +1,16 @@
+[
+  {
+    "id": "001",
+    "tag": "Protocol",
+    "title": "Link Protocol",
+    "desc": "为 AI Agent 打造的行为驱动信任网络。",
+    "link": "https://link.cn"
+  },
+  {
+    "id": "002",
+    "tag": "Infrastructure",
+    "title": "MCP Server",
+    "desc": "本地数据的模型上下文协议实现，连接私有知识库。",
+    "link": "#"
+  }
+]
