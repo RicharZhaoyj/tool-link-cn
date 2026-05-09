@@ -1,8 +1,7 @@
 import json
-import os
 
 def update():
-    # 填入你真正想要展示的高质量 AI 项目链接
+    # 真实的 AI 项目数据
     real_projects = [
         {
             "id": "20260509-01",
@@ -27,20 +26,14 @@ def update():
         }
     ]
 
-    # 确保 data.json 写入根目录
+    # 直接在当前工作目录写入
     try:
-        # 获取当前脚本所在目录的上一级（即仓库根目录）
-        root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        file_path = os.path.join(root_dir, 'data.json')
-        
-        with open(file_path, 'w', encoding='utf-8') as f:
+        with open('data.json', 'w', encoding='utf-8') as f:
             json.dump(real_projects, f, ensure_ascii=False, indent=4)
-        print(f"Successfully updated {file_path}")
+        print("Success: data.json has been created in the current directory.")
     except Exception as e:
         print(f"Error: {e}")
         exit(1)
 
-if __name__ == "__main__":
-    update()
 if __name__ == "__main__":
     update()
