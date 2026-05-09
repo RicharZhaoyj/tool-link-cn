@@ -1,51 +1,46 @@
 import json
-import datetime
-import requests
+import os
 
-def fetch_real_ai_tools():
-    """
-    模拟从 GitHub 或 AI 资讯源获取真实数据。
-    这里展示 3 个你目前可以手动维护或通过 API 接入的真实项目案例。
-    """
-    # 实际开发中，这里可以接入 GitHub API 搜索 'topic:mcp' 或 'topic:ai-agent'
+def update():
+    # 填入你真正想要展示的高质量 AI 项目链接
     real_projects = [
         {
             "id": "20260509-01",
             "tag": "MCP-SERVER",
             "title": "Postgres MCP Server",
-            "desc": "A Model Context Protocol server that gives AI Agents read/write access to PostgreSQL databases.",
+            "desc": "让 AI Agent 能够读写 PostgreSQL 数据库的官方标准服务器。",
             "link": "https://github.com/modelcontextprotocol/servers"
         },
         {
             "id": "20260509-02",
-            "tag": "AGENT-FRAME",
+            "tag": "FRAMEWORK",
             "title": "PydanticAI",
-            "desc": "Agentic AI framework by Pydantic, designed for production-grade AI agents with strict validation.",
+            "desc": "由 Pydantic 团队开发的生产级 Agent 框架，支持严格的类型验证。",
             "link": "https://github.com/pydantic/pydantic-ai"
         },
         {
             "id": "20260509-03",
-            "tag": "INFRA",
+            "tag": "PROTOCOL",
             "title": "Link Protocol Core",
-            "desc": "The behavior-driven trust network infrastructure for cross-agent interaction and identity.",
-            "link": "https://link.cn" # 你的核心协议
+            "desc": "Link.cn 核心协议：为 AI Agent 打造的行为驱动信任网络底层基础设施。",
+            "link": "https://link.cn" 
         }
     ]
-    return real_projects
 
-def update():
+    # 确保 data.json 写入根目录
     try:
-        # 1. 获取真实/半真实的项目数据
-        new_tools = fetch_real_ai_tools()
+        # 获取当前脚本所在目录的上一级（即仓库根目录）
+        root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        file_path = os.path.join(root_dir, 'data.json')
         
-        # 2. 写入 data.json
-        # 我们这里直接覆盖或合并，确保页面上有实质性的链接
-        with open('data.json', 'w', encoding='utf-8') as f:
-            json.dump(new_tools, f, ensure_ascii=False, indent=4)
-        print("Successfully updated data.json with real project links.")
-            
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(real_projects, f, ensure_ascii=False, indent=4)
+        print(f"Successfully updated {file_path}")
     except Exception as e:
-        print(f"Update failed: {e}")
+        print(f"Error: {e}")
+        exit(1)
 
+if __name__ == "__main__":
+    update()
 if __name__ == "__main__":
     update()
