@@ -1,23 +1,23 @@
 [
     {
-        "id": "050902",
-        "tag": "AUTO-GEN",
-        "title": "AI Agent - 02:10",
-        "desc": "由 Link-Bot 自动发现并验证的最新 AI 工具。",
-        "link": "https://link.cn"
+        "id": "20260509-01",
+        "tag": "MCP-SERVER",
+        "title": "Postgres MCP Server",
+        "desc": "让 AI Agent 能够读写 PostgreSQL 数据库的官方标准服务器。",
+        "link": "https://github.com/modelcontextprotocol/servers"
     },
     {
-        "id": "001",
-        "tag": "Protocol",
-        "title": "Link Protocol",
-        "desc": "为 AI Agent 打造的行为驱动信任网络。",
-        "link": "https://link.cn"
+        "id": "20260509-02",
+        "tag": "FRAMEWORK",
+        "title": "PydanticAI",
+        "desc": "由 Pydantic 团队开发的生产级 Agent 框架，支持严格的类型验证。",
+        "link": "https://github.com/pydantic/pydantic-ai"
     },
     {
-        "id": "002",
-        "tag": "Infrastructure",
-        "title": "MCP Server",
-        "desc": "本地数据的模型上下文协议实现，连接私有知识库。",
-        "link": "#"
+        "id": "20260509-03",
+        "tag": "PROTOCOL",
+        "title": "Link Protocol Core",
+        "desc": "Link.cn 核心协议：为 AI Agent 打造的行为驱动信任网络底层基础设施。",
+        "link": "https://link.cn"
     }
 ]
