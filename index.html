@@ -57,10 +57,16 @@ body::before {
         </footer>
     </div>
 <script>
-    fetch('./data.json')
-        .then(response => response.json())
+    <script>
+    // 1. 获取数据，加个时间戳防止浏览器缓存
+    fetch('./data.json?t=' + new Date().getTime())
+        .then(response => {
+            if (!response.ok) throw new Error('找不到数据文件');
+            return response.json();
+        })
         .then(data => {
             const grid = document.getElementById('tool-grid');
+            // 2. 清空原本的手写内容，换成自动生成的卡片
             grid.innerHTML = data.map(item => `
                 <div class="glass-card p-6 rounded-xl group">
                     <div class="flex justify-between items-start mb-4">
@@ -69,10 +75,16 @@ body::before {
                     </div>
                     <h2 class="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">${item.title}</h2>
                     <p class="text-sm text-zinc-400 leading-relaxed mb-4">${item.desc}</p>
-                    <a href="${item.link}" class="text-xs font-bold text-white border-b border-white pb-1 hover:text-blue-400 hover:border-blue-400 transition-all">访问工具 →</a>
+                    <a href="${item.link}" class="text-xs font-bold text-white border-b border-white pb-1 hover:text-blue-400 hover:border-blue-400 transition-all">VIEW PROJECT →</a>
                 </div>
             `).join('');
+        })
+        .catch(err => {
+            console.error('渲染失败:', err);
+            // 如果报错，在页面上给个提示
+            document.getElementById('tool-grid').innerHTML = '<p class="text-zinc-500">数据加载中或路径错误...</p>';
         });
+</script>
 </script>
 </body>
 </html>
