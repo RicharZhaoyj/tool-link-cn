@@ -1,7 +1,7 @@
 import json
+import os
 
 def update():
-    # 真实的 AI 项目数据
     real_projects = [
         {
             "id": "20260509-01",
@@ -26,14 +26,13 @@ def update():
         }
     ]
 
-    # 直接在当前工作目录写入
-    try:
-        with open('data.json', 'w', encoding='utf-8') as f:
-            json.dump(real_projects, f, ensure_ascii=False, indent=4)
-        print("Success: data.json has been created in the current directory.")
-    except Exception as e:
-        print(f"Error: {e}")
-        exit(1)
+    # 强制在当前执行脚本的同级目录生成文件，或者直接指定根目录
+    file_path = 'data.json'
+    
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(real_projects, f, ensure_ascii=False, indent=4)
+    
+    print(f"Success: {os.path.abspath(file_path)}")
 
 if __name__ == "__main__":
     update()
