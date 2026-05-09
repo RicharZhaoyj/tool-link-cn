@@ -3,7 +3,8 @@ on:
   schedule:
     - cron: '0 0 * * *' # 每天早上 8 点自动跑
   workflow_dispatch: # 允许你手动点一下运行
-
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
