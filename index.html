@@ -46,5 +46,23 @@
             &copy; 2026 LINK.CN • PART OF THE LINK PROTOCOL ECOSYSTEM
         </footer>
     </div>
+<script>
+    fetch('./data.json')
+        .then(response => response.json())
+        .then(data => {
+            const grid = document.getElementById('tool-grid');
+            grid.innerHTML = data.map(item => `
+                <div class="glass-card p-6 rounded-xl group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-2 py-1 bg-blue-900/30 text-blue-400 text-[10px] font-bold rounded uppercase">${item.tag}</span>
+                        <span class="text-zinc-600 text-[10px] font-mono">ID: ${item.id}</span>
+                    </div>
+                    <h2 class="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">${item.title}</h2>
+                    <p class="text-sm text-zinc-400 leading-relaxed mb-4">${item.desc}</p>
+                    <a href="${item.link}" class="text-xs font-bold text-white border-b border-white pb-1 hover:text-blue-400 hover:border-blue-400 transition-all">访问工具 →</a>
+                </div>
+            `).join('');
+        });
+</script>
 </body>
 </html>
