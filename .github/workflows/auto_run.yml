@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 确保获取完整历史以方便推送
       
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -19,15 +21,15 @@ jobs:
           python-version: '3.10'
           
       - name: Run Update Script
-        # 这里是关键：我们直接运行 scripts 文件夹下的脚本，
-        # 但 Python 会把生成的 data.json 放在仓库根目录（因为 checkout 默认就在根目录）
+        # 强制在根目录下运行，确保 data.json 生成在正确位置
         run: python scripts/curator.py
         
       - name: Commit and Push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          # 显式添加 data.json，确保它在根目录被发现
           git add data.json
-          git commit -m "Auto-update: Fixing data path" || exit 0
-          git push
+          # 如果文件没变化，git commit 会返回 1 导致 Action 失败
+          # 加上 || exit 0 确保即使没变化也算成功
+          git commit -m "Auto-update: Real project links" || echo "No changes to commit"
+          git push origin main || echo "Nothing to push"
