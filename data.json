@@ -1,30 +1,37 @@
 [
     {
-        "id": "CORE-001",
+        "id": "LINK-CORE",
         "tag": "OFFICIAL",
-        "title": "Link Protocol Ecosystem",
-        "desc": "加入行为驱动信任网络，为你的 AI Agent 建立数字身份与信誉体系。",
+        "title": "Link Protocol",
+        "desc": "基于行为驱动的 AI Agent 信任网络。利用 20 余年资产沉淀，为 AI 时代建立信用身份。",
         "link": "https://link.cn"
     },
     {
-        "id": "PRO-2026-001",
-        "tag": "HOT / DEALS",
-        "title": "InVideo AI",
-        "desc": "最强大的 AI 视频生成工具，支持文本直接转专业视频。通过 Link.cn 访问可获取早鸟折扣。",
-        "link": "https://invideo.io/i/link_cn_special"
+        "id": "JOIN-US",
+        "tag": "WANTED",
+        "title": "Seeking Tech Partner",
+        "desc": "寻找 AI 基础设施方向的核心合伙人（Ali P8+ / Byte 3-1）。共建基于 link.cn 的信任协议。",
+        "link": "https://link.cn"
     },
     {
-        "id": "PRO-2026-002",
-        "tag": "AGENT / TOOL",
-        "title": "AdCreative.ai",
-        "desc": "为电商打造的 AI 广告素材生成器。高转化率背书，Link Protocol 合作伙伴。",
-        "link": "https://free-trial.adcreative.ai/link-cn"
+        "id": "AS-2026-001",
+        "tag": "LIFETIME DEAL",
+        "title": "NeuronWriter",
+        "desc": "顶级的 AI 内容与 SEO 优化工具，AppSumo 长期销量冠军。一次性付费，永久告别月费。",
+        "link": "https://appsumo.com/products/neuronwriter/?rid=7284907"
     },
     {
-        "id": "PRO-2026-003",
-        "tag": "DEV / MCP",
-        "title": "Cursor AI",
-        "desc": "当前最火的 AI 编程环境。集成全自动 Agent 模式，开发者必备。",
-        "link": "https://cursor.com"
+        "id": "AS-2026-002",
+        "tag": "AGENT / AUTO",
+        "title": "Taskade",
+        "desc": "集成 AI Agent 的第二大脑，支持自动化工作流拆解。AI 时代的高效团队协同神器。",
+        "link": "https://appsumo.com/products/taskade/?rid=7284907"
+    },
+    {
+        "id": "AS-2026-003",
+        "tag": "VIDEO AI",
+        "title": "Synthesys",
+        "desc": "AI 虚拟人视频生成平台，支持 140+ 语言。输入文字即可生成专业级口播内容。",
+        "link": "https://appsumo.com/products/synthesys/?rid=7284907"
     }
 ]
