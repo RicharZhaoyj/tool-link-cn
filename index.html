@@ -1,32 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta name='impact-site-verification' value='021fab8b-7c22-438c-808e-6f9ec8f20b90'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tool.Link.cn | AI 自动化工具导航</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #050505; color: #d4d4d4; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { background: #050505; color: #d4d4d4; font-family: 'Inter', sans-serif; }
         .glass-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
         .glass-card:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.05); transform: translateY(-2px); }
         .neon-text { text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
-
-        /* 扫描线特效 */
-        body::before {
-            content: " ";
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            background-size: 100% 4px, 3px 100%;
-            pointer-events: none;
-            z-index: 100;
-        }
     </style>
 </head>
-<body class="min-h-screen">
-    <div class="max-w-5xl mx-auto px-6 py-12">
+<body class="min-h-screen flex flex-col">
+    <div class="max-w-5xl mx-auto px-6 py-12 flex-grow">
         <header class="flex justify-between items-center mb-16 border-b border-zinc-800 pb-8">
             <div>
                 <h1 class="text-2xl font-black tracking-tighter text-white neon-text uppercase">Tool.Link.cn</h1>
@@ -35,14 +22,30 @@
             <nav class="text-xs font-mono space-x-4">
                 <a href="https://link.cn" class="hover:text-blue-400">LINK.CN MAIN</a>
                 <span class="text-zinc-700">|</span>
-                <span class="text-green-500">● SYSTEM ONLINE</span>
+                <span class="text-green-500">● VERCEL NODE ONLINE</span>
             </nav>
         </header>
 
-        <!-- 关键修复：添加了 id="tool-grid" -->
         <div id="tool-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- 初始加载状态 -->
-            <div class="glass-card p-6 rounded-xl flex items-center justify-center border-dashed border-zinc-700 col-span-full py-20">
-                <p class="text-zinc-600 text-sm italic animate-pulse">Initializing Link Protocol Data...</p>
+            <!-- 这里的卡片未来将由 Gemini 自动脚本生成 -->
+            <div class="glass-card p-6 rounded-xl group">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="px-2 py-1 bg-blue-900/30 text-blue-400 text-[10px] font-bold rounded uppercase">Protocol</span>
+                    <span class="text-zinc-600 text-[10px] font-mono">ID: 001</span>
+                </div>
+                <h2 class="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Link Protocol</h2>
+                <p class="text-sm text-zinc-400 leading-relaxed mb-4">Behavior-driven trust network for AI Agents.</p>
+                <a href="https://link.cn" class="text-xs font-bold text-white border-b border-white pb-1 hover:text-blue-400 hover:border-blue-400 transition-all">VIEW PROJECT →</a>
+            </div>
+
+            <div class="glass-card p-6 rounded-xl flex items-center justify-center border-dashed border-zinc-700">
+                <p class="text-zinc-600 text-sm italic tracking-widest uppercase">Fetching next AI tool...</p>
             </div>
         </div>
+
+        <footer class="mt-24 pt-8 border-t border-zinc-900 text-center text-[10px] text-zinc-600 tracking-widest uppercase">
+            &copy; 2026 LINK.CN • PART OF THE LINK PROTOCOL ECOSYSTEM
+        </footer>
+    </div>
+</body>
+</html>
