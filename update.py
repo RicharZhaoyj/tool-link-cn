@@ -44,9 +44,9 @@ def get_appsumo_deals():
 
 if __name__ == "__main__":
     new_deals = get_appsumo_deals()
-    file_path = os.path.join(os.getcwd(), 'tools.json') # 强制使用绝对路径
+    file_path = 'tools.json'
     
-    # 哪怕没抓到新数据，我们也确保 tools.json 至少存在
+    # 1. 强制读取（如果失败则重置为空列表）
     tools = []
     if os.path.exists(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -55,20 +55,24 @@ if __name__ == "__main__":
             except:
                 tools = []
 
-    if not new_deals:
-        print("Using historical data only.")
-    else:
-        # 合并新旧数据，并进行深度去重
-        existing_titles = [t.get('title') for t in tools]
-        added_count = 0
-        for d in reversed(new_deals):
-            if d['title'] not in existing_titles:
-                tools.insert(0, d)
-                added_count += 1
-        print(f"Added {added_count} new unique deals.")
+    # 2. 强制插入新数据（哪怕重复也先插进去，用于测试）
+    if new_deals:
+        # 我们把新抓到的直接放在最前面
+        # 为了测试，我们甚至可以给标题加个时间戳，确保它是“全新的”
+        for d in new_deals:
+            d['title'] = f"{d['title']} (Updated: {datetime.now().strftime('%H:%M')})"
+            tools.insert(0, d)
+        
+        # 只保留前 20 条
+        tools = tools[:20]
 
-    # 强制写入：即使没有新数据，也重新保存一次以确保持续触发 Vercel
-    with open(file_path, 'w', encoding='utf-8') as f:
-        json.dump(tools[:30], f, indent=4, ensure_ascii=False)
-    
-    print(f"Successfully processed tools.json. Total count: {len(tools)}")
+        # 3. 物理删除旧文件再写入（强制触发文件变动）
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(tools, f, indent=4, ensure_ascii=False)
+        
+        print(f"Successfully forced update of {file_path}")
+    else:
+        print("No data fetched from AppSumo, skipping write.")
