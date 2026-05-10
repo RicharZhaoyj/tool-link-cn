@@ -24,15 +24,19 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run Curator Script
-        # 确保 update.py 就在仓库根目录下
-        run: python update.py 
+      - - name: Run Curator Script
+        run: |
+          python update.py
+          # 诊断：打印出 tools.json 的前 5 行，看看内容到底变没变
+          head -n 5 tools.json
 
       - name: Commit and Push
         run: |
           git config --local user.email "bot@link.cn"
           git config --local user.name "Link-Bot"
-          # 强制指定添加根目录下的 tools.json
-          git add tools.json
-          git commit -m "Auto-update AppSumo Deals (ID: 7294907)" || echo "No changes"
+          # 强制添加，不理会 .gitignore
+          git add -f tools.json 
+          # 打印 git 状态看看
+          git status
+          git commit -m "Force Update tools.json (ID: 7294907)" || echo "No changes to commit"
           git push origin main
