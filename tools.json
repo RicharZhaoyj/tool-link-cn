@@ -2,8 +2,15 @@
     {
         "id": "SYNC-INFO",
         "tag": "SYSTEM",
-        "title": "Last Update: 2026-05-10 07:05:50",
-        "desc": "Automated sync active for ID: 7294907",
+        "title": "Last Sync: 2026-05-10 07:07:58",
+        "desc": "Link.cn 自动监测引擎已启动 | ID:7294907",
+        "url": "https://link.cn"
+    },
+    {
+        "id": "RETRY",
+        "tag": "NOTICE",
+        "title": "正在等待 AppSumo 数据同步...",
+        "desc": "由于接口响应较慢，数据可能在下次更新时显示。请稍后刷新。",
         "url": "https://link.cn"
     }
 ]
