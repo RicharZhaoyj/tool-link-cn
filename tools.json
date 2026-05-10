@@ -2,8 +2,15 @@
     {
         "id": "SYNC-INFO",
         "tag": "SYSTEM",
-        "title": "Sync Time: 2026-05-10 11:17:49",
+        "title": "Sync Time: 2026-05-10 11:19:39",
         "desc": "Link.cn API 核心已连接。原生追踪链路就绪。",
         "url": "https://link.cn"
+    },
+    {
+        "id": "API-PENDING",
+        "tag": "WAITING",
+        "title": "API Connecting...",
+        "desc": "Impact API 已识别，正在等待 Brand 授权同步数据。通常需要几小时。",
+        "url": "https://appsumo.8io8.net/c/7294907/297384/4468"
     }
 ]
