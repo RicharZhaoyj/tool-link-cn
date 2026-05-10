@@ -1,0 +1,44 @@
+name: 24H Auto Curator
+on:
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Run Script
+        run: python update.py
+
+      - name: Verify File
+        run: |
+          echo "Checking tools.json status:"
+          ls -l tools.json
+          head -n 15 tools.json
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "bot@link.cn"
+          git config --local user.name "Link-Bot"
+          git add tools.json
+          # 只要有变动就提交，没变动就跳过
+          git commit -m "Auto-sync tools.json [$(date)]" || exit 0
+          git push origin main
