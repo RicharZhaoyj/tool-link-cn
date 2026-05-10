@@ -1,5 +1,12 @@
 [
     {
+        "id": "149",
+        "tag": "AGENT",
+        "title": "New AI Discovery",
+        "desc": "Automated discovery via Link Protocol.",
+        "url": "https://link.cn"
+    },
+    {
         "id": "131",
         "tag": "AGENT",
         "title": "New AI Agent",
@@ -11,7 +18,7 @@
         "tag": "Protocol",
         "title": "Link Protocol",
         "desc": "Behavior-driven trust network for AI Agents.",
-        "desc_cn": "\u4e3a AI Agent \u6253\u9020\u7684\u884c\u4e3a\u9a71\u52a8\u4fe1\u4efb\u7f51\u7edc\u3002",
+        "desc_cn": "为 AI Agent 打造的行为驱动信任网络。",
         "url": "https://link.cn"
     }
 ]
