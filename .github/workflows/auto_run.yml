@@ -1,36 +1,38 @@
 name: 24H Auto Curator
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
   push:
     branches: [ main ]
-  workflow_dispatch:
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # 解决你看到的警告
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # 确保有写权限，防止无法提交
+      contents: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # 获取完整历史，防止合并冲突
-
+      
       - name: Set up Python
-        uses: actions/setup-python@v5 # 升级到 v5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      # ============ 关键修复步骤：安装 requests ============
+      - name: Install dependencies
+        run: |
+          pip install requests
+      # ===================================================
 
       - name: Run Curator Script
         run: python update.py
 
       - name: Commit and Push
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "bot@link.cn"
+          git config --local user.name "Link-Bot"
           git add .
-          git commit -m "Auto-curated: Added new tool while preserving history" || exit 0
+          git commit -m "Auto-update AppSumo Deals (ID: 7294907)" || exit 0
+          git pushe preserving history" || exit 0
           git push
