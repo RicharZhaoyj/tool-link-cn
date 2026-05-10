@@ -3,85 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link.cn - AI Tool Navigation</title>
+    <title>LINK.CN | AI 工具导航</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #050505; color: #fff; }
+        /* 极简主义、深色模式、未来感设计 */
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --accent-blue: #3b82f6;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
         .glass-card:hover {
-            border-color: rgba(59, 130, 246, 0.5);
-            transform: translateY(-2px);
+            border-color: var(--accent-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
         }
+
+        /* 渐变标题 */
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 隐藏滚动条但保留滚动功能 */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
 </head>
 <body class="min-h-screen">
-    <nav class="p-6 border-b border-zinc-900 flex justify-between items-center">
-        <div class="text-xl font-bold tracking-tighter">LINK<span class="text-blue-500">.CN</span></div>
-        <div class="text-xs text-zinc-500 font-mono" id="sync-time">Syncing...</div>
+
+    <nav class="sticky top-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-black">L</div>
+                <span class="text-xl font-bold tracking-tighter uppercase">Link<span class="text-blue-500">.cn</span></span>
+            </div>
+            <div id="sync-status" class="text-[10px] font-mono text-zinc-500 px-3 py-1 bg-white/5 rounded-full">
+                Checking connection...
+            </div>
+        </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto px-6 py-12">
-        <section class="mb-12 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 italic">LIFETIME DEALS</h1>
-            <p class="text-zinc-400">甄选全球顶尖 AI 工具，一次性付费，终身使用。</p>
-        </section>
+    <main class="max-w-7xl mx-auto px-6 py-16">
+        
+        <header class="mb-16 text-center">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tight gradient-text">
+                LIFETIME DEALS
+            </h1>
+            <p class="text-zinc-400 text-lg max-w-2xl mx-auto">
+                24小时自动化搜罗 AppSumo 全球顶尖 AI 工具。
+                <span class="block mt-2 text-sm text-zinc-600 italic">一次性买断，告别订阅制。</span>
+            </p>
+        </header>
 
-        <div id="tool-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="animate-pulse text-zinc-700">Loading tools...</div>
+        <div id="tool-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="col-span-full py-20 text-center text-zinc-600 font-mono text-sm animate-pulse">
+                INITIALIZING PROTOCOL...
+            </div>
         </div>
+
     </main>
 
+    <footer class="border-t border-white/5 py-12 text-center text-zinc-600 text-xs">
+        <p>&copy; 2026 LINK.CN | BEHAVIOR-DRIVEN TRUST NETWORK</p>
+    </footer>
+
     <script>
-        async function loadDeals() {
+        /**
+         * 核心加载逻辑
+         */
+        async function fetchTools() {
             const grid = document.getElementById('tool-grid');
-            const syncTimeText = document.getElementById('sync-time');
-            
+            const statusEl = document.getElementById('sync-status');
+
             try {
-                // 加上时间戳防止浏览器缓存 tools.json
+                // 1. 发起请求 (添加版本号绕过 Vercel/浏览器缓存)
                 const response = await fetch('./tools.json?v=' + Date.now());
-                const data = await response.json();
+                
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const tools = await response.json();
 
-                if (data && data.length > 0) {
-                    grid.innerHTML = ''; // 清空加载提示
-                    
-                    data.forEach(item => {
-                        // 处理系统状态项
-                        if (item.id === "SYNC-INFO") {
-                            syncTimeText.innerText = item.title;
-                            return;
-                        }
-
-                        // 渲染工具卡片
-                        const card = `
-                            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
-                                <div>
-                                    <div class="flex justify-between items-start mb-4">
-                                        <span class="px-2 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-bold rounded uppercase tracking-wider">${item.tag}</span>
-                                    </div>
-                                    <h2 class="text-xl font-bold mb-2 leading-tight">${item.title}</h2>
-                                    <p class="text-zinc-400 text-sm mb-6 line-clamp-3">${item.desc}</p>
-                                </div>
-                                <a href="${item.url}" target="_blank" rel="nofollow" 
-                                   class="block w-full py-3 text-center bg-white text-black text-sm font-bold rounded-xl hover:bg-blue-500 hover:text-white transition-colors">
-                                    VIEW DEAL →
-                                </a>
-                            </div>
-                        `;
-                        grid.innerHTML += card;
-                    });
+                // 检查数据有效性
+                if (!Array.isArray(tools) || tools.length === 0) {
+                    grid.innerHTML = `<div class="col-span-full py-20 text-zinc-500 text-center border border-dashed border-white/10 rounded-3xl">当前无活跃优惠数据</div>`;
+                    statusEl.innerText = "NO ACTIVE DEALS";
+                    return;
                 }
-            } catch (err) {
-                grid.innerHTML = '<div class="text-red-500">加载失败，请刷新页面。</div>';
-                console.error(err);
-            }
-        }
 
-        window.onload = loadDeals;
-    </script>
-</body>
-</html>
+                // 2. 清空容器并准备渲染
+                grid.innerHTML = '';
+                
+                tools.forEach(item => {
+                    // 处理系统同步信息
+                    if (item.id === "SYNC-INFO" || item.id === "STATUS") {
+                        statusEl.innerText = item.title;
+                        statusEl.classList.add('text-blue-400');
+                        return; // 不作为卡片显示
+                    }
+
+                    // 3. 构造卡片 HTML
+                    const dealCard = `
+                        <article class="glass-card p-8 rounded-3xl flex flex-col h-full">
+                            <div class="mb-6 flex-grow">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span class="bg-blue-500/10 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-blue-500/20">
+                                        ${item.tag || 'LIFETIME'}
+                                    </span>
+                                </div>
