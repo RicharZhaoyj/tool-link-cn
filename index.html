@@ -3,90 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LINK.CN | AI 导航</title>
+    <title>LINK.CN | AI 工具导航</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #050505; color: #fff; font-family: sans-serif; }
+        body { background-color: #050505; color: #ffffff; font-family: system-ui, -apple-system, sans-serif; }
         .glass-card {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
         }
-        .glass-card:hover { transform: translateY(-5px); border-color: #3b82f6; }
+        .glass-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px -10px rgba(59, 130, 246, 0.5);
+        }
     </style>
 </head>
-<body>
-    <nav class="p-6 border-b border-white/5 flex justify-between items-center">
-        <div class="font-bold text-xl uppercase tracking-tighter">Link<span class="text-blue-500">.cn</span></div>
-        <div id="sync-status" class="text-[10px] font-mono text-zinc-500">INIT...</div>
+<body class="min-h-screen">
+
+    <nav class="border-b border-white/5 p-6 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-md z-50">
+        <div class="flex items-center space-x-2">
+            <div class="w-7 h-7 bg-blue-600 rounded flex items-center justify-center font-bold">L</div>
+            <span class="text-xl font-black tracking-tighter uppercase">Link<span class="text-blue-500">.cn</span></span>
+        </div>
+        <div id="sync-status" class="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full uppercase">
+            Initializing...
+        </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto px-6 py-12">
-        <div id="tool-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="text-zinc-600 animate-pulse">正在连接协议层...</div>
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <header class="mb-12">
+            <h1 class="text-4xl font-black mb-2 uppercase italic">Lifetime Deals</h1>
+            <p class="text-zinc-500 text-sm font-mono">24H 自动更新 · 全球顶尖 AI 工具买断方案</p>
+        </header>
+
+        <div id="tool-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="text-zinc-700 font-mono text-sm animate-pulse">CONNECTING TO PROTOCOL...</div>
         </div>
     </main>
 
+    <footer class="p-12 text-center text-zinc-800 text-[10px] tracking-widest uppercase">
+        &copy; 2026 Link.cn | AI Infrastructure Layer
+    </footer>
+
     <script>
-        async function loadDeals() {
+        async function fetchDeals() {
             const grid = document.getElementById('tool-grid');
             const status = document.getElementById('sync-status');
             
             try {
-                // 【核心修复】强制不使用缓存，并追加动态时间戳
-                const timestamp = new Date().getTime();
-                const response = await fetch(`./tools.json?t=${timestamp}`, {
-                    cache: "no-store" 
-                });
-                
-                if (!response.ok) throw new Error('网络响应异常');
+                // 强制忽略缓存获取最新数据
+                const response = await fetch('./tools.json?v=' + Date.now(), { cache: 'no-store' });
+                if (!response.ok) throw new Error('Network Error');
                 const data = await response.json();
 
                 if (data && data.length > 0) {
-                    grid.innerHTML = '';
+                    grid.innerHTML = ''; // 清空容器
+                    
                     data.forEach(item => {
-                        // 更新同步状态
-                        if (item.id === "SYNC-INFO") {
+                        // 1. 更新顶部同步时间
+                        if (item.id === "SYNC-INFO" || item.id === "STATUS") {
                             status.innerText = item.title;
                             return;
                         }
 
-                        // 渲染卡片
-                        grid.innerHTML += `
-                            <div class="glass-card p-6 rounded-2xl flex flex-col">
-                                <div class="mb-4">
-                                    <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-1 rounded uppercase font-bold">${item.tag}</span>
+                        // 2. 生成卡片 HTML
+                        const cardHtml = `
+                            <div class="glass-card p-8 rounded-3xl flex flex-col h-full">
+                                <div class="flex-grow">
+                                    <div class="mb-4">
+                                        <span class="text-[10px] font-bold bg-blue-500/20 text-blue-400 px-2 py-1 rounded tracking-widest uppercase border border-blue-500/30">
+                                            ${item.tag || 'DEAL'}
+                                        </span>
+                                    </div>
+                                    <h3 class="text-2xl font-bold mb-3">${item.title}</h3>
+                                    <p class="text-zinc-400 text-sm leading-relaxed mb-8">${item.desc}</p>
                                 </div>
-                                <h3 class="text-lg font-bold mb-2">${item.title}</h3>
-                                <p class="text-zinc-400 text-xs mb-6 flex-grow">${item.desc}</p>
-                                <a href="${item.url}" target="_blank" rel="nofollow" class="w-full py-3 bg-white text-black text-center text-sm font-bold rounded-xl hover:bg-blue-500 hover:text-white transition-colors">
+                                <a href="${item.url}" target="_blank" rel="nofollow" 
+                                   class="block w-full py-4 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">
                                     立即查看 →
                                 </a>
                             </div>
                         `;
+                        grid.innerHTML += cardHtml;
                     });
                 }
-            } catch (e) {
-                grid.innerHTML = `<div class="text-red-500 text-sm font-mono">ERR: ${e.message}</div>`;
-                status.innerText = "OFFLINE";
+            } catch (err) {
+                console.error(err);
+                status.innerText = "SYNC FAILED";
+                grid.innerHTML = `<div class="text-red-900 font-mono">PROTOCOL ERROR: DATA LINK DISRUPTED</div>`;
             }
         }
-        window.addEventListener('DOMContentLoaded', loadDeals);
+
+        window.onload = fetchDeals;
     </script>
 </body>
 </html>
-                        statusEl.innerText = item.title;
-                        statusEl.classList.add('text-blue-400');
-                        return; // 不作为卡片显示
-                    }
-
-                    // 3. 构造卡片 HTML
-                    const dealCard = `
-                        <article class="glass-card p-8 rounded-3xl flex flex-col h-full">
-                            <div class="mb-6 flex-grow">
-                                <div class="flex justify-between items-start mb-4">
-                                    <span class="bg-blue-500/10 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-blue-500/20">
-                                        ${item.tag || 'LIFETIME'}
-                                    </span>
-                                </div>
