@@ -1,73 +1,101 @@
 import json
 import os
 import requests
+import urllib.parse
 from datetime import datetime
 
-# 配置你的联盟 ID
+# ================= 配置区 =================
+# 1. 你的 Impact Radius 联盟 ID
 IMPACT_ID = "7294907"
-# 标准 Impact Radius 深度链接前缀
-# 格式通常为: https://appsumo.8io8.net/c/[YourID]/[ActionID]/[CampaignID]
-# 这里的 123456 和 7890 是示例占位符，如果你的平台提供了更具体的 URL 请替换，否则使用下方通用跳转
-BASE_AFF_URL = f"https://appsumo.8io8.net/c/{IMPACT_ID}/123456/7890"
+
+# 2. 深度链接前缀 (使用 AppSumo 默认的 Action/Campaign ID)
+# 如果点击后提示 "Link Invalid"，请在 Impact 后台获取你的专属 Deep Link 路径并替换 297384/4468
+AFF_BASE = f"https://appsumo.8io8.net/c/{IMPACT_ID}/297384/4468"
 
 def get_data():
     items_list = []
-    now_str = datetime.now().strftime('%H:%M:%S')
+    now_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
-    # 心跳包
+    # 系统心跳包：显示在网页顶部，证明同步正常
     items_list.append({
         "id": "SYNC-INFO",
         "tag": "SYSTEM",
         "title": f"Last Sync: {now_str}",
-        "desc": "Link.cn 引擎状态：已连接。链接重定向：已激活。",
+        "desc": f"Link.cn 自动化引擎运行中 | 联盟 ID: {IMPACT_ID}",
         "url": "https://link.cn"
     })
 
     try:
+        # 模拟浏览器 Header，防止被 AppSumo 拦截
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            'Accept': 'application/json'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+            'Accept': 'application/json',
+            'Referer': 'https://appsumo.com/browse/'
         }
-        # 使用 AppSumo 官方 Browse API，这最稳定
-        url = "https://appsumo.com/api/v2/browse/deals/?page_size=15&sort=newest"
-        response = requests.get(url, headers=headers, timeout=20)
+        
+        # 使用 AppSumo 官方浏览 API
+        api_url = "https://appsumo.com/api/v2/browse/deals/?page_size=15&sort=newest"
+        response = requests.get(api_url, headers=headers, timeout=25)
         
         if response.status_code == 200:
-            deals = response.json().get('results', [])
-            for deal in deals:
-                title = deal.get('name', '')
-                slug = deal.get('slug', '')
-                # 【核心修复】使用 ?u= 拼接时，确保后缀是干净的 slug 地址
-                # 标准跳转格式: BASE_URL?u=https://appsumo.com/products/[slug]/
-                target_link = f"{BASE_AFF_URL}?u=https://appsumo.com/products/{slug}/"
-                
-                items_list.append({
-                    "id": str(deal.get('id')),
-                    "tag": "LIFETIME DEAL",
-                    "title": title.replace("Lifetime Deal", "").strip(),
-                    "desc": deal.get('tagline', 'Grab this exclusive deal on AppSumo today.'),
-                    "url": target_link
-                })
-        
-    except Exception as e:
-        print(f"API Error: {e}")
+            data = response.json()
+            deals = data.get('results', [])
+            print(f"成功获取 API 数据，共 {len(deals)} 个项目")
 
-    # 兜底固定链接测试
+            for deal in deals:
+                title = deal.get('name', 'AI Tool')
+                slug = deal.get('slug', '')
+                tagline = deal.get('tagline', 'Limited time lifetime deal.')
+                
+                if slug:
+                    # 【关键修复】对目标链接进行标准的 URL 编码
+                    # 避免跳转时因为 / 或 : 导致 Impact 识别路径错误
+                    target_product_url = f"https://appsumo.com/products/{slug}/"
+                    encoded_target = urllib.parse.quote(target_product_url, safe='')
+                    
+                    # 拼接最终的深度链接
+                    final_aff_link = f"{AFF_BASE}?u={encoded_target}"
+                    
+                    items_list.append({
+                        "id": str(deal.get('id', slug)),
+                        "tag": "LIFETIME DEAL",
+                        "title": title.replace("Lifetime Deal", "").strip(),
+                        "desc": tagline,
+                        "url": final_aff_link
+                    })
+        else:
+            print(f"API 请求失败，状态码: {response.status_code}")
+
+    except Exception as e:
+        print(f"抓取异常: {e}")
+
+    # 3. 【强力兜底】如果 API 没抓到数据，手动注入高权重工具，确保网页不为空
     if len(items_list) <= 1:
-        test_slugs = ["neuronwriter", "depositphotos-100-stock-photo-deal"]
-        for slug in test_slugs:
+        fallbacks = [
+            {"t": "NeuronWriter", "s": "neuronwriter", "d": "SEO-optimized content writing tool."},
+            {"t": "Depositphotos", "s": "depositphotos-100-stock-photo-deal", "d": "Premium stock image credits."},
+            {"t": "LlamaGen.ai", "s": "llamagenai", "d": "Professional AI video and image generator."}
+        ]
+        for f in fallbacks:
+            target = f"https://appsumo.com/products/{f['s']}/"
             items_list.append({
-                "id": f"FIXED-{slug}",
+                "id": f"FB-{f['s']}",
                 "tag": "HOT DEAL",
-                "title": slug.capitalize(),
-                "desc": "High-value deal verified by Link.cn protocol.",
-                "url": f"{BASE_AFF_URL}?u=https://appsumo.com/products/{slug}/"
+                "title": f['t'],
+                "desc": f['d'],
+                "url": f"{AFF_BASE}?u={urllib.parse.quote(target, safe='')}"
             })
 
     return items_list
 
 if __name__ == "__main__":
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    target_file = os.path.join(base_path, 'tools.json')
-    with open(target_file, 'w', encoding='utf-8') as f:
-        json.dump(get_data(), f, indent=4, ensure_ascii=False)
+    # 获取当前脚本所在目录，确保 tools.json 写入位置正确
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    output_path = os.path.join(base_dir, 'tools.json')
+    
+    final_data = get_data()
+    
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(final_data, f, indent=4, ensure_ascii=False)
+    
+    print(f"[{datetime.now()}] 成功写入 {len(final_data)} 条数据到 {output_path}")
