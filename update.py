@@ -1,35 +1,44 @@
 import json
 import os
-import requests # 确保你的 GitHub Action 环境安装了 requests
+import requests
+from datetime import datetime
 
-def fetch_real_ai_tools():
+# 配置你的 AppSumo 联盟信息
+APPSUMO_PARTNER_ID = "你的注册ID" # 填入你在 AppSumo 获取的 ID
+AFFILIATE_BASE_URL = f"https://appsumo.8io8.net/c/{APPSUMO_PARTNER_ID}/123456/7890" # 请根据你后台的实际链接格式调整
+
+def fetch_appsumo_deals():
     """
-    这里是脚本的'眼睛'。
-    目前我们可以模拟从一个 AI 资讯源抓取，
-    或者你可以接入一个简单的搜索 API。
+    抓取 AppSumo 最新的 Deals。
+    这里可以使用他们的 RSS Feed 或特定的 API 接口。
     """
-    # 示例：从一个公共的 AI 工具聚合 JSON（或你自己的爬虫逻辑）获取
-    # 为了演示，我构造一个根据时间动态生成的‘准真实’数据
-    import datetime
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    # 模拟抓取逻辑，实际可以使用 requests 访问 AppSumo 的公开 Feed
+    # 例如：https://appsumo.com/feed/
     
-    # 实际开发中，这里可以替换为：requests.get("某个AI工具列表API").json()
+    # 假设这是抓取回来的最新 Deal
+    deal_title = "AI Content Writer Pro"
+    deal_slug = "ai-content-writer-pro" # 抓取到的产品唯一标识
+    
+    # 自动生成你的返佣链接
+    # 注意：具体的拼接规则请参照你的联盟后台生成的链接样式
+    affiliate_link = f"https://appsumo.8io8.net/c/{APPSUMO_PARTNER_ID}/your_deal_path/{deal_slug}"
+    
     return {
-        "id": datetime.datetime.now().strftime("%M%S"),
-        "tag": "NEW-FIND",
-        "title": f"AI Agent Helper {today}",
-        "desc": "Automatically discovered via Link Protocol analysis.",
-        "url": "https://link.cn/discovery"
+        "id": datetime.now().strftime("%y%m%d%H"),
+        "tag": "LIFETIME DEAL",
+        "title": deal_title,
+        "desc": "Limited time software deal from AppSumo. One-time payment.",
+        "url": affiliate_link, # 注入返佣链接
+        "is_affiliate": True
     }
 
 def main():
     file_path = 'tools.json'
     
-    # 1. 获取真实数据
-    new_data = fetch_real_ai_tools()
-    print(f"发现新工具: {new_data['title']}")
-
-    # 2. 读取旧数据
+    # 获取新的返佣工具
+    new_deal = fetch_appsumo_deals()
+    
+    # 读取历史数据
     tools = []
     if os.path.exists(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -37,13 +46,11 @@ def main():
                 tools = json.load(f)
             except: tools = []
 
-    # 3. 避免重复并插入
-    if not any(t['title'] == new_data['title'] for t in tools):
-        tools.insert(0, new_data)
-        # 保持只展示最近的 15 个，防止页面太沉重
-        tools = tools[:15]
+    # 优先推荐：如果不存在就插入到最前面
+    if not any(t['title'] == new_deal['title'] for t in tools):
+        tools.insert(0, new_deal)
+        tools = tools[:20] # 保持 20 个最新工具
 
-    # 4. 写入
     with open(file_path, 'w', encoding='utf-8') as f:
         json.dump(tools, f, indent=4, ensure_ascii=False)
 
