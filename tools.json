@@ -2,15 +2,29 @@
     {
         "id": "SYNC-INFO",
         "tag": "SYSTEM",
-        "title": "Last Sync: 2026-05-10 09:52:28",
-        "desc": "Link.cn 引擎运行中 | Partner ID: 7294907",
+        "title": "Last Sync: 2026-05-10 10:03:05",
+        "desc": "Link.cn 引擎正在通过 API 模式运行 | ID: 7294907",
         "url": "https://link.cn"
     },
     {
-        "id": "TEST-CARD",
-        "tag": "DEBUG",
-        "title": "Wait for Next Sync",
-        "desc": "AppSumo RSS 响应为空。系统会在下次同步时再次尝试。",
-        "url": "https://link.cn"
+        "id": "FALLBACK-neuronwriter",
+        "tag": "HOT DEAL",
+        "title": "NeuronWriter",
+        "desc": "Optimize your website content for SEO with ease.",
+        "url": "https://appsumo.8io8.net/c/7294907/123456/7890?u=https://appsumo.com/products/neuronwriter/"
+    },
+    {
+        "id": "FALLBACK-depositphotos-100-stock-photo-deal",
+        "tag": "HOT DEAL",
+        "title": "Depositphotos",
+        "desc": "Premium stock photos for your creative projects.",
+        "url": "https://appsumo.8io8.net/c/7294907/123456/7890?u=https://appsumo.com/products/depositphotos-100-stock-photo-deal/"
+    },
+    {
+        "id": "FALLBACK-llamagenai",
+        "tag": "HOT DEAL",
+        "title": "LlamaGen.ai",
+        "desc": "Generate high-quality AI images and videos.",
+        "url": "https://appsumo.8io8.net/c/7294907/123456/7890?u=https://appsumo.com/products/llamagenai/"
     }
 ]
