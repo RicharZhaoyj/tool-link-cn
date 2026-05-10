@@ -10,75 +10,56 @@ AFF_PREFIX = f"https://appsumo.8io8.net/c/{IMPACT_ID}/123456/7890"
 
 def get_data():
     items_list = []
-    # 永远保留系统时间戳，确保 tools.json 物理内容永远在变，触发 Git 提交
     now_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    # 始终保留第一条作为“心跳包”，证明脚本在跑
     items_list.append({
         "id": "SYNC-INFO",
         "tag": "SYSTEM",
         "title": f"Last Sync: {now_str}",
-        "desc": f"Link.cn 自动监测引擎已启动 | ID:{IMPACT_ID}",
+        "desc": f"ID:{IMPACT_ID} | 自动抓取引擎运行正常",
         "url": "https://link.cn"
     })
 
     try:
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            'Accept': 'application/rss+xml, application/xml'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
-        # 加上随机参数绕过 CDN 缓存
-        url = f"https://appsumo.com/feed/?nocache={datetime.now().timestamp()}"
+        # 使用更稳定的 RSS 地址
+        url = "https://appsumo.com/feed/"
         r = requests.get(url, headers=headers, timeout=30)
+        r.encoding = 'utf-8'
         
-        if r.status_code == 200:
-            # 自动处理编码
-            r.encoding = 'utf-8'
-            # 兼容性解析
-            content = r.text.strip()
-            root = ET.fromstring(content)
-            
-            # 尝试抓取所有 item 节点
-            raw_items = root.findall('.//item')
-            print(f"找到原始节点数量: {len(raw_items)}")
-
-            for item in raw_items[:15]:
-                # 兼容性获取 title 和 link (处理可能存在的命名空间)
-                title = item.findtext('title')
-                link = item.findtext('link')
+        # 尝试暴力解析：直接寻找 <item> 标签内容
+        content = r.text
+        # 简单粗暴的分割法，绕过复杂的 XML 命名空间问题
+        parts = content.split('<item>')[1:16] # 抓取前 15 个
+        
+        for p in parts:
+            try:
+                title = p.split('<title>')[1].split('</title>')[0].replace('<![CDATA[', '').replace(']]>', '').strip()
+                link = p.split('<link>')[1].split('</link>')[0].strip()
                 
                 if title and link:
                     items_list.append({
-                        "id": datetime.now().strftime("%H%M%S") + str(len(items_list)),
+                        "id": str(hash(title)),
                         "tag": "LIFETIME DEAL",
-                        "title": title.replace("Lifetime Deal", "").strip(),
-                        "desc": "Limited time offer: Get lifetime access to this professional AI tool.",
-                        "url": f"{AFF_PREFIX}?u={link}",
-                        "is_ads": True
+                        "title": title,
+                        "desc": "Limited time offer: Professional AI tool lifetime access.",
+                        "url": f"{AFF_PREFIX}?u={link}"
                     })
-        else:
-            print(f"请求失败，状态码: {r.status_code}")
-
+            except:
+                continue
+                
     except Exception as e:
-        print(f"解析过程中出现异常: {e}")
-    
-    # --- 兜底逻辑：如果除了系统项外没有抓到任何数据，插入一条提示 ---
-    if len(items_list) <= 1:
-        items_list.append({
-            "id": "RETRY",
-            "tag": "NOTICE",
-            "title": "正在等待 AppSumo 数据同步...",
-            "desc": "由于接口响应较慢，数据可能在下次更新时显示。请稍后刷新。",
-            "url": "https://link.cn"
-        })
+        print(f"抓取异常: {e}")
     
     return items_list
 
 if __name__ == "__main__":
     base_path = os.path.dirname(os.path.abspath(__file__))
     target_file = os.path.join(base_path, 'tools.json')
-    
     result = get_data()
-    
     with open(target_file, 'w', encoding='utf-8') as f:
         json.dump(result, f, indent=4, ensure_ascii=False)
-    
-    print(f"成功写入 {len(result)} 条数据到 {target_file}")
+    print(f"写入完成，共 {len(result)} 条。")
