@@ -10,8 +10,9 @@ AFFILIATE_PREFIX = f"https://appsumo.8io8.net/c/{IMPACT_ID}/123456/7890"
 
 def get_appsumo_deals():
     try:
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
-        response = requests.get(f"https://appsumo.com/feed/", headers=headers, timeout=20)
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+        # 加上随机参数防止被缓存
+        response = requests.get(f"https://appsumo.com/feed/?v={datetime.now().timestamp()}", headers=headers, timeout=20)
         response.encoding = 'utf-8'
         root = ET.fromstring(response.text)
         deals = []
@@ -21,30 +22,30 @@ def get_appsumo_deals():
             deals.append({
                 "id": datetime.now().strftime("%H%M%S"),
                 "tag": "LIFETIME DEAL",
-                "title": title + " [Verified]", # 强制修改标题确保 Git 感知变化
-                "desc": f"ID: {IMPACT_ID} | Updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}",
+                # 在标题里强行加入时间戳，确保 Git 100% 能发现文件变动了
+                "title": f"{title} [{datetime.now().strftime('%H:%M')}]",
+                "desc": f"ID: {IMPACT_ID} | Exclusive AppSumo Deal",
                 "url": f"{AFFILIATE_PREFIX}?u={link}"
             })
         return deals
     except Exception as e:
-        print(f"Fetch Error: {e}")
+        print(f"Error fetching: {e}")
         return []
 
 if __name__ == "__main__":
-    # 强制获取根目录绝对路径
-    root_dir = os.getcwd()
-    file_path = os.path.join(root_dir, 'tools.json')
+    # 【关键修改】获取脚本所在的绝对路径，并定位到根目录下的 tools.json
+    # 假设 update.py 在根目录
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_dir, 'tools.json')
     
-    print(f"--- DIAGNOSTIC INFO ---")
-    print(f"Current Working Directory: {root_dir}")
-    print(f"Files in Directory: {os.listdir(root_dir)}")
-    print(f"Targeting File: {file_path}")
+    print(f"Target file path: {file_path}")
     
     new_deals = get_appsumo_deals()
     
     if new_deals:
+        # 无论如何，直接覆盖写入
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(new_deals, f, indent=4, ensure_ascii=False)
-        print(f"--- SUCCESS: Wrote {len(new_deals)} deals to {file_path} ---")
+        print(f"Successfully wrote {len(new_deals)} deals to {file_path}")
     else:
-        print("--- ERROR: No deals found, nothing written ---")
+        print("No data fetched. Check network or RSS feed.")
