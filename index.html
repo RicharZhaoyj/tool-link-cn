@@ -22,24 +22,13 @@
             <nav class="text-xs font-mono space-x-4">
                 <a href="https://link.cn" class="hover:text-blue-400">LINK.CN MAIN</a>
                 <span class="text-zinc-700">|</span>
-                <span class="text-green-500">● VERCEL NODE ONLINE</span>
+                <span id="status-dot" class="text-green-500">● SYSTEM ONLINE</span>
             </nav>
         </header>
 
         <div id="tool-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- 这里的卡片未来将由 Gemini 自动脚本生成 -->
-            <div class="glass-card p-6 rounded-xl group">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="px-2 py-1 bg-blue-900/30 text-blue-400 text-[10px] font-bold rounded uppercase">Protocol</span>
-                    <span class="text-zinc-600 text-[10px] font-mono">ID: 001</span>
-                </div>
-                <h2 class="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Link Protocol</h2>
-                <p class="text-sm text-zinc-400 leading-relaxed mb-4">Behavior-driven trust network for AI Agents.</p>
-                <a href="https://link.cn" class="text-xs font-bold text-white border-b border-white pb-1 hover:text-blue-400 hover:border-blue-400 transition-all">VIEW PROJECT →</a>
-            </div>
-
             <div class="glass-card p-6 rounded-xl flex items-center justify-center border-dashed border-zinc-700">
-                <p class="text-zinc-600 text-sm italic tracking-widest uppercase">Fetching next AI tool...</p>
+                <p class="text-zinc-600 text-sm italic tracking-widest uppercase animate-pulse">Loading Tools...</p>
             </div>
         </div>
 
@@ -47,5 +36,39 @@
             &copy; 2026 LINK.CN • PART OF THE LINK PROTOCOL ECOSYSTEM
         </footer>
     </div>
+
+    <script>
+        async function loadTools() {
+            try {
+                // 1. 获取最新的 tools.json (加上时间戳防止缓存)
+                const response = await fetch('./tools.json?t=' + new Date().getTime());
+                const tools = await response.json();
+                const grid = document.getElementById('tool-grid');
+                
+                // 2. 清空加载状态
+                grid.innerHTML = '';
+
+                // 3. 循环渲染卡片
+                tools.forEach(tool => {
+                    const card = `
+                        <div class="glass-card p-6 rounded-xl group">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="px-2 py-1 bg-blue-900/30 text-blue-400 text-[10px] font-bold rounded uppercase">${tool.tag}</span>
+                                <span class="text-zinc-600 text-[10px] font-mono">ID: ${tool.id}</span>
+                            </div>
+                            <h2 class="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">${tool.title}</h2>
+                            <p class="text-sm text-zinc-400 leading-relaxed mb-4">${tool.desc}</p>
+                            <a href="${tool.url}" target="_blank" class="text-xs font-bold text-white border-b border-white pb-1 hover:text-blue-400 hover:border-blue-400 transition-all">VIEW PROJECT →</a>
+                        </div>
+                    `;
+                    grid.innerHTML += card;
+                });
+            } catch (error) {
+                console.error('Error loading tools:', error);
+            }
+        }
+        // 页面加载完毕后执行
+        window.onload = loadTools;
+    </script>
 </body>
 </html>
