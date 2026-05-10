@@ -3,113 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LINK.CN | AI 工具导航</title>
+    <title>LINK.CN | AI 导航</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 极简主义、深色模式、未来感设计 */
-        :root {
-            --bg-color: #050505;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --accent-blue: #3b82f6;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
+        body { background-color: #050505; color: #fff; font-family: sans-serif; }
         .glass-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
         }
-
-        .glass-card:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
-        }
-
-        /* 渐变标题 */
-        .gradient-text {
-            background: linear-gradient(135deg, #fff 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* 隐藏滚动条但保留滚动功能 */
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        .glass-card:hover { transform: translateY(-5px); border-color: #3b82f6; }
     </style>
 </head>
-<body class="min-h-screen">
-
-    <nav class="sticky top-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-black">L</div>
-                <span class="text-xl font-bold tracking-tighter uppercase">Link<span class="text-blue-500">.cn</span></span>
-            </div>
-            <div id="sync-status" class="text-[10px] font-mono text-zinc-500 px-3 py-1 bg-white/5 rounded-full">
-                Checking connection...
-            </div>
-        </div>
+<body>
+    <nav class="p-6 border-b border-white/5 flex justify-between items-center">
+        <div class="font-bold text-xl uppercase tracking-tighter">Link<span class="text-blue-500">.cn</span></div>
+        <div id="sync-status" class="text-[10px] font-mono text-zinc-500">INIT...</div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-6 py-16">
-        
-        <header class="mb-16 text-center">
-            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tight gradient-text">
-                LIFETIME DEALS
-            </h1>
-            <p class="text-zinc-400 text-lg max-w-2xl mx-auto">
-                24小时自动化搜罗 AppSumo 全球顶尖 AI 工具。
-                <span class="block mt-2 text-sm text-zinc-600 italic">一次性买断，告别订阅制。</span>
-            </p>
-        </header>
-
-        <div id="tool-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="col-span-full py-20 text-center text-zinc-600 font-mono text-sm animate-pulse">
-                INITIALIZING PROTOCOL...
-            </div>
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <div id="tool-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="text-zinc-600 animate-pulse">正在连接协议层...</div>
         </div>
-
     </main>
 
-    <footer class="border-t border-white/5 py-12 text-center text-zinc-600 text-xs">
-        <p>&copy; 2026 LINK.CN | BEHAVIOR-DRIVEN TRUST NETWORK</p>
-    </footer>
-
     <script>
-        /**
-         * 核心加载逻辑
-         */
-        async function fetchTools() {
+        async function loadDeals() {
             const grid = document.getElementById('tool-grid');
-            const statusEl = document.getElementById('sync-status');
-
+            const status = document.getElementById('sync-status');
+            
             try {
-                // 1. 发起请求 (添加版本号绕过 Vercel/浏览器缓存)
-                const response = await fetch('./tools.json?v=' + Date.now());
+                // 【核心修复】强制不使用缓存，并追加动态时间戳
+                const timestamp = new Date().getTime();
+                const response = await fetch(`./tools.json?t=${timestamp}`, {
+                    cache: "no-store" 
+                });
                 
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                const tools = await response.json();
+                if (!response.ok) throw new Error('网络响应异常');
+                const data = await response.json();
 
-                // 检查数据有效性
-                if (!Array.isArray(tools) || tools.length === 0) {
-                    grid.innerHTML = `<div class="col-span-full py-20 text-zinc-500 text-center border border-dashed border-white/10 rounded-3xl">当前无活跃优惠数据</div>`;
-                    statusEl.innerText = "NO ACTIVE DEALS";
-                    return;
+                if (data && data.length > 0) {
+                    grid.innerHTML = '';
+                    data.forEach(item => {
+                        // 更新同步状态
+                        if (item.id === "SYNC-INFO") {
+                            status.innerText = item.title;
+                            return;
+                        }
+
+                        // 渲染卡片
+                        grid.innerHTML += `
+                            <div class="glass-card p-6 rounded-2xl flex flex-col">
+                                <div class="mb-4">
+                                    <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-1 rounded uppercase font-bold">${item.tag}</span>
+                                </div>
+                                <h3 class="text-lg font-bold mb-2">${item.title}</h3>
+                                <p class="text-zinc-400 text-xs mb-6 flex-grow">${item.desc}</p>
+                                <a href="${item.url}" target="_blank" rel="nofollow" class="w-full py-3 bg-white text-black text-center text-sm font-bold rounded-xl hover:bg-blue-500 hover:text-white transition-colors">
+                                    立即查看 →
+                                </a>
+                            </div>
+                        `;
+                    });
                 }
-
-                // 2. 清空容器并准备渲染
-                grid.innerHTML = '';
-                
-                tools.forEach(item => {
-                    // 处理系统同步信息
-                    if (item.id === "SYNC-INFO" || item.id === "STATUS") {
+            } catch (e) {
+                grid.innerHTML = `<div class="text-red-500 text-sm font-mono">ERR: ${e.message}</div>`;
+                status.innerText = "OFFLINE";
+            }
+        }
+        window.addEventListener('DOMContentLoaded', loadDeals);
+    </script>
+</body>
+</html>
                         statusEl.innerText = item.title;
                         statusEl.classList.add('text-blue-400');
                         return; // 不作为卡片显示
