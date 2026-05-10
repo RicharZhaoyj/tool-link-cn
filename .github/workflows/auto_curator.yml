@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # 消除 Node 20 警告
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
@@ -29,21 +29,22 @@ jobs:
         run: pip install requests
 
       - name: Run Script
-        # 使用 -u 参数强制显示 Python 实时日志，方便排错
         run: python -u update.py
 
-      - name: Verify and Push
+      - name: Commit and Push
         run: |
           git config --local user.email "bot@link.cn"
           git config --local user.name "Link-Bot"
           
-          # 检查文件是否存在
-          if [ ! -f "tools.json" ]; then
-            echo "错误：tools.json 未生成！"
-            exit 1
-          fi
+          # 强制拉取最新代码，防止推送冲突
+          git pull origin main --rebase
           
           git add tools.json
-          # 强制提交，哪怕只有时间戳变化
-          git commit -m "Auto-sync tools.json [$(date)]" || exit 0
-          git push origin main
+          
+          # 只有在有变动时才提交
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Auto-sync tools.json [$(date)]"
+            git push origin main
+          else
+            echo "No changes to commit."
+          fi
