@@ -9,7 +9,6 @@ on:
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
-# 【关键点 1】显式声明权限范围
 permissions:
   contents: write
 
@@ -21,7 +20,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # 【关键点 2】显式使用内置令牌
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Python
@@ -32,23 +30,24 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
+      # --- 关键改动：先对齐远程分支，再运行脚本 ---
+      - name: Prepare Git
+        run: |
+          git config --local user.email "bot@link.cn"
+          git config --local user.name "Link-Bot"
+          git pull origin main --rebase || echo "No remote changes to pull"
+
       - name: Run Script
         run: python -u update.py
 
       - name: Commit and Push
         run: |
-          git config --local user.email "bot@link.cn"
-          git config --local user.name "Link-Bot"
-          
-          # 确保在推送前拉取最新远程变更，避免冲突
-          git pull origin main --rebase
-          
           git add tools.json
           
-          # 检查是否有文件变更
+          # 只有在有变动时才提交
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Auto-sync tools.json [$(date)]"
-            # 使用包含权限的 URL 进行推送
+            # 使用 Token 强制推送
             git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main
           else
             echo "No changes to commit."
