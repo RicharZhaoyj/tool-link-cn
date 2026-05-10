@@ -1,19 +1,16 @@
 name: 24H Auto Curator
 on:
   schedule:
-    - cron: '0 */12 * * *' # 每12小时跑一次
-  workflow_dispatch:      # 允许手动点按钮测试
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
   push:
     branches: [ main ]
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # 必须给写权限，否则报错 Exit Code 1
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,17 +22,17 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests
+        run: pip install requests
 
       - name: Run Curator Script
-        run: python update.py
+        # 确保 update.py 就在仓库根目录下
+        run: python update.py 
 
       - name: Commit and Push
         run: |
           git config --local user.email "bot@link.cn"
           git config --local user.name "Link-Bot"
-          git add .
-          git commit -m "Auto-update AppSumo Deals (ID: 7294907)" || exit 0
-          git push
+          # 强制指定添加根目录下的 tools.json
+          git add tools.json
+          git commit -m "Auto-update AppSumo Deals (ID: 7294907)" || echo "No changes"
+          git push origin main
