@@ -38,6 +38,9 @@ jobs:
           git pull origin main --rebase || echo "No remote changes to pull"
 
       - name: Run Script
+        env:
+          IMPACT_SID: ${{ secrets.IMPACT_SID }}
+          IMPACT_TOKEN: ${{ secrets.IMPACT_TOKEN }}
         run: python -u update.py
 
       - name: Commit and Push
