@@ -2,8 +2,15 @@
     {
         "id": "SYNC-INFO",
         "tag": "SYSTEM",
-        "title": "Last Sync: 2026-05-10 09:49:31",
-        "desc": "ID:7294907 | 自动抓取引擎运行正常",
+        "title": "Last Sync: 2026-05-10 09:52:03",
+        "desc": "Link.cn 引擎运行中 | Partner ID: 7294907",
+        "url": "https://link.cn"
+    },
+    {
+        "id": "TEST-CARD",
+        "tag": "DEBUG",
+        "title": "Wait for Next Sync",
+        "desc": "AppSumo RSS 响应为空。系统会在下次同步时再次尝试。",
         "url": "https://link.cn"
     }
 ]
