@@ -1,35 +1,36 @@
-name: 24H Content Engine
+name: 24H Auto Curator
 on:
   schedule:
     - cron: '0 0 * * *'
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
-permissions:
-  contents: write
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # 解决你看到的警告
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # 确保有写权限，防止无法提交
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 确保获取完整历史以方便推送
-      
+          fetch-depth: 0 # 获取完整历史，防止合并冲突
+
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5 # 升级到 v5
         with:
-          python-version: '3.10'
-          
-      - name: Run Update Script
-        # 强制在根目录下运行，确保 data.json 生成在正确位置
-        run: python scripts/curator.py
-        
+          python-version: '3.11'
+
+      - name: Run Curator Script
+        run: python update.py
+
       - name: Commit and Push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data.json
-          # 如果文件没变化，git commit 会返回 1 导致 Action 失败
-          # 加上 || exit 0 确保即使没变化也算成功
-          git commit -m "Auto-update: Real project links" || echo "No changes to commit"
-          git push origin main || echo "Nothing to push"
+          git add .
+          git commit -m "Auto-curated: Added new tool while preserving history" || exit 0
+          git push
