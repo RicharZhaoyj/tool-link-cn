@@ -6,6 +6,9 @@ on:
   push:
     branches: [ main ]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # 消除 Node 20 警告
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,19 +29,21 @@ jobs:
         run: pip install requests
 
       - name: Run Script
-        run: python update.py
+        # 使用 -u 参数强制显示 Python 实时日志，方便排错
+        run: python -u update.py
 
-      - name: Verify File
-        run: |
-          echo "Checking tools.json status:"
-          ls -l tools.json
-          head -n 15 tools.json
-
-      - name: Commit and Push
+      - name: Verify and Push
         run: |
           git config --local user.email "bot@link.cn"
           git config --local user.name "Link-Bot"
+          
+          # 检查文件是否存在
+          if [ ! -f "tools.json" ]; then
+            echo "错误：tools.json 未生成！"
+            exit 1
+          fi
+          
           git add tools.json
-          # 只要有变动就提交，没变动就跳过
+          # 强制提交，哪怕只有时间戳变化
           git commit -m "Auto-sync tools.json [$(date)]" || exit 0
           git push origin main
