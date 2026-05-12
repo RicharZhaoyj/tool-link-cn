@@ -30,7 +30,6 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
-      # --- 关键改动：先对齐远程分支，再运行脚本 ---
       - name: Prepare Git
         run: |
           git config --local user.email "bot@link.cn"
@@ -43,14 +42,27 @@ jobs:
           IMPACT_TOKEN: ${{ secrets.IMPACT_TOKEN }}
         run: python -u update.py
 
+      - name: Update Sitemap
+        run: |
+          python -c "
+          import json
+          from datetime import datetime
+          tools = json.load(open('tools.json'))
+          urls = ['  <url>\n    <loc>https://tool.link.cn/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>']
+          for t in tools:
+              if t.get('id') not in ('SYNC-INFO', 'STATUS', 'API-PENDING'):
+                  urls.append(f'  <url>\n    <loc>https://tool.link.cn/#tool-{t[\"id\"]}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>')
+          sitemap = '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n' + '\n'.join(urls) + '\n</urlset>'
+          open('sitemap.xml', 'w').write(sitemap)
+          print(f'Sitemap updated with {len(urls)} URLs')
+          "
+
       - name: Commit and Push
         run: |
-          git add tools.json
+          git add tools.json sitemap.xml
           
-          # 只有在有变动时才提交
           if [ -n "$(git status --porcelain)" ]; then
-            git commit -m "Auto-sync tools.json [$(date)]"
-            # 使用 Token 强制推送
+            git commit -m "Auto-sync: tools.json + sitemap [$(date -u '+%Y-%m-%d %H:%M UTC')]"
             git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main
           else
             echo "No changes to commit."
