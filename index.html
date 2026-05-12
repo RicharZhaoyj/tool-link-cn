@@ -3,7 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LINK.CN | AI 工具导航</title>
+    <title>LINK.CN | AI工具导航 - 全球顶尖AI工具Lifetime Deal买断方案</title>
+    <meta name="description" content="发现全球最优AI工具Lifetime Deal，一次买断终身使用。24小时自动更新，涵盖AI写作、AI绘图、AI视频、AI开发等热门品类。">
+    <meta name="keywords" content="AI工具,Lifetime Deal,买断,AI软件,AppSumo,AI导航,AI写作,AI绘图,AI视频,终身授权">
+    <meta name="author" content="Link.cn">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://tool.link.cn/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="LINK.CN | AI工具导航">
+    <meta property="og:description" content="全球顶尖AI工具Lifetime Deal买断方案，24H自动更新">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tool.link.cn/">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LINK.CN | AI工具导航">
+    <meta name="twitter:description" content="全球顶尖AI工具Lifetime Deal买断方案">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #050505; color: #ffffff; font-family: system-ui, -apple-system, sans-serif; }
@@ -18,83 +36,298 @@
             transform: translateY(-4px);
             box-shadow: 0 10px 20px -10px rgba(59, 130, 246, 0.5);
         }
+        .ai-badge {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        .price-tag {
+            background: linear-gradient(135deg, #059669, #10b981);
+        }
+        .discount-tag {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+        }
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.4);
+            color: #60a5fa;
+        }
+        .search-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .search-input:focus {
+            border-color: rgba(59, 130, 246, 0.5);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tool-card { animation: fadeIn 0.4s ease forwards; }
+        .stat-number {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "LINK.CN AI工具导航",
+        "url": "https://tool.link.cn/",
+        "description": "全球顶尖AI工具Lifetime Deal买断方案导航",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://tool.link.cn/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
 </head>
 <body class="min-h-screen">
 
-    <nav class="border-b border-white/5 p-6 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-md z-50">
+    <nav class="border-b border-white/5 p-4 md:p-6 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-md z-50">
         <div class="flex items-center space-x-2">
-            <div class="w-7 h-7 bg-blue-600 rounded flex items-center justify-center font-bold">L</div>
+            <div class="w-7 h-7 bg-blue-600 rounded flex items-center justify-center font-bold text-sm">L</div>
             <span class="text-xl font-black tracking-tighter uppercase">Link<span class="text-blue-500">.cn</span></span>
         </div>
-        <div id="sync-status" class="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full uppercase">
-            Initializing...
+        <div class="flex items-center space-x-4">
+            <span id="tool-count" class="text-xs font-mono text-zinc-500 hidden md:inline"></span>
+            <div id="sync-status" class="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full uppercase">
+                加载中...
+            </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-6 py-12">
-        <header class="mb-12">
-            <h1 class="text-4xl font-black mb-2 uppercase italic">Lifetime Deals</h1>
-            <p class="text-zinc-500 text-sm font-mono">24H 自动更新 · 全球顶尖 AI 工具买断方案</p>
+    <main class="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
+        <!-- Hero -->
+        <header class="mb-8 md:mb-12">
+            <h1 class="text-3xl md:text-4xl font-black mb-2 uppercase italic">AI 工具 Lifetime Deals</h1>
+            <p class="text-zinc-500 text-sm font-mono">24H 自动更新 · 一次买断终身使用 · 全球顶尖 AI 工具精选</p>
         </header>
 
-        <div id="tool-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="text-zinc-700 font-mono text-sm animate-pulse">CONNECTING TO PROTOCOL...</div>
+        <!-- Stats Bar -->
+        <div id="stats-bar" class="grid grid-cols-3 gap-4 mb-8 hidden">
+            <div class="glass-card rounded-2xl p-4 text-center">
+                <div class="stat-number text-2xl md:text-3xl font-black" id="stat-total">0</div>
+                <div class="text-zinc-500 text-xs mt-1">工具总数</div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 text-center">
+                <div class="stat-number text-2xl md:text-3xl font-black" id="stat-ai">0</div>
+                <div class="text-zinc-500 text-xs mt-1">AI 工具</div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 text-center">
+                <div class="stat-number text-2xl md:text-3xl font-black" id="stat-deal">0</div>
+                <div class="text-zinc-500 text-xs mt-1">限时优惠</div>
+            </div>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="mb-8 space-y-4">
+            <div class="relative">
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input type="text" id="search-input" placeholder="搜索 AI 工具..." 
+                    class="search-input w-full pl-11 pr-4 py-3 rounded-2xl text-sm text-white placeholder-zinc-600">
+            </div>
+            <div id="filter-bar" class="flex flex-wrap gap-2">
+                <button class="filter-btn active px-4 py-2 rounded-full text-xs font-medium" data-filter="all">全部</button>
+                <button class="filter-btn px-4 py-2 rounded-full text-xs font-medium" data-filter="ai">🤖 AI工具</button>
+                <!-- 动态分类按钮会由JS生成 -->
+            </div>
+        </div>
+
+        <!-- Tool Grid -->
+        <div id="tool-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            <div class="text-zinc-700 font-mono text-sm animate-pulse">加载中...</div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-16">
+            <div class="text-4xl mb-4">🔍</div>
+            <p class="text-zinc-500 text-sm">没有找到匹配的工具</p>
         </div>
     </main>
 
-    <footer class="p-12 text-center text-zinc-800 text-[10px] tracking-widest uppercase">
-        &copy; 2026 Link.cn | AI Infrastructure Layer
+    <footer class="p-8 md:p-12 text-center">
+        <div class="max-w-7xl mx-auto space-y-4">
+            <div class="text-zinc-600 text-xs">
+                © 2026 Link.cn · AI 工具导航 · 数据每12小时自动更新
+            </div>
+            <div class="flex justify-center space-x-6 text-zinc-700 text-[10px] tracking-widest uppercase">
+                <a href="https://github.com/RicharZhaoyj/tool-link-cn" target="_blank" class="hover:text-zinc-400 transition-colors">GitHub</a>
+                <span>|</span>
+                <span>AppSumo 联盟合作伙伴</span>
+            </div>
+        </div>
     </footer>
 
     <script>
+        let allTools = [];
+        let activeFilter = 'all';
+        let searchQuery = '';
+
         async function fetchDeals() {
             const grid = document.getElementById('tool-grid');
             const status = document.getElementById('sync-status');
-            
+
             try {
-                // 强制忽略缓存获取最新数据
                 const response = await fetch('./tools.json?v=' + Date.now(), { cache: 'no-store' });
                 if (!response.ok) throw new Error('Network Error');
                 const data = await response.json();
 
                 if (data && data.length > 0) {
-                    grid.innerHTML = ''; // 清空容器
-                    
-                    data.forEach(item => {
-                        // 1. 更新顶部同步时间
-                        if (item.id === "SYNC-INFO" || item.id === "STATUS") {
-                            status.innerText = item.title;
-                            return;
-                        }
+                    // 提取系统信息
+                    const sysInfo = data.find(item => item.id === 'SYNC-INFO' || item.id === 'STATUS');
+                    if (sysInfo) {
+                        const time = sysInfo.title.replace('Sync Time: ', '');
+                        status.innerText = `已同步 ${time}`;
+                    }
 
-                        // 2. 生成卡片 HTML
-                        const cardHtml = `
-                            <div class="glass-card p-8 rounded-3xl flex flex-col h-full">
-                                <div class="flex-grow">
-                                    <div class="mb-4">
-                                        <span class="text-[10px] font-bold bg-blue-500/20 text-blue-400 px-2 py-1 rounded tracking-widest uppercase border border-blue-500/30">
-                                            ${item.tag || 'DEAL'}
-                                        </span>
-                                    </div>
-                                    <h3 class="text-2xl font-bold mb-3">${item.title}</h3>
-                                    <p class="text-zinc-400 text-sm leading-relaxed mb-8">${item.desc}</p>
-                                </div>
-                                <a href="${item.url}" target="_blank" rel="nofollow" 
-                                   class="block w-full py-4 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">
-                                    立即查看 →
-                                </a>
-                            </div>
-                        `;
-                        grid.innerHTML += cardHtml;
-                    });
+                    // 过滤掉系统记录
+                    allTools = data.filter(item => item.id !== 'SYNC-INFO' && item.id !== 'STATUS' && item.id !== 'API-PENDING');
+
+                    // 更新统计
+                    updateStats();
+
+                    // 生成分类按钮
+                    generateFilterButtons();
+
+                    // 渲染
+                    renderTools();
                 }
             } catch (err) {
                 console.error(err);
-                status.innerText = "SYNC FAILED";
-                grid.innerHTML = `<div class="text-red-900 font-mono">PROTOCOL ERROR: DATA LINK DISRUPTED</div>`;
+                status.innerText = "同步失败";
+                grid.innerHTML = '<div class="text-red-900 font-mono">加载失败，请刷新重试</div>';
             }
         }
+
+        function updateStats() {
+            const total = allTools.length;
+            const aiCount = allTools.filter(t => t.is_ai).length;
+            const dealCount = allTools.filter(t => t.price).length;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-ai').textContent = aiCount;
+            document.getElementById('stat-deal').textContent = dealCount;
+            document.getElementById('stats-bar').classList.remove('hidden');
+            document.getElementById('tool-count').textContent = `${total} 个工具`;
+        }
+
+        function generateFilterButtons() {
+            const bar = document.getElementById('filter-bar');
+            // 收集所有中文标签
+            const tags = [...new Set(allTools.map(t => t.tag).filter(Boolean))];
+            tags.forEach(tag => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn px-4 py-2 rounded-full text-xs font-medium';
+                btn.dataset.filter = tag;
+                btn.textContent = tag;
+                bar.appendChild(btn);
+            });
+        }
+
+        function getDiscountPercent(price, originalPrice) {
+            if (!price || !originalPrice) return null;
+            const p = parseFloat(price.replace(/[^0-9.]/g, ''));
+            const o = parseFloat(originalPrice.replace(/[^0-9.]/g, ''));
+            if (isNaN(p) || isNaN(o) || o === 0) return null;
+            return Math.round((1 - p / o) * 100);
+        }
+
+        function renderTools() {
+            const grid = document.getElementById('tool-grid');
+            const emptyState = document.getElementById('empty-state');
+
+            let filtered = allTools;
+
+            // 分类过滤
+            if (activeFilter === 'ai') {
+                filtered = filtered.filter(t => t.is_ai);
+            } else if (activeFilter !== 'all') {
+                filtered = filtered.filter(t => t.tag === activeFilter);
+            }
+
+            // 搜索过滤
+            if (searchQuery) {
+                const q = searchQuery.toLowerCase();
+                filtered = filtered.filter(t =>
+                    t.title.toLowerCase().includes(q) ||
+                    (t.desc && t.desc.toLowerCase().includes(q)) ||
+                    (t.tag && t.tag.toLowerCase().includes(q))
+                );
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            // AI工具优先排序
+            filtered.sort((a, b) => (b.is_ai ? 1 : 0) - (a.is_ai ? 1 : 0));
+
+            grid.innerHTML = filtered.map((item, i) => {
+                const discount = getDiscountPercent(item.price, item.originalPrice);
+                const aiLabel = item.is_ai ? '<span class="ai-badge text-[10px] font-bold px-2 py-0.5 rounded tracking-widest uppercase ml-2">AI</span>' : '';
+                const priceHtml = item.price ? `
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="price-tag text-white text-sm font-black px-3 py-1 rounded-lg">${item.price}<span class="text-[10px] font-normal opacity-70">/终身</span></span>
+                        ${item.originalPrice ? `<span class="text-zinc-600 text-xs line-through">${item.originalPrice}</span>` : ''}
+                        ${discount ? `<span class="discount-tag text-[10px] font-bold px-2 py-0.5 rounded">-${discount}%</span>` : ''}
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="tool-card glass-card p-6 md:p-8 rounded-3xl flex flex-col h-full" style="animation-delay: ${i * 50}ms">
+                        <div class="flex-grow">
+                            <div class="mb-4 flex items-center">
+                                <span class="text-[10px] font-bold bg-blue-500/20 text-blue-400 px-2 py-1 rounded tracking-widest uppercase border border-blue-500/30">
+                                    ${item.tag || 'DEAL'}
+                                </span>
+                                ${aiLabel}
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2">${item.title}</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed mb-4">${item.desc || '限时 Lifetime Deal'}</p>
+                            ${priceHtml}
+                        </div>
+                        <a href="${item.url}" target="_blank" rel="nofollow"
+                           class="block w-full py-3.5 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">
+                            立即查看 →
+                        </a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 事件绑定
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                activeFilter = e.target.dataset.filter;
+                renderTools();
+            }
+        });
+
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            searchQuery = e.target.value.trim();
+            renderTools();
+        });
 
         window.onload = fetchDeals;
     </script>
