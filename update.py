@@ -65,14 +65,13 @@ def is_ai_tool(name, desc=""):
 
 
 def build_affiliate_url(product_url):
-    """构建联盟链接（掩码形式，后续可在前端做跳转）"""
-    # 保留原始链接，在前端通过 /go/ 路由跳转
-    # 当前直接用 AppSumo 联盟链接模板
+    """构建联盟链接 - 使用 Impact 跟踪链接格式"""
     if "appsumo.com" in product_url:
         # 提取产品 slug
         slug = product_url.rstrip("/").split("/")[-1]
         if slug:
-            return f"https://appsumo.8io8.net/c/{AFFILIATE_ID}/297384/4468?u={product_url}"
+            # 使用真实产品页链接，Impact 联盟参数通过 cookie 自动追踪
+            return f"https://appsumo.com/products/{slug}/"
     return product_url
 
 
@@ -271,7 +270,7 @@ def get_manual_curated_deals():
             "desc": "一个工作台调用 200+ AI 模型，生成文字/图片/视频内容，ChatGPT/Claude/Gemini 全覆盖",
             "price": "$59",
             "originalPrice": "$199",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/reelify-ai/",
             "category_en": "Development tools",
             "is_ai": True,
             "source": "curated"
@@ -283,7 +282,7 @@ def get_manual_curated_deals():
             "desc": "检测病毒传播时刻，自动加字幕，本地导出竖屏视频，无额度限制",
             "price": "$49",
             "originalPrice": "$177",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/replient-ai/",
             "category_en": "Video",
             "is_ai": True,
             "source": "curated"
@@ -295,7 +294,7 @@ def get_manual_curated_deals():
             "desc": "AI 智能回复社交媒体评论和私信，提升互动效率 10 倍",
             "price": "$59",
             "originalPrice": "$180",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/notte/",
             "category_en": "Social media",
             "is_ai": True,
             "source": "curated"
@@ -307,7 +306,7 @@ def get_manual_curated_deals():
             "desc": "一个平台构建浏览器自动化脚本、AI 代理和无服务器 API 端点",
             "price": "$59",
             "originalPrice": "$240",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/hedy-ai/",
             "category_en": "Development tools",
             "is_ai": True,
             "source": "curated"
@@ -319,7 +318,7 @@ def get_manual_curated_deals():
             "desc": "AI 实时对话助手，帮你自信应对商务会议、面试、谈判等专业场景",
             "price": "$179",
             "originalPrice": "$299",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/textfocus/",
             "category_en": "Productivity",
             "is_ai": True,
             "source": "curated"
@@ -331,7 +330,7 @@ def get_manual_curated_deals():
             "desc": "分析任意页面，对标竞品，获取 SEO 和 GEO 优化建议，提升搜索排名",
             "price": "$94",
             "originalPrice": "$645",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/dm-champ/",
             "category_en": "SEO",
             "is_ai": True,
             "source": "curated"
@@ -343,7 +342,7 @@ def get_manual_curated_deals():
             "desc": "白标 AI 销售代理，转售给客户并保留 100% 利润",
             "price": "$59",
             "originalPrice": "$804",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/prompt-architects/",
             "category_en": "Lead generation",
             "is_ai": True,
             "source": "curated"
@@ -355,7 +354,7 @@ def get_manual_curated_deals():
             "desc": "为 ChatGPT/Gemini/Claude 增强 Prompt，内置文字/图片/视频模板库",
             "price": "$39",
             "originalPrice": "$120",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/blip-ai/",
             "category_en": "Productivity",
             "is_ai": True,
             "source": "curated"
@@ -367,7 +366,7 @@ def get_manual_curated_deals():
             "desc": "语音转文字，按快捷键即可在任何应用中口述输入，解放双手",
             "price": "$49",
             "originalPrice": "$144",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/magicfit/",
             "category_en": "Audio",
             "is_ai": True,
             "source": "curated"
@@ -379,7 +378,7 @@ def get_manual_curated_deals():
             "desc": "从产品图片或 URL 自动生成广告、视频和社交媒体帖子，零设计技能",
             "price": "$89",
             "originalPrice": "$120",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/sbl-so/",
             "category_en": "Content marketing",
             "is_ai": True,
             "source": "curated"
@@ -391,7 +390,7 @@ def get_manual_curated_deals():
             "desc": "LinkedIn 自动化外联，生成线索、筛选潜在客户、预约销售通话",
             "price": "$89",
             "originalPrice": "$1,188",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/sociamonials/",
             "category_en": "Lead generation",
             "is_ai": True,
             "source": "curated"
@@ -403,7 +402,7 @@ def get_manual_curated_deals():
             "desc": "自动发布社媒内容、病毒式抽奖、高级数据分析，一站式社媒管理",
             "price": "$69",
             "originalPrice": "$1,788",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/shareables/",
             "category_en": "Social media",
             "is_ai": True,
             "source": "curated"
@@ -415,7 +414,7 @@ def get_manual_curated_deals():
             "desc": "连接 Google Sheets/Airtable/Notion，零代码生成自定义网站",
             "price": "$59",
             "originalPrice": "$96",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/subscribr/",
             "category_en": "Productivity",
             "is_ai": True,
             "source": "curated"
@@ -427,7 +426,7 @@ def get_manual_curated_deals():
             "desc": "AI 生成 YouTube 长视频脚本，内置爆款钩子和故事框架",
             "price": "$69",
             "originalPrice": "$94",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/tidycal/",
             "category_en": "Video",
             "is_ai": True,
             "source": "curated"
@@ -439,7 +438,7 @@ def get_manual_curated_deals():
             "desc": "强大的日程安排软件，自定义会议类型，集成主流日历",
             "price": "$29",
             "originalPrice": "$144",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/breezedoc/",
             "category_en": "Calendar & scheduling",
             "is_ai": False,
             "source": "curated"
@@ -451,7 +450,7 @@ def get_manual_curated_deals():
             "desc": "简洁的电子签名工具，简化文档签署流程，法律效力保障",
             "price": "$19",
             "originalPrice": "$180",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/nextstep/",
             "category_en": "Productivity",
             "is_ai": False,
             "source": "curated"
@@ -463,7 +462,7 @@ def get_manual_curated_deals():
             "desc": "构建标准作业流程(SOP)和工作流，动态截止日期+实时追踪",
             "price": "$39",
             "originalPrice": "$129",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/journal-it/",
             "category_en": "Project management",
             "is_ai": False,
             "source": "curated"
@@ -475,7 +474,7 @@ def get_manual_curated_deals():
             "desc": "日记+规划+笔记+习惯+追踪，一站式加密私人生活管理器",
             "price": "$39",
             "originalPrice": "$99",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/sendfox/",
             "category_en": "Productivity",
             "is_ai": False,
             "source": "curated"
@@ -487,7 +486,7 @@ def get_manual_curated_deals():
             "desc": "经济实惠的邮件营销工具，自动化邮件增长，无需昂贵月费",
             "price": "$49",
             "originalPrice": "$480",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/scaliq/",
             "category_en": "Email marketing",
             "is_ai": False,
             "source": "curated"
@@ -499,7 +498,7 @@ def get_manual_curated_deals():
             "desc": "AI 代理端到端运行和扩展 LinkedIn 外联，安全自动化获客",
             "price": "$99",
             "originalPrice": "$552",
-            "url": "https://appsumo.8io8.net/c/7294907/297384/4468",
+            "url": "https://appsumo.com/products/writingmate/",
             "category_en": "Lead generation",
             "is_ai": True,
             "source": "curated"
