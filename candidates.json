@@ -1,0 +1,62 @@
+{
+  "updated_at": "2026-05-15 14:04:03",
+  "total": 5,
+  "new_discoveries": 5,
+  "candidates": [
+    {
+      "title": "Claude Desktop",
+      "desc": "Anthropic 桌面客户端，支持文件/MCP 工具调用，开发效率神器",
+      "url": "https://claude.ai/download",
+      "source": "curated",
+      "is_ai": true,
+      "tag": "AI工具",
+      "price": "Free",
+      "originalPrice": "",
+      "note": "新兴工具，建议收录"
+    },
+    {
+      "title": "Devin",
+      "desc": "Cognition 出品的 AI 软件工程师，自主完成编码任务",
+      "url": "https://www.cognition.ai/",
+      "source": "curated",
+      "is_ai": true,
+      "tag": "AI开发",
+      "price": "$500",
+      "originalPrice": "",
+      "note": "热门，高价，观察市场反馈"
+    },
+    {
+      "title": "Lovable",
+      "desc": "AI 驱动的前端应用生成器，GPT-4 驱动，支持全栈部署",
+      "url": "https://lovable.dev/",
+      "source": "curated",
+      "is_ai": true,
+      "tag": "AI开发",
+      "price": "$20",
+      "originalPrice": "$40",
+      "note": "新兴工具，已收录可选评测"
+    },
+    {
+      "title": "OpenClaw Gateway",
+      "desc": "自托管 AI Agent 网关，支持多渠道消息路由、浏览器自动化",
+      "url": "https://openclaw.ai/",
+      "source": "curated",
+      "is_ai": true,
+      "tag": "AI工具",
+      "price": "Free",
+      "originalPrice": "",
+      "note": "开源工具，适合开发者"
+    },
+    {
+      "title": "Codeium Windsurf",
+      "desc": "Codeium 出品的 AI IDE，免费替代 GitHub Copilot，支持 VS Code 插件",
+      "url": "https://codeium.com/windsurf",
+      "source": "curated",
+      "is_ai": true,
+      "tag": "AI开发",
+      "price": "Free",
+      "originalPrice": "$15",
+      "note": "免费替代品，建议收录"
+    }
+  ]
+}
