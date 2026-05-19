@@ -912,6 +912,21 @@ if __name__ == "__main__":
                 all_items.append(item)
                 existing_titles.add(item['title'].lower())
 
+    # 保留已有联盟链接（防止自动同步覆盖）
+    try:
+        if os.path.exists(target_file):
+            with open(target_file, 'r', encoding='utf-8') as f:
+                old_items = json.load(f)
+            affiliate_items = [t for t in old_items if t.get('source') == 'affiliate']
+            existing_ids = {t['id'] for t in all_items}
+            for aff in affiliate_items:
+                if aff['id'] not in existing_ids:
+                    all_items.append(aff)
+                    existing_ids.add(aff['id'])
+                    print(f"Preserved affiliate: {aff['title']} ({aff['url']})")
+    except Exception as e:
+        print(f"Preserve affiliate failed (non-critical): {e}")
+
     # 统计
     ai_count = sum(1 for item in all_items if item.get('is_ai'))
     total_count = len(all_items) - 1
