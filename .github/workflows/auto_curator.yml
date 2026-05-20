@@ -44,6 +44,9 @@ jobs:
       - name: Sync Tools
         run: python -u update.py
 
+      - name: Build SEO Static Fallback (noscript)
+        run: python -u build_noscript.py
+
       - name: Update Sitemap
         run: |
           python -c "
@@ -60,7 +63,7 @@ jobs:
 
       - name: Commit and Push
         run: |
-          git add tools.json sitemap.xml
+          git add tools.json sitemap.xml index.html
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Auto-sync: tools [$(date -u '+%Y-%m-%d %H:%M UTC')]"
             git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main
