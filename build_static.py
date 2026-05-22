@@ -182,6 +182,25 @@ def build_meta_description(html, tools):
     )
 
 
+def build_update_time(html):
+    """从 tools.json 读取 SYNC-INFO，预填 update-time"""
+    try:
+        import json, os
+        tools_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tools.json')
+        data = json.load(open(tools_path, 'r', encoding='utf-8'))
+        si = next((t for t in data if t.get('id') == 'SYNC-INFO'), None)
+        if si:
+            sync_time = si.get('title', '').replace('Sync Time: ', '')
+            html = html.replace(
+                'id="update-time" class="text-zinc-600 text-xs font-mono mt-1">最后更新：加载中...</p>',
+                f'id="update-time" class="text-zinc-600 text-xs font-mono mt-1">最后更新：{sync_time}</p>'
+            )
+            print(f'    [OK] update-time pre-filled: {sync_time}')
+    except Exception as e:
+        print(f'    [WARN] build_update_time failed: {e}')
+    return html
+
+
 def build_all():
     tools = load_tools()
     if not tools:
@@ -198,6 +217,7 @@ def build_all():
     html = build_tags(html, tools)
     html = build_schema(html, tools)
     html = build_meta_description(html, tools)
+    html = build_update_time(html)
 
     with open(HTML_FILE, 'w', encoding='utf-8') as f:
         f.write(html)

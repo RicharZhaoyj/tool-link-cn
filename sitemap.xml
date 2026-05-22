@@ -76,6 +76,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://tool.link.cn/r/CUR-133</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://tool.link.cn/r/CUR-030</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
