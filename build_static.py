@@ -56,36 +56,65 @@ def build_tool_card(tool, index=0):
     desc_html = tool.get('desc', '限时 Lifetime Deal').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     url_html = tool.get('url', '').replace('&', '&amp;')
 
+    # Deal type badge
+    price_str = str(tool.get('price', ''))
+    is_sub = '/' in price_str or '月起' in price_str or '付费' in price_str
+    if price_str:
+        deal_badge = (
+            '<span class="text-[10px] font-bold bg-zinc-700/30 text-zinc-400 px-2 py-0.5 '
+            'rounded tracking-widest uppercase ml-2 border border-zinc-600/30">订阅</span>'
+            if is_sub else
+            '<span class="text-[10px] font-bold bg-emerald-500/15 text-emerald-400 px-2 py-0.5 '
+            'rounded tracking-widest uppercase ml-2 border border-emerald-500/30">LTD</span>'
+        )
+    else:
+        deal_badge = ''
+
     # price HTML
     price_html = ''
     if tool.get('price'):
+        display_price = price_str.replace('/月', '<span class="text-sm font-normal text-emerald-400/70">/月</span>')
+        display_price = display_price.replace('/月起', '<span class="text-sm font-normal text-emerald-400/70">/月起</span>')
         price_html = (
-            '<div class="flex items-center gap-2 mb-3">'
-            f'<span class="price-tag text-white text-sm font-black px-3 py-1 rounded-lg">'
-            f'{tool["price"]}<span class="text-[10px] font-normal opacity-70">/终身</span></span>'
+            '<div class="mb-4"><div class="flex items-baseline gap-3 mb-2">'
+            f'<span class="text-2xl md:text-3xl font-black text-emerald-400">{display_price}</span>'
         )
         if tool.get('originalPrice') and tool['originalPrice'] != tool.get('price'):
             price_html += (
-                f'<span class="text-zinc-600 text-xs line-through">{tool["originalPrice"]}</span>'
+                f'<span class="text-zinc-600 text-sm line-through">{tool["originalPrice"]}</span>'
             )
         if discount and discount > 0:
             price_html += (
-                f'<span class="discount-tag text-[10px] font-bold px-2 py-0.5 rounded">-{discount}%</span>'
+                f'<span class="discount-tag text-xs font-bold px-2 py-1 rounded">省 {discount}%</span>'
             )
         price_html += '</div>'
+        if discount and discount > 50:
+            price_html += '<div class="text-[10px] font-mono text-amber-400/80 mb-1">热门 Deal · 节省超一半</div>'
+        price_html += '</div>'
+    else:
+        price_html = '<div class="mb-4 text-zinc-600 text-sm font-mono">暂无报价</div>'
+
+    # Review link
+    review_slug = tool.get('title', '').lower().replace(' ', '-')
+    review_slug = ''.join(c if c.isalnum() or c == '-' else '' for c in review_slug)
+    review_url = f'https://tools.link.cn/review/{review_slug}'
 
     delay = index * 50
     return f'''                    <div class="tool-card glass-card p-6 md:p-8 rounded-3xl flex flex-col h-full" style="animation-delay: {delay}ms">
                         <div class="flex-grow">
-                            <div class="mb-4 flex items-center">
+                            <div class="mb-4 flex items-center flex-wrap gap-1">
                                 <span class="text-[10px] font-bold bg-blue-500/20 text-blue-400 px-2 py-1 rounded tracking-widest uppercase border border-blue-500/30">{tag}</span>
                                 {ai_label}
+                                {deal_badge}
                             </div>
                             <h3 class="text-xl md:text-2xl font-bold mb-2">{title_html}</h3>
                             <p class="text-zinc-400 text-sm leading-relaxed mb-4">{desc_html}</p>
                             {price_html}
                         </div>
-                        <a href="{url_html}" target="_blank" rel="nofollow" class="block w-full py-3.5 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">立即查看 →</a>
+                        <div class="space-y-2">
+                            <a href="{url_html}" target="_blank" rel="nofollow" class="block w-full py-3.5 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">立即查看 →</a>
+                            <a href="{review_url}" target="_blank" class="block w-full py-2 text-zinc-600 text-center text-xs font-mono hover:text-blue-400 transition-colors">工具评测 ↗</a>
+                        </div>
                     </div>'''
 
 
@@ -124,10 +153,18 @@ def build_item_list_schema(tools):
 
 # ---- 各个构建步骤 ----
 def build_tool_grid(html, tools):
-    """替换 tool-grid 内的占位符为静态工具卡片"""
+    """替换 tool-grid 内的工具卡片为静态预渲染版本"""
     tools_html = '\n'.join(build_tool_card(t, i) for i, t in enumerate(tools))
     marker = '<!-- STATIC_TOOLS -->'
-    return html.replace(marker, tools_html)
+    if marker in html:
+        return html.replace(marker, tools_html)
+    # Fallback: find tool-grid and replace content between opening tag and next </div>
+    import re
+    m = re.search(r'<div id="tool-grid"[^>]*>.*?(?=<div id="empty-state")', html, re.DOTALL)
+    if m:
+        return html[:m.end()] + '\n' + tools_html + '\n                    ' + html[m.end():]
+    print('[WARN] build_tool_grid: could not find grid container')
+    return html
 
 
 def build_stats(html, tools):
@@ -171,10 +208,26 @@ def build_schema(html, tools):
     return html.replace('</head>', schema_script)
 
 
+def build_hero_title(html):
+    """更新 Hero h1 内的工具数量为静态已知值"""
+    import json, os
+    tools_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tools.json')
+    try:
+        data = json.load(open(tools_path, 'r', encoding='utf-8'))
+        count = len([t for t in data if t.get('id') not in ('SYNC-INFO', 'STATUS', 'API-PENDING')])
+        tagline = f'发现 {count} 个值得一次买断的优质 AI 工具'
+        old = '<p class="text-zinc-400 text-base md:text-lg mb-1">发现值得一次买断的优质 AI 工具</p>'
+        if old in html:
+            html = html.replace(old, f'<p class="text-zinc-400 text-base md:text-lg mb-1">{tagline}</p>')
+    except Exception as e:
+        print(f'    [WARN] build_hero_title: {e}')
+    return html
+
+
 def build_meta_description(html, tools):
     """更新 meta description 包含工具名"""
     top = [t['title'] for t in tools[:8]]
-    desc = f'发现{len(tools)}个AI工具Lifetime Deal：{", ".join(top)}...一次买断终身使用。'
+    desc = f'发现{len(tools)}个AI工具Lifetime Deal：{", ".join(top)}...原价+Deal价+节省比例，一次买断终身使用。'
     return re.sub(
         r'<meta name="description" content="[^"]*">',
         f'<meta name="description" content="{desc}">',
@@ -216,6 +269,7 @@ def build_all():
     html = build_stats(html, tools)
     html = build_tags(html, tools)
     html = build_schema(html, tools)
+    html = build_hero_title(html)
     html = build_meta_description(html, tools)
     html = build_update_time(html)
 
