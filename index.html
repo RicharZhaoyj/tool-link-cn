@@ -2986,10 +2986,24 @@
             <div class="w-7 h-7 bg-blue-600 rounded flex items-center justify-center font-bold text-sm">L</div>
             <span class="text-xl font-black tracking-tighter uppercase">Link<span class="text-blue-500">.cn</span></span>
         </div>
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-3 md:space-x-4">
+            <div class="hidden lg:flex items-center space-x-1">
+                <a href="https://ai.link.cn" target="_blank" class="text-[10px] font-mono text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-full hover:bg-purple-500/20 transition-colors border border-purple-500/20">
+                    📰 AI资讯
+                </a>
+                <a href="https://tools.link.cn" target="_blank" class="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full hover:bg-blue-500/20 transition-colors border border-blue-500/20">
+                    🛠️ 工具推荐
+                </a>
+                <a href="https://prompts.link.cn" target="_blank" class="text-[10px] font-mono text-green-400 bg-green-500/10 px-2.5 py-1 rounded-full hover:bg-green-500/20 transition-colors border border-green-500/20">
+                    ✍️ 提示词
+                </a>
+                <a href="https://signal.link.cn" target="_blank" class="text-[10px] font-mono text-orange-400 bg-orange-500/10 px-2.5 py-1 rounded-full hover:bg-orange-500/20 transition-colors border border-orange-500/20">
+                    ₿ 加密分析
+                </a>
+            </div>
             <span id="tool-count" class="text-xs font-mono text-zinc-500 hidden md:inline">56 个工具55 个工具56 个工具</span>
-            <div id="sync-status" class="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full uppercase">
-                实时数据
+            <div id="sync-status" class="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full uppercase border border-cyan-500/20">
+                ⚡ LTD
             </div>
         </div>
     </nav>
@@ -3001,6 +3015,69 @@
             <p class="text-zinc-500 text-sm font-mono">24H 自动更新 · 一次买断终身使用 · 全球顶尖 AI 工具精选</p>
             <p id="update-time" class="text-zinc-600 text-xs font-mono mt-1">最后更新：2026-05-19 15:30:00</p>
         </header>
+
+        <!-- Sister Sites -->
+        <section class="mb-10">
+            <div class="flex items-center space-x-2 mb-5">
+                <span class="text-lg">🔗</span>
+                <h2 class="text-lg font-bold uppercase tracking-tight">更多资源推荐</h2>
+                <div class="flex-grow h-px bg-gradient-to-r from-white/10 to-transparent ml-4"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <a href="https://ai.link.cn" target="_blank" class="group glass-card rounded-2xl p-5 hover:border-purple-500/50 transition-all hover:-translate-y-1">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center text-xl border border-purple-500/30">
+                            📰
+                        </div>
+                        <svg class="w-4 h-4 text-zinc-600 group-hover:text-purple-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-bold mb-1 text-purple-400 group-hover:text-purple-300 transition-colors">AI资讯新闻</h3>
+                    <p class="text-xs text-zinc-500 leading-relaxed">聚焦全球AI前沿动态，每日更新行业资讯、研究成果与应用案例</p>
+                    <div class="mt-3 text-[10px] font-mono text-zinc-600">ai.link.cn</div>
+                </a>
+                <a href="https://tools.link.cn" target="_blank" class="group glass-card rounded-2xl p-5 hover:border-blue-500/50 transition-all hover:-translate-y-1">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-xl border border-blue-500/30">
+                            🛠️
+                        </div>
+                        <svg class="w-4 h-4 text-zinc-600 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-bold mb-1 text-blue-400 group-hover:text-blue-300 transition-colors">AI工具推荐</h3>
+                    <p class="text-xs text-zinc-500 leading-relaxed">精选全球优质AI工具，分类导航，评测对比，助你高效选品</p>
+                    <div class="mt-3 text-[10px] font-mono text-zinc-600">tools.link.cn</div>
+                </a>
+                <a href="https://prompts.link.cn" target="_blank" class="group glass-card rounded-2xl p-5 hover:border-green-500/50 transition-all hover:-translate-y-1">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center text-xl border border-green-500/30">
+                            ✍️
+                        </div>
+                        <svg class="w-4 h-4 text-zinc-600 group-hover:text-green-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-bold mb-1 text-green-400 group-hover:text-green-300 transition-colors">AI提示词市场</h3>
+                    <p class="text-xs text-zinc-500 leading-relaxed">海量高质量Prompt模板，覆盖写作、编程、设计等多场景</p>
+                    <div class="mt-3 text-[10px] font-mono text-zinc-600">prompts.link.cn</div>
+                </a>
+                <a href="https://signal.link.cn" target="_blank" class="group glass-card rounded-2xl p-5 hover:border-orange-500/50 transition-all hover:-translate-y-1">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center text-xl border border-orange-500/30">
+                            ₿
+                        </div>
+                        <svg class="w-4 h-4 text-zinc-600 group-hover:text-orange-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-bold mb-1 text-orange-400 group-hover:text-orange-300 transition-colors">加密货币分析</h3>
+                    <p class="text-xs text-zinc-500 leading-relaxed">专业加密货币市场分析，实时行情、链上数据与投资信号</p>
+                    <div class="mt-3 text-[10px] font-mono text-zinc-600">signal.link.cn</div>
+                </a>
+            </div>
+        </section>
 
         <!-- Stats Bar -->
         <div id="stats-bar" class="grid grid-cols-3 gap-4 mb-8">
@@ -3732,14 +3809,66 @@
     </main>
 
     <footer class="p-8 md:p-12 text-center">
-        <div class="max-w-7xl mx-auto space-y-4">
-            <div class="text-zinc-600 text-xs">
-                © 2026 Link.cn · AI 工具导航 · 数据每12小时自动更新
+        <div class="max-w-7xl mx-auto space-y-8">
+            <div class="space-y-4">
+                <div class="text-zinc-500 text-xs font-mono tracking-widest uppercase">姊妹站点</div>
+                <div class="flex flex-wrap justify-center gap-3 md:gap-4">
+                    <a href="https://ai.link.cn" target="_blank" class="group text-left glass-card rounded-xl px-4 py-3 hover:border-purple-500/50 transition-all">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-lg">📰</span>
+                            <div>
+                                <div class="text-sm font-semibold text-purple-400 group-hover:text-purple-300 transition-colors">AI资讯新闻</div>
+                                <div class="text-[10px] text-zinc-600 font-mono">ai.link.cn</div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://tools.link.cn" target="_blank" class="group text-left glass-card rounded-xl px-4 py-3 hover:border-blue-500/50 transition-all">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-lg">🛠️</span>
+                            <div>
+                                <div class="text-sm font-semibold text-blue-400 group-hover:text-blue-300 transition-colors">AI工具推荐</div>
+                                <div class="text-[10px] text-zinc-600 font-mono">tools.link.cn</div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://tool.link.cn" target="_blank" class="group text-left glass-card rounded-xl px-4 py-3 hover:border-cyan-500/50 transition-all ring-1 ring-cyan-500/30">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-lg">⚡</span>
+                            <div>
+                                <div class="text-sm font-semibold text-cyan-400 group-hover:text-cyan-300 transition-colors">AI工具LTD</div>
+                                <div class="text-[10px] text-zinc-600 font-mono">tool.link.cn</div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://prompts.link.cn" target="_blank" class="group text-left glass-card rounded-xl px-4 py-3 hover:border-green-500/50 transition-all">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-lg">✍️</span>
+                            <div>
+                                <div class="text-sm font-semibold text-green-400 group-hover:text-green-300 transition-colors">AI提示词市场</div>
+                                <div class="text-[10px] text-zinc-600 font-mono">prompts.link.cn</div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://signal.link.cn" target="_blank" class="group text-left glass-card rounded-xl px-4 py-3 hover:border-orange-500/50 transition-all">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-lg">₿</span>
+                            <div>
+                                <div class="text-sm font-semibold text-orange-400 group-hover:text-orange-300 transition-colors">加密货币分析</div>
+                                <div class="text-[10px] text-zinc-600 font-mono">signal.link.cn</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-            <div class="flex justify-center space-x-6 text-zinc-700 text-[10px] tracking-widest uppercase">
-                <a href="https://github.com/RicharZhaoyj/tool-link-cn" target="_blank" class="hover:text-zinc-400 transition-colors">GitHub</a>
-                <span>|</span>
-                <span>精选全球 AI 工具</span>
+            <div class="space-y-4">
+                <div class="text-zinc-600 text-xs">
+                    © 2026 Link.cn · AI 工具导航 · 数据每12小时自动更新
+                </div>
+                <div class="flex justify-center space-x-6 text-zinc-700 text-[10px] tracking-widest uppercase">
+                    <a href="https://github.com/RicharZhaoyj/tool-link-cn" target="_blank" class="hover:text-zinc-400 transition-colors">GitHub</a>
+                    <span>|</span>
+                    <span>精选全球 AI 工具</span>
+                </div>
             </div>
         </div>
     </footer>
