@@ -280,9 +280,4 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://tool.link.cn/#tool-CUR-133</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
 </urlset>
