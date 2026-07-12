@@ -2,7 +2,7 @@
     {
         "id": "SYNC-INFO",
         "tag": "SYSTEM",
-        "title": "Sync Time: 2026-07-12 08:05:55",
+        "title": "Sync Time: 2026-07-12 09:30:36",
         "desc": "Link.cn 数据同步完成 | v2.0 多源数据",
         "url": "https://tool.link.cn",
         "price": "",
@@ -670,21 +670,5 @@
         "category_en": "AI",
         "is_ai": true,
         "source": "curated"
-    },
-    {
-        "id": "CUR-133",
-        "tag": "AI视频",
-        "title": "Fliki",
-        "desc": "AI视频创作工具，文字转视频、AI配音、数字人、PPT转视频，一键生成专业短视频",
-        "price": "",
-        "originalPrice": "",
-        "url": "https://fliki.ai/?via=yongjian&via=linkcn",
-        "category_en": "Video",
-        "is_ai": true,
-        "source": "affiliate",
-        "_affiliate": {
-            "status": "direct",
-            "note": "Figma有联盟计划（Impact）"
-        }
     }
 ]
