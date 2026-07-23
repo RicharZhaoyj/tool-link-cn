@@ -43,6 +43,9 @@ jobs:
       - name: Sync Tools
         run: python -u update.py
 
+      - name: Build Static HTML
+        run: python -u build_static.py
+
       - name: Build SEO Static Fallback (noscript)
         run: python -u build_noscript.py
 

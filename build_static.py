@@ -124,14 +124,28 @@ def build_item_list_schema(tools):
 
 # ---- 各个构建步骤 ----
 def build_tool_grid(html, tools):
-    """替换 tool-grid 内的占位符为静态工具卡片"""
+    """替换 tool-grid 内的占位符或已渲染内容为最新静态工具卡片"""
+    import re
     tools_html = '\n'.join(build_tool_card(t, i) for i, t in enumerate(tools))
+
+    # 先尝试替换已有标记之间的内容（幂等：支持多次运行）
+    pattern = r'<!-- STATIC_TOOLS_START -->.*?<!-- STATIC_TOOLS_END -->'
+    if re.search(pattern, html, re.DOTALL):
+        return re.sub(pattern, f'<!-- STATIC_TOOLS_START -->\n{tools_html}\n            <!-- STATIC_TOOLS_END -->', html, flags=re.DOTALL)
+
+    # 兼容旧版：替换占位符（首次运行）
     marker = '<!-- STATIC_TOOLS -->'
-    return html.replace(marker, tools_html)
+    if marker in html:
+        return html.replace(marker, f'<!-- STATIC_TOOLS_START -->\n{tools_html}\n            <!-- STATIC_TOOLS_END -->')
+
+    # 如果都没有，说明已经手动渲染过，跳过
+    print('    [SKIP] tool-grid: no marker found, skipping')
+    return html
 
 
 def build_stats(html, tools):
     """预填统计数据"""
+    import re
     total = len(tools)
     ai_count = sum(1 for t in tools if t.get('is_ai'))
     deal_count = sum(1 for t in tools if t.get('price'))
@@ -140,25 +154,32 @@ def build_stats(html, tools):
         'id="stats-bar" class="grid grid-cols-3 gap-4 mb-8 hidden"',
         'id="stats-bar" class="grid grid-cols-3 gap-4 mb-8"',
     )
-    html = html.replace('id="stat-total">0<', f'id="stat-total">{total}<')
-    html = html.replace('id="stat-ai">0<', f'id="stat-ai">{ai_count}<')
-    html = html.replace('id="stat-deal">0<', f'id="stat-deal">{deal_count}<')
-    html = html.replace(
-        'id="tool-count" class="text-xs font-mono text-zinc-500 hidden md:inline">',
-        f'id="tool-count" class="text-xs font-mono text-zinc-500 hidden md:inline">{total} 个工具',
+    html = re.sub(r'(id="stat-total">)\d*(<)', rf'\g<1>{total}\g<2>', html)
+    html = re.sub(r'(id="stat-ai">)\d*(<)', rf'\g<1>{ai_count}\g<2>', html)
+    html = re.sub(r'(id="stat-deal">)\d*(<)', rf'\g<1>{deal_count}\g<2>', html)
+    html = re.sub(
+        r'(id="tool-count" class="text-xs font-mono text-zinc-500 hidden md:inline">)[^<]*(<)',
+        rf'\g<1>{total} 个工具\g<2>',
+        html
     )
     return html
 
 
 def build_tags(html, tools):
     """预填分类标签"""
+    import re
     tags = sorted(set(t.get('tag', '') for t in tools if t.get('tag')))
     buttons = '\n'.join(
         f'                <button class="filter-btn px-4 py-2 rounded-full text-xs font-medium" '
         f'data-filter="{tag}">{tag}</button>'
         for tag in tags
     )
-    return html.replace('<!-- STATIC_TAGS -->', buttons)
+    # 幂等：先尝试替换已有标记之间的内容
+    pattern = r'<!-- STATIC_TAGS_START -->.*?<!-- STATIC_TAGS_END -->'
+    if re.search(pattern, html, re.DOTALL):
+        return re.sub(pattern, f'<!-- STATIC_TAGS_START -->\n{buttons}\n                <!-- STATIC_TAGS_END -->', html, flags=re.DOTALL)
+    # 兼容旧版占位符
+    return html.replace('<!-- STATIC_TAGS -->', f'<!-- STATIC_TAGS_START -->\n{buttons}\n                <!-- STATIC_TAGS_END -->')
 
 
 def build_schema(html, tools):
@@ -185,15 +206,17 @@ def build_meta_description(html, tools):
 def build_update_time(html):
     """从 tools.json 读取 SYNC-INFO，预填 update-time"""
     try:
-        import json, os
+        import json, os, re
         tools_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tools.json')
         data = json.load(open(tools_path, 'r', encoding='utf-8'))
         si = next((t for t in data if t.get('id') == 'SYNC-INFO'), None)
         if si:
             sync_time = si.get('title', '').replace('Sync Time: ', '')
-            html = html.replace(
-                'id="update-time" class="text-zinc-600 text-xs font-mono mt-1">最后更新：加载中...</p>',
-                f'id="update-time" class="text-zinc-600 text-xs font-mono mt-1">最后更新：{sync_time}</p>'
+            # 用 regex 匹配任意已存在的日期文本（包括"加载中..."和具体日期）
+            html = re.sub(
+                r'(id="update-time"[^>]*>最后更新：)[^<]*(</p>)',
+                rf'\g<1>{sync_time}\g<2>',
+                html
             )
             print(f'    [OK] update-time pre-filled: {sync_time}')
     except Exception as e:
