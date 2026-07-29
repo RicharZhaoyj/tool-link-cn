@@ -164,6 +164,80 @@ def build_html(tool, all_tools):
                         <div class="flex items-center gap-2">{rt_price_tag}</div>
                     </a>'''
 
+    # 跨站推荐（根据类别映射）
+    CROSS_SITE_MAP = {
+        "AI Image": [
+            ("https://ai.link.cn/articles/ai-image-generation-2026", "2026年AI绘图工具深度评测", "AI绘图技术飞速发展，Midjourney、DALL-E、Flux谁是最佳选择？"),
+            ("https://prompts.link.cn/prompts?category=image", "AI绘图提示词精选", "Midjourney、Stable Diffusion优质提示词，免费使用"),
+        ],
+        "AI Video": [
+            ("https://ai.link.cn/articles/ai-video-generation-2026", "AI视频生成工具全面对比", "Runway Gen-3、Kling、Pika谁更适合你？"),
+            ("https://prompts.link.cn/prompts?category=video", "AI视频提示词模板", "提升AI视频生成质量的提示词技巧"),
+        ],
+        "AI Audio": [
+            ("https://ai.link.cn/articles/ai-music-generation", "AI音乐创作工具排行", "Suno、Udio、Murf AI深度体验对比"),
+            ("https://prompts.link.cn/prompts?category=music", "AI音乐提示词合集", "Suno/Udio高质量音乐提示词模板"),
+        ],
+        "AI Writing": [
+            ("https://ai.link.cn/articles/ai-writing-tools-comparison", "AI写作工具哪家强？", "Jasper、Copy.ai、Writesonic、Rytr全对比"),
+            ("https://prompts.link.cn/prompts?category=writing", "AI写作提示词库", "营销文案、SEO文章、社交媒体提示词"),
+        ],
+        "AI SEO": [
+            ("https://ai.link.cn/articles/ai-seo-tools-2026", "2026年AI SEO工具实战指南", "SurferSEO、Frase、Ahrefs AI功能全面对比"),
+            ("https://prompts.link.cn/prompts?category=seo", "SEO提示词模板", "关键词研究、内容优化、元描述生成提示词"),
+        ],
+        "AI Dev": [
+            ("https://ai.link.cn/articles/ai-coding-tools-2026", "AI编程工具终极指南", "Cursor、GitHub Copilot、Replit Agent实测对比"),
+            ("https://prompts.link.cn/prompts?category=code", "AI编程提示词", "代码生成、调试、重构提示词模板"),
+        ],
+        "AI Sales": [
+            ("https://ai.link.cn/articles/ai-sales-outreach", "AI销售获客工具攻略", "Apollo、Instantly、Smartlead自动化对比"),
+            ("https://prompts.link.cn/prompts?category=business", "商业提示词集", "销售邮件、客户跟进提示词模板"),
+        ],
+        "AI Social": [
+            ("https://ai.link.cn/articles/ai-social-media-tools", "AI社交媒体管理工具评测", "Buffer、Taplio、Hypefury谁更值得买？"),
+            ("https://prompts.link.cn/prompts?category=social", "社媒提示词模板", "Twitter、LinkedIn、小红书内容提示词"),
+        ],
+        "AI Productivity": [
+            ("https://ai.link.cn/articles/ai-productivity-tools", "AI效率工具Top10", "Notion AI、Motion、Fireflies对比测评"),
+            ("https://prompts.link.cn/prompts?category=productivity", "效率提示词模板", "会议纪要、任务管理、邮件处理提示词"),
+        ],
+        "AI Design": [
+            ("https://ai.link.cn/articles/ai-design-tools-2026", "AI设计工具横评", "Canva AI、Gamma、Beautiful.ai谁更出色"),
+            ("https://prompts.link.cn/prompts?category=design", "AI设计提示词", "PPT生成、Logo设计、UI稿提示词"),
+        ],
+        "AI Email": [
+            ("https://ai.link.cn/articles/ai-email-marketing", "AI邮件营销工具对比", "ConvertKit、Brevo、SendFox功能与价格分析"),
+            ("https://prompts.link.cn/prompts?category=email", "邮件提示词模板", "冷邮件、 Newsletter、跟进邮件提示词"),
+        ],
+        "AI Meeting": [
+            ("https://ai.link.cn/articles/ai-meeting-tools", "AI会议助手工具对比", "Otter.ai、Fireflies、Tidycal实测体验"),
+            ("https://prompts.link.cn/prompts?category=productivity", "会议效率提示词", "会议纪要、行动项提取提示词模板"),
+        ],
+    }
+    cross_recs = CROSS_SITE_MAP.get(cat_en, [
+        ("https://ai.link.cn", "AI热点资讯", "最新AI行业动态、工具评测、技术前沿"),
+        ("https://prompts.link.cn", "AI提示词免费库", "ChatGPT/Midjourney/Stable Diffusion提示词"),
+    ])
+
+    cross_site_cards = ""
+    for cs_url, cs_title, cs_desc in cross_recs:
+        is_prompts = "prompts.link.cn" in cs_url
+        icon = "✨" if is_prompts else "📰"
+        color_class = "from-purple-500/20 to-pink-500/20" if is_prompts else "from-blue-500/20 to-cyan-500/20"
+        border_class = "border-purple-500/30" if is_prompts else "border-blue-500/30"
+        badge_text = "提示词" if is_prompts else "文章"
+        badge_color = "bg-purple-500/20 text-purple-400 border-purple-500/30" if is_prompts else "bg-blue-500/20 text-blue-400 border-blue-500/30"
+        cross_site_cards += f'''
+                    <a href="{esc(cs_url)}" target="_blank" rel="noopener noreferrer" class="tool-card glass-card p-5 rounded-2xl flex flex-col h-full hover:border-blue-500/50 transition-all hover:-translate-y-1">
+                        <div class="mb-3">
+                            <span class="text-[10px] font-bold {badge_color} px-2 py-1 rounded tracking-widest uppercase border">{badge_text}</span>
+                        </div>
+                        <h4 class="text-base font-bold mb-2">{esc(cs_title)}</h4>
+                        <p class="text-zinc-400 text-xs leading-relaxed mb-3 flex-grow">{esc(cs_desc)}</p>
+                        <div class="flex items-center gap-1 text-xs text-zinc-500"><span>{icon}</span><span>查看详情 →</span></div>
+                    </a>'''
+
     # JSON-LD: SoftwareApplication
     offers_price = parse_price(price)
     offers_json = ""
@@ -338,6 +412,17 @@ def build_html(tool, all_tools):
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {related_cards}
+            </div>
+        </section>
+
+        <!-- Cross-Site Recommendations -->
+        <section class="mt-8">
+            <h2 class="text-xl md:text-2xl font-bold mb-5 flex items-center gap-2">
+                <span class="w-1 h-6 bg-gradient-to-b from-purple-500 to-pink-500 rounded"></span>
+                延伸阅读与资源
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {cross_site_cards}
             </div>
         </section>
 
