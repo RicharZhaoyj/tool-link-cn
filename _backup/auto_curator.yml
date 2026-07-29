@@ -1,0 +1,113 @@
+name: Link.cn Operations
+
+on:
+  schedule:
+    # 每12小时同步工具数据
+    - cron: '0 */12 * * *'
+    # 每周一早上8点发现新工具
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: write
+
+jobs:
+  # ===== 工具同步任务（每12小时）=====
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Prepare Git
+        run: |
+          git config --local user.email "bot@link.cn"
+          git config --local user.name "Link-Bot"
+
+      - name: Sync Tools
+        run: python -u update.py
+
+      - name: Build SEO Static Fallback (noscript)
+        run: python -u build_noscript.py
+
+      - name: Update Sitemap
+        run: |
+          python -c "
+          import json
+          tools = json.load(open('tools.json'))
+          urls = ['  <url>\n    <loc>https://tool.link.cn/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>']
+          for t in tools:
+              if t.get('id') not in ('SYNC-INFO', 'STATUS', 'API-PENDING'):
+                  urls.append(f'  <url>\n    <loc>https://tool.link.cn/#tool-{t[\"id\"]}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>')
+          sitemap = '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n' + '\n'.join(urls) + '\n</urlset>'
+          open('sitemap.xml', 'w').write(sitemap)
+          print(f'Sitemap: {len(urls)} URLs')
+          "
+
+      - name: Commit and Push
+        run: |
+          git add tools.json sitemap.xml index.html
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Auto-sync: tools [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+            git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main
+          else
+            echo "No changes."
+          fi
+
+  # ===== 工具发现任务（每周一）=====
+  discover:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' && github.event.schedule == '0 0 * * 1'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Discover New Tools
+        run: python -u discover.py
+
+      - name: Commit Candidates
+        run: |
+          git config --local user.email "bot@link.cn"
+          git config --local user.name "Link-Bot"
+          git add candidates.json
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Discovery: new tool candidates [$(date -u '+%Y-%m-%d')]"
+            git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main
+          else
+            echo "No new candidates."
+          fi
+
+      - name: Summary
+        run: |
+          if [ -f candidates.json ]; then
+            python -c "
+          import json
+          d = json.load(open('candidates.json'))
+          print(f'发现 {d.get(\"total\", 0)} 个候选工具')
+          print(f'其中新工具: {d.get(\"new_discoveries\", 0)} 个')
+          "
+          fi
