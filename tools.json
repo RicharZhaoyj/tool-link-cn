@@ -21,7 +21,13 @@
         "url": "https://www.jasper.ai/",
         "category_en": "Writing",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "writing",
+        "_cat_name": "AI写作类",
+        "_cat_emoji": "✍️",
+        "category": "AI写作类",
+        "category_slug": "writing",
+        "category_emoji": "✍️"
     },
     {
         "id": "CUR-002",
@@ -33,7 +39,13 @@
         "url": "https://www.copy.ai/",
         "category_en": "Writing",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "writing",
+        "_cat_name": "AI写作类",
+        "_cat_emoji": "✍️",
+        "category": "AI写作类",
+        "category_slug": "writing",
+        "category_emoji": "✍️"
     },
     {
         "id": "CUR-003",
@@ -45,7 +57,13 @@
         "url": "https://writesonic.com/",
         "category_en": "Writing",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "writing",
+        "_cat_name": "AI写作类",
+        "_cat_emoji": "✍️",
+        "category": "AI写作类",
+        "category_slug": "writing",
+        "category_emoji": "✍️"
     },
     {
         "id": "CUR-004",
@@ -57,7 +75,13 @@
         "url": "https://rytr.me/",
         "category_en": "Writing",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "writing",
+        "_cat_name": "AI写作类",
+        "_cat_emoji": "✍️",
+        "category": "AI写作类",
+        "category_slug": "writing",
+        "category_emoji": "✍️"
     },
     {
         "id": "CUR-010",
@@ -69,7 +93,13 @@
         "url": "https://www.midjourney.com/",
         "category_en": "Image",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "image",
+        "_cat_name": "AI绘图类",
+        "_cat_emoji": "🎨",
+        "category": "AI绘图类",
+        "category_slug": "image",
+        "category_emoji": "🎨"
     },
     {
         "id": "CUR-011",
@@ -81,7 +111,13 @@
         "url": "https://openai.com/dall-e-3/",
         "category_en": "Image",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "image",
+        "_cat_name": "AI绘图类",
+        "_cat_emoji": "🎨",
+        "category": "AI绘图类",
+        "category_slug": "image",
+        "category_emoji": "🎨"
     },
     {
         "id": "CUR-012",
@@ -93,7 +129,13 @@
         "url": "https://leonardo.ai/",
         "category_en": "Image",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "image",
+        "_cat_name": "AI绘图类",
+        "_cat_emoji": "🎨",
+        "category": "AI绘图类",
+        "category_slug": "image",
+        "category_emoji": "🎨"
     },
     {
         "id": "CUR-013",
@@ -105,7 +147,13 @@
         "url": "https://ideogram.ai/",
         "category_en": "Image",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "image",
+        "_cat_name": "AI绘图类",
+        "_cat_emoji": "🎨",
+        "category": "AI绘图类",
+        "category_slug": "image",
+        "category_emoji": "🎨"
     },
     {
         "id": "CUR-014",
@@ -117,7 +165,13 @@
         "url": "https://blackforestlabs.ai/",
         "category_en": "Image",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "image",
+        "_cat_name": "AI绘图类",
+        "_cat_emoji": "🎨",
+        "category": "AI绘图类",
+        "category_slug": "image",
+        "category_emoji": "🎨"
     },
     {
         "id": "CUR-020",
@@ -129,7 +183,13 @@
         "url": "https://runwayml.com/",
         "category_en": "Video",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "video",
+        "_cat_name": "AI视频类",
+        "_cat_emoji": "🎬",
+        "category": "AI视频类",
+        "category_slug": "video",
+        "category_emoji": "🎬"
     },
     {
         "id": "CUR-021",
@@ -141,7 +201,13 @@
         "url": "https://pika.art/",
         "category_en": "Video",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "video",
+        "_cat_name": "AI视频类",
+        "_cat_emoji": "🎬",
+        "category": "AI视频类",
+        "category_slug": "video",
+        "category_emoji": "🎬"
     },
     {
         "id": "CUR-022",
@@ -153,7 +219,13 @@
         "url": "https://klingai.com/",
         "category_en": "Video",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "video",
+        "_cat_name": "AI视频类",
+        "_cat_emoji": "🎬",
+        "category": "AI视频类",
+        "category_slug": "video",
+        "category_emoji": "🎬"
     },
     {
         "id": "CUR-023",
@@ -165,7 +237,13 @@
         "url": "https://www.heygen.com/",
         "category_en": "Video",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "video",
+        "_cat_name": "AI视频类",
+        "_cat_emoji": "🎬",
+        "category": "AI视频类",
+        "category_slug": "video",
+        "category_emoji": "🎬"
     },
     {
         "id": "CUR-024",
@@ -177,7 +255,13 @@
         "url": "https://www.opus.pro/",
         "category_en": "Video",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "video",
+        "_cat_name": "AI视频类",
+        "_cat_emoji": "🎬",
+        "category": "AI视频类",
+        "category_slug": "video",
+        "category_emoji": "🎬"
     },
     {
         "id": "CUR-030",
@@ -189,7 +273,13 @@
         "url": "https://elevenlabs.io/",
         "category_en": "Audio",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "audio",
+        "_cat_name": "AI音频类",
+        "_cat_emoji": "🎵",
+        "category": "AI音频类",
+        "category_slug": "audio",
+        "category_emoji": "🎵"
     },
     {
         "id": "CUR-031",
@@ -201,7 +291,13 @@
         "url": "https://murf.ai/",
         "category_en": "Audio",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "audio",
+        "_cat_name": "AI音频类",
+        "_cat_emoji": "🎵",
+        "category": "AI音频类",
+        "category_slug": "audio",
+        "category_emoji": "🎵"
     },
     {
         "id": "CUR-032",
@@ -213,7 +309,13 @@
         "url": "https://suno.com/",
         "category_en": "Audio",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "audio",
+        "_cat_name": "AI音频类",
+        "_cat_emoji": "🎵",
+        "category": "AI音频类",
+        "category_slug": "audio",
+        "category_emoji": "🎵"
     },
     {
         "id": "CUR-033",
@@ -225,7 +327,13 @@
         "url": "https://www.udio.com/",
         "category_en": "Audio",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "audio",
+        "_cat_name": "AI音频类",
+        "_cat_emoji": "🎵",
+        "category": "AI音频类",
+        "category_slug": "audio",
+        "category_emoji": "🎵"
     },
     {
         "id": "CUR-040",
@@ -237,7 +345,13 @@
         "url": "https://www.notion.so/product/ai",
         "category_en": "Productivity",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "productivity",
+        "_cat_name": "AI办公生产力类",
+        "_cat_emoji": "⚡",
+        "category": "AI办公生产力类",
+        "category_slug": "productivity",
+        "category_emoji": "⚡"
     },
     {
         "id": "CUR-041",
@@ -249,7 +363,13 @@
         "url": "https://usemotion.com/",
         "category_en": "Productivity",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "productivity",
+        "_cat_name": "AI办公生产力类",
+        "_cat_emoji": "⚡",
+        "category": "AI办公生产力类",
+        "category_slug": "productivity",
+        "category_emoji": "⚡"
     },
     {
         "id": "CUR-042",
@@ -261,7 +381,13 @@
         "url": "https://otter.ai/",
         "category_en": "Productivity",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "productivity",
+        "_cat_name": "AI办公生产力类",
+        "_cat_emoji": "⚡",
+        "category": "AI办公生产力类",
+        "category_slug": "productivity",
+        "category_emoji": "⚡"
     },
     {
         "id": "CUR-043",
@@ -273,7 +399,13 @@
         "url": "https://fireflies.ai/",
         "category_en": "Productivity",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "productivity",
+        "_cat_name": "AI办公生产力类",
+        "_cat_emoji": "⚡",
+        "category": "AI办公生产力类",
+        "category_slug": "productivity",
+        "category_emoji": "⚡"
     },
     {
         "id": "CUR-044",
@@ -285,7 +417,13 @@
         "url": "https://tidycal.com/",
         "category_en": "Calendar & scheduling",
         "is_ai": false,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "productivity",
+        "_cat_name": "AI办公生产力类",
+        "_cat_emoji": "⚡",
+        "category": "AI办公生产力类",
+        "category_slug": "productivity",
+        "category_emoji": "⚡"
     },
     {
         "id": "CUR-045",
@@ -297,7 +435,13 @@
         "url": "https://breezedoc.com/",
         "category_en": "Productivity",
         "is_ai": false,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "productivity",
+        "_cat_name": "AI办公生产力类",
+        "_cat_emoji": "⚡",
+        "category": "AI办公生产力类",
+        "category_slug": "productivity",
+        "category_emoji": "⚡"
     },
     {
         "id": "CUR-050",
@@ -309,7 +453,13 @@
         "url": "https://github.com/features/copilot",
         "category_en": "Development tools",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "coding",
+        "_cat_name": "AI编程开发类",
+        "_cat_emoji": "💻",
+        "category": "AI编程开发类",
+        "category_slug": "coding",
+        "category_emoji": "💻"
     },
     {
         "id": "CUR-051",
@@ -321,7 +471,13 @@
         "url": "https://cursor.sh/",
         "category_en": "Development tools",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "coding",
+        "_cat_name": "AI编程开发类",
+        "_cat_emoji": "💻",
+        "category": "AI编程开发类",
+        "category_slug": "coding",
+        "category_emoji": "💻"
     },
     {
         "id": "CUR-052",
@@ -333,7 +489,13 @@
         "url": "https://v0.dev/",
         "category_en": "Development tools",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "coding",
+        "_cat_name": "AI编程开发类",
+        "_cat_emoji": "💻",
+        "category": "AI编程开发类",
+        "category_slug": "coding",
+        "category_emoji": "💻"
     },
     {
         "id": "CUR-053",
@@ -345,7 +507,13 @@
         "url": "https://replit.com/",
         "category_en": "Development tools",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "coding",
+        "_cat_name": "AI编程开发类",
+        "_cat_emoji": "💻",
+        "category": "AI编程开发类",
+        "category_slug": "coding",
+        "category_emoji": "💻"
     },
     {
         "id": "CUR-054",
@@ -357,7 +525,13 @@
         "url": "https://bolt.new/",
         "category_en": "Development tools",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "coding",
+        "_cat_name": "AI编程开发类",
+        "_cat_emoji": "💻",
+        "category": "AI编程开发类",
+        "category_slug": "coding",
+        "category_emoji": "💻"
     },
     {
         "id": "CUR-060",
@@ -369,7 +543,13 @@
         "url": "https://surferseo.com/",
         "category_en": "SEO",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "marketing",
+        "_cat_name": "AI营销SEO类",
+        "_cat_emoji": "📣",
+        "category": "AI营销SEO类",
+        "category_slug": "marketing",
+        "category_emoji": "📣"
     },
     {
         "id": "CUR-061",
@@ -381,7 +561,13 @@
         "url": "https://frase.io/",
         "category_en": "SEO",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "marketing",
+        "_cat_name": "AI营销SEO类",
+        "_cat_emoji": "📣",
+        "category": "AI营销SEO类",
+        "category_slug": "marketing",
+        "category_emoji": "📣"
     },
     {
         "id": "CUR-062",
@@ -393,7 +579,13 @@
         "url": "https://ahrefs.com/",
         "category_en": "Analytics",
         "is_ai": false,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "marketing",
+        "_cat_name": "AI营销SEO类",
+        "_cat_emoji": "📣",
+        "category": "AI营销SEO类",
+        "category_slug": "marketing",
+        "category_emoji": "📣"
     },
     {
         "id": "CUR-063",
@@ -405,7 +597,13 @@
         "url": "https://www.canva.com/pro/",
         "category_en": "Design",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "marketing",
+        "_cat_name": "AI营销SEO类",
+        "_cat_emoji": "📣",
+        "category": "AI营销SEO类",
+        "category_slug": "marketing",
+        "category_emoji": "📣"
     },
     {
         "id": "CUR-064",
@@ -417,7 +615,13 @@
         "url": "https://www.descript.com/",
         "category_en": "Content marketing",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "video",
+        "_cat_name": "AI视频类",
+        "_cat_emoji": "🎬",
+        "category": "AI视频类",
+        "category_slug": "video",
+        "category_emoji": "🎬"
     },
     {
         "id": "CUR-070",
@@ -429,7 +633,13 @@
         "url": "https://www.apollo.io/",
         "category_en": "Lead generation",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "sales",
+        "_cat_name": "AI销售拓客类",
+        "_cat_emoji": "🤝",
+        "category": "AI销售拓客类",
+        "category_slug": "sales",
+        "category_emoji": "🤝"
     },
     {
         "id": "CUR-071",
@@ -441,7 +651,13 @@
         "url": "https://instantly.ai/",
         "category_en": "Lead generation",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "sales",
+        "_cat_name": "AI销售拓客类",
+        "_cat_emoji": "🤝",
+        "category": "AI销售拓客类",
+        "category_slug": "sales",
+        "category_emoji": "🤝"
     },
     {
         "id": "CUR-072",
@@ -453,7 +669,13 @@
         "url": "https://smartlead.ai/",
         "category_en": "Email marketing",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "sales",
+        "_cat_name": "AI销售拓客类",
+        "_cat_emoji": "🤝",
+        "category": "AI销售拓客类",
+        "category_slug": "sales",
+        "category_emoji": "🤝"
     },
     {
         "id": "CUR-073",
@@ -465,7 +687,13 @@
         "url": "https://www.clay.com/",
         "category_en": "Lead generation",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "sales",
+        "_cat_name": "AI销售拓客类",
+        "_cat_emoji": "🤝",
+        "category": "AI销售拓客类",
+        "category_slug": "sales",
+        "category_emoji": "🤝"
     },
     {
         "id": "CUR-074",
@@ -477,7 +705,13 @@
         "url": "https://buffer.com/",
         "category_en": "Social media",
         "is_ai": false,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "sales",
+        "_cat_name": "AI销售拓客类",
+        "_cat_emoji": "🤝",
+        "category": "AI销售拓客类",
+        "category_slug": "sales",
+        "category_emoji": "🤝"
     },
     {
         "id": "CUR-080",
@@ -489,7 +723,13 @@
         "url": "https://taplio.com/",
         "category_en": "Social media",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "social",
+        "_cat_name": "AI社交媒体类",
+        "_cat_emoji": "📱",
+        "category": "AI社交媒体类",
+        "category_slug": "social",
+        "category_emoji": "📱"
     },
     {
         "id": "CUR-081",
@@ -501,7 +741,13 @@
         "url": "https://hypefury.com/",
         "category_en": "Social media",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "social",
+        "_cat_name": "AI社交媒体类",
+        "_cat_emoji": "📱",
+        "category": "AI社交媒体类",
+        "category_slug": "social",
+        "category_emoji": "📱"
     },
     {
         "id": "CUR-090",
@@ -513,7 +759,13 @@
         "url": "https://clickup.com/",
         "category_en": "Project management",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "collab",
+        "_cat_name": "AI协作项目管理类",
+        "_cat_emoji": "📋",
+        "category": "AI协作项目管理类",
+        "category_slug": "collab",
+        "category_emoji": "📋"
     },
     {
         "id": "CUR-091",
@@ -525,7 +777,13 @@
         "url": "https://www.notion.so/",
         "category_en": "Project management",
         "is_ai": false,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "productivity",
+        "_cat_name": "AI办公生产力类",
+        "_cat_emoji": "⚡",
+        "category": "AI办公生产力类",
+        "category_slug": "productivity",
+        "category_emoji": "⚡"
     },
     {
         "id": "CUR-092",
@@ -537,7 +795,13 @@
         "url": "https://nextstep.so/",
         "category_en": "Project management",
         "is_ai": false,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "collab",
+        "_cat_name": "AI协作项目管理类",
+        "_cat_emoji": "📋",
+        "category": "AI协作项目管理类",
+        "category_slug": "collab",
+        "category_emoji": "📋"
     },
     {
         "id": "CUR-100",
@@ -549,7 +813,13 @@
         "url": "https://convertkit.com/",
         "category_en": "Email marketing",
         "is_ai": false,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "marketing",
+        "_cat_name": "AI营销SEO类",
+        "_cat_emoji": "📣",
+        "category": "AI营销SEO类",
+        "category_slug": "marketing",
+        "category_emoji": "📣"
     },
     {
         "id": "CUR-101",
@@ -561,7 +831,13 @@
         "url": "https://sendfox.com/",
         "category_en": "Email marketing",
         "is_ai": false,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "marketing",
+        "_cat_name": "AI营销SEO类",
+        "_cat_emoji": "📣",
+        "category": "AI营销SEO类",
+        "category_slug": "marketing",
+        "category_emoji": "📣"
     },
     {
         "id": "CUR-102",
@@ -573,7 +849,13 @@
         "url": "https://www.brevo.com/",
         "category_en": "Email marketing",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "marketing",
+        "_cat_name": "AI营销SEO类",
+        "_cat_emoji": "📣",
+        "category": "AI营销SEO类",
+        "category_slug": "marketing",
+        "category_emoji": "📣"
     },
     {
         "id": "CUR-110",
@@ -585,7 +867,13 @@
         "url": "https://www.figma.com/",
         "category_en": "Design",
         "is_ai": false,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "collab",
+        "_cat_name": "AI协作项目管理类",
+        "_cat_emoji": "📋",
+        "category": "AI协作项目管理类",
+        "category_slug": "collab",
+        "category_emoji": "📋"
     },
     {
         "id": "CUR-111",
@@ -597,7 +885,13 @@
         "url": "https://gamma.app/",
         "category_en": "Design",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "design",
+        "_cat_name": "AI设计创意类",
+        "_cat_emoji": "🎭",
+        "category": "AI设计创意类",
+        "category_slug": "design",
+        "category_emoji": "🎭"
     },
     {
         "id": "CUR-112",
@@ -609,7 +903,13 @@
         "url": "https://www.beautiful.ai/",
         "category_en": "Design",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "design",
+        "_cat_name": "AI设计创意类",
+        "_cat_emoji": "🎭",
+        "category": "AI设计创意类",
+        "category_slug": "design",
+        "category_emoji": "🎭"
     },
     {
         "id": "CUR-120",
@@ -621,7 +921,13 @@
         "url": "https://journal-it.app/",
         "category_en": "Productivity",
         "is_ai": false,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "productivity",
+        "_cat_name": "AI办公生产力类",
+        "_cat_emoji": "⚡",
+        "category": "AI办公生产力类",
+        "category_slug": "productivity",
+        "category_emoji": "⚡"
     },
     {
         "id": "CUR-121",
@@ -633,7 +939,13 @@
         "url": "https://shareables.co/",
         "category_en": "Productivity",
         "is_ai": false,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "productivity",
+        "_cat_name": "AI办公生产力类",
+        "_cat_emoji": "⚡",
+        "category": "AI办公生产力类",
+        "category_slug": "productivity",
+        "category_emoji": "⚡"
     },
     {
         "id": "CUR-130",
@@ -645,7 +957,13 @@
         "url": "https://www.perplexity.ai/",
         "category_en": "AI",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "research",
+        "_cat_name": "AI搜索研究类",
+        "_cat_emoji": "🔍",
+        "category": "AI搜索研究类",
+        "category_slug": "research",
+        "category_emoji": "🔍"
     },
     {
         "id": "CUR-131",
@@ -657,7 +975,13 @@
         "url": "https://you.com/",
         "category_en": "AI",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "research",
+        "_cat_name": "AI搜索研究类",
+        "_cat_emoji": "🔍",
+        "category": "AI搜索研究类",
+        "category_slug": "research",
+        "category_emoji": "🔍"
     },
     {
         "id": "CUR-132",
@@ -669,6 +993,12 @@
         "url": "https://notebooklm.google.com/",
         "category_en": "AI",
         "is_ai": true,
-        "source": "curated"
+        "source": "curated",
+        "_cat_slug": "productivity",
+        "_cat_name": "AI办公生产力类",
+        "_cat_emoji": "⚡",
+        "category": "AI办公生产力类",
+        "category_slug": "productivity",
+        "category_emoji": "⚡"
     }
 ]
