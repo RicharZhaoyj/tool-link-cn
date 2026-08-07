@@ -50,22 +50,11 @@ jobs:
         run: python -u build_noscript.py
 
       - name: Update Sitemap
-        run: |
-          python -c "
-          import json
-          tools = json.load(open('tools.json'))
-          urls = ['  <url>\n    <loc>https://tool.link.cn/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>']
-          for t in tools:
-              if t.get('id') not in ('SYNC-INFO', 'STATUS', 'API-PENDING'):
-                  urls.append(f'  <url>\n    <loc>https://tool.link.cn/#tool-{t[\"id\"]}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>')
-          sitemap = '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n' + '\n'.join(urls) + '\n</urlset>'
-          open('sitemap.xml', 'w').write(sitemap)
-          print(f'Sitemap: {len(urls)} URLs')
-          "
+        run: python -u gen_sitemap.py
 
       - name: Commit and Push
         run: |
-          git add tools.json sitemap.xml index.html
+          git add tools.json sitemap.xml index.html guides/ category/
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Auto-sync: tools [$(date -u '+%Y-%m-%d %H:%M UTC')]"
             git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main
