@@ -3,3 +3,4 @@ affiliate-links.json
 updated_tools.json
 .vercel
 .env*
+__pycache__/
