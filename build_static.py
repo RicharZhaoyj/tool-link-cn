@@ -3,6 +3,7 @@
 # 同时生成 sitemap.xml 和 robots.txt
 
 import json
+import html as html_lib
 import os
 import re
 import sys
@@ -55,6 +56,7 @@ def build_tool_card(tool, index=0):
     title_html = tool.get('title', '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     desc_html = tool.get('desc', '限时 Lifetime Deal').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     url_html = tool.get('url', '').replace('&', '&amp;')
+    tool_id_html = html_lib.escape(str(tool.get('id', '')), quote=True)
 
     # price HTML
     price_html = ''
@@ -85,7 +87,7 @@ def build_tool_card(tool, index=0):
                             <p class="text-zinc-400 text-sm leading-relaxed mb-4">{desc_html}</p>
                             {price_html}
                         </div>
-                        <a href="{url_html}" target="_blank" rel="nofollow" class="block w-full py-3.5 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">立即查看 →</a>
+                        <a href="{url_html}" target="_blank" rel="nofollow noopener" data-growth-event="affiliate_click" data-tool-id="{tool_id_html}" data-tool-name="{title_html}" data-placement="home_card" class="block w-full py-3.5 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">立即查看 →</a>
                     </div>'''
 
 
@@ -224,6 +226,28 @@ def build_update_time(html):
     return html
 
 
+def build_growth_tracking(html):
+    """给首页外链 CTA 增加统一的 GA4 affiliate_click 事件监听。"""
+    marker = '<!-- LINK_GROWTH_TRACKING -->'
+    if marker in html:
+        return html
+    script = f'''\n    {marker}
+    <script>
+      document.addEventListener('click', function (event) {{
+        const link = event.target.closest('a[data-growth-event]');
+        if (!link || typeof window.gtag !== 'function') return;
+        window.gtag('event', link.dataset.growthEvent, {{
+          event_category: 'monetization',
+          tool_id: link.dataset.toolId || '',
+          tool_name: link.dataset.toolName || '',
+          placement: link.dataset.placement || 'home_card',
+          destination: link.href
+        }});
+      }});
+    </script>'''
+    return html.replace('</head>', script + '\n</head>', 1)
+
+
 def build_all():
     tools = load_tools()
     if not tools:
@@ -241,6 +265,7 @@ def build_all():
     html = build_schema(html, tools)
     html = build_meta_description(html, tools)
     html = build_update_time(html)
+    html = build_growth_tracking(html)
 
     with open(HTML_FILE, 'w', encoding='utf-8') as f:
         f.write(html)

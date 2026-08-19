@@ -91,30 +91,20 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-0RV8LQE4JB');
+      document.addEventListener('click', function (event) {
+        const link = event.target.closest('a[data-growth-event]');
+        if (!link || typeof window.gtag !== 'function') return;
+        window.gtag('event', link.dataset.growthEvent, {
+          event_category: 'monetization',
+          tool_id: link.dataset.toolId || '',
+          tool_name: link.dataset.toolName || '',
+          placement: link.dataset.placement || 'detail',
+          destination: link.href
+        });
+      });
     </script>
 </head>
 <body class="min-h-screen">
-
-<!-- SEO面包屑 -->
-<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-2 flex text-sm text-gray-400 items-center gap-2 flex-wrap">
-  <a href="../index.html" class="hover:text-white transition">🏠 首页</a><span>/</span>
-  <a href="../sitemap.html" class="hover:text-white transition">📋 全部工具</a><span>/</span>
-  <a href="../category/productivity.html" class="hover:text-blue-400 transition font-medium">⚡ AI办公生产力类</a><span>/</span>
-  <span class="text-white">Fireflies.ai</span>
-</nav>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"BreadcrumbList",
-  "itemListElement":[
-    {"@type":"ListItem","position":1,"name":"首页","item":"https://tool.link.cn/"},
-    {"@type":"ListItem","position":2,"name":"全部工具","item":"https://tool.link.cn/sitemap.html"},
-    {"@type":"ListItem","position":3,"name":"AI办公生产力类","item":"https://tool.link.cn/category/productivity.html"},
-    {"@type":"ListItem","position":4,"name":"Fireflies.ai"}
-  ]
-}
-</script>
-
 
     <nav class="border-b border-white/5 p-4 md:p-6 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-md z-50">
         <a href="../index.html" class="flex items-center space-x-2">
@@ -156,7 +146,7 @@
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3">
-                <a href="https://fireflies.ai/" target="_blank" rel="nofollow noopener" class="flex-1 py-4 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">
+                <a href="https://fireflies.ai/" target="_blank" rel="nofollow noopener" data-growth-event="affiliate_click" data-tool-id="CUR-043" data-tool-name="Fireflies.ai" data-placement="detail" class="flex-1 py-4 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">
                     访问官网 →
                 </a>
                 <a href="../index.html" class="flex-1 py-4 glass-card text-center text-sm font-bold rounded-2xl hover:border-blue-500/50 transition-all">
@@ -242,111 +232,7 @@
             </div>
         </section>
 
-    
-<!-- SEO内链：相关分类推荐 -->
-<section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-  <div class="glass-card rounded-2xl p-5 md:p-7">
-    <h3 class="text-lg md:text-xl font-bold mb-1">还在看其他⚡ AI办公生产力类工具？</h3>
-    <p class="text-sm text-gray-400 mb-5">查看我们整理的AI办公生产力类全品类LTD深度评测：选购避坑法则+真实省钱案例+FAQ。</p>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-
-      <a href="../category/writing.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/5 hover:border-blue-500/40 hover:bg-white/[0.05] transition">
-        <span class="text-lg">✍️</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-sm text-white truncate">AI写作类</div>
-          <div class="text-[10px] text-gray-500">4款工具</div>
-        </div>
-        <span class="text-gray-500 text-xs">→</span>
-      </a>
-      <a href="../category/image.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/5 hover:border-blue-500/40 hover:bg-white/[0.05] transition">
-        <span class="text-lg">🎨</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-sm text-white truncate">AI绘图类</div>
-          <div class="text-[10px] text-gray-500">5款工具</div>
-        </div>
-        <span class="text-gray-500 text-xs">→</span>
-      </a>
-      <a href="../category/video.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/5 hover:border-blue-500/40 hover:bg-white/[0.05] transition">
-        <span class="text-lg">🎬</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-sm text-white truncate">AI视频类</div>
-          <div class="text-[10px] text-gray-500">6款工具</div>
-        </div>
-        <span class="text-gray-500 text-xs">→</span>
-      </a>
-      <a href="../category/audio.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/5 hover:border-blue-500/40 hover:bg-white/[0.05] transition">
-        <span class="text-lg">🎵</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-sm text-white truncate">AI音频类</div>
-          <div class="text-[10px] text-gray-500">4款工具</div>
-        </div>
-        <span class="text-gray-500 text-xs">→</span>
-      </a>
-      <a href="../category/coding.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/5 hover:border-blue-500/40 hover:bg-white/[0.05] transition">
-        <span class="text-lg">💻</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-sm text-white truncate">AI编程开发类</div>
-          <div class="text-[10px] text-gray-500">5款工具</div>
-        </div>
-        <span class="text-gray-500 text-xs">→</span>
-      </a>
-      <a href="../category/marketing.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/5 hover:border-blue-500/40 hover:bg-white/[0.05] transition">
-        <span class="text-lg">📣</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-sm text-white truncate">AI营销SEO类</div>
-          <div class="text-[10px] text-gray-500">7款工具</div>
-        </div>
-        <span class="text-gray-500 text-xs">→</span>
-      </a>
-      <a href="../category/sales.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/5 hover:border-blue-500/40 hover:bg-white/[0.05] transition">
-        <span class="text-lg">🤝</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-sm text-white truncate">AI销售拓客类</div>
-          <div class="text-[10px] text-gray-500">5款工具</div>
-        </div>
-        <span class="text-gray-500 text-xs">→</span>
-      </a>
-      <a href="../category/social.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/5 hover:border-blue-500/40 hover:bg-white/[0.05] transition">
-        <span class="text-lg">📱</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-sm text-white truncate">AI社交媒体类</div>
-          <div class="text-[10px] text-gray-500">2款工具</div>
-        </div>
-        <span class="text-gray-500 text-xs">→</span>
-      </a>
-      <a href="../category/collab.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/5 hover:border-blue-500/40 hover:bg-white/[0.05] transition">
-        <span class="text-lg">📋</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-sm text-white truncate">AI协作项目类</div>
-          <div class="text-[10px] text-gray-500">3款工具</div>
-        </div>
-        <span class="text-gray-500 text-xs">→</span>
-      </a>
-      <a href="../category/design.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/5 hover:border-blue-500/40 hover:bg-white/[0.05] transition">
-        <span class="text-lg">🎭</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-sm text-white truncate">AI设计创意类</div>
-          <div class="text-[10px] text-gray-500">2款工具</div>
-        </div>
-        <span class="text-gray-500 text-xs">→</span>
-      </a>
-      <a href="../category/research.html" class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/5 hover:border-blue-500/40 hover:bg-white/[0.05] transition">
-        <span class="text-lg">🔍</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-sm text-white truncate">AI搜索研究类</div>
-          <div class="text-[10px] text-gray-500">2款工具</div>
-        </div>
-        <span class="text-gray-500 text-xs">→</span>
-      </a>
-    </div>
-    <div class="mt-5 pt-5 border-t border-white/5 flex flex-wrap items-center justify-between gap-3">
-      <a href="../category/productivity.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold text-sm transition">进入AI办公生产力类专题页面 →</a>
-      <a href="../sitemap.html" class="text-sm text-gray-400 hover:text-white transition">浏览全部56款精选LTD工具 →</a>
-    </div>
-  </div>
-</section>
-
-</main>
+    </main>
 
     <footer class="border-t border-white/5 mt-16 py-8 px-4 text-center text-xs text-zinc-600">
         <p>© 2026 Link.cn · AI工具导航 · Lifetime Deal 终身买断方案</p>

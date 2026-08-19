@@ -344,6 +344,17 @@ def build_html(tool, all_tools):
       function gtag(){{dataLayer.push(arguments);}}
       gtag('js', new Date());
       gtag('config', '{GA4_ID}');
+      document.addEventListener('click', function (event) {{
+        const link = event.target.closest('a[data-growth-event]');
+        if (!link || typeof window.gtag !== 'function') return;
+        window.gtag('event', link.dataset.growthEvent, {{
+          event_category: 'monetization',
+          tool_id: link.dataset.toolId || '',
+          tool_name: link.dataset.toolName || '',
+          placement: link.dataset.placement || 'detail',
+          destination: link.href
+        }});
+      }});
     </script>
 </head>
 <body class="min-h-screen">
@@ -388,7 +399,7 @@ def build_html(tool, all_tools):
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3">
-                <a href="{esc(url)}" target="_blank" rel="nofollow noopener" class="flex-1 py-4 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">
+                <a href="{esc(url)}" target="_blank" rel="nofollow noopener" data-growth-event="affiliate_click" data-tool-id="{esc(tool['id'])}" data-tool-name="{esc(title)}" data-placement="detail" class="flex-1 py-4 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">
                     访问官网 →
                 </a>
                 <a href="../index.html" class="flex-1 py-4 glass-card text-center text-sm font-bold rounded-2xl hover:border-blue-500/50 transition-all">

@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
 Sitemap: https://tool.link.cn/sitemap.xml
-# RSS Feed
-# Feed: https://tool.link.cn/feed.xml
