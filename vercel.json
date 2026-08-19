@@ -24,6 +24,10 @@
     {
       "src": "guides/*.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "tools/*.html",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
