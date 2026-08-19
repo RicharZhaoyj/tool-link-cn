@@ -140,8 +140,22 @@ def build_tool_grid(html, tools):
     if marker in html:
         return html.replace(marker, f'<!-- STATIC_TOOLS_START -->\n{tools_html}\n            <!-- STATIC_TOOLS_END -->')
 
-    # 如果都没有，说明已经手动渲染过，跳过
-    print('    [SKIP] tool-grid: no marker found, skipping')
+    # 兼容早期已经预渲染的首页：按工具 URL 为现有 CTA 补齐增长埋点。
+    updated = 0
+    for tool in tools:
+        url_html = html_lib.escape(str(tool.get('url', '')), quote=True)
+        title_html = html_lib.escape(str(tool.get('title', '')), quote=True)
+        tool_id_html = html_lib.escape(str(tool.get('id', '')), quote=True)
+        old = f'<a href="{url_html}" target="_blank" rel="nofollow"'
+        new = (
+            f'<a href="{url_html}" target="_blank" rel="nofollow noopener" '
+            f'data-growth-event="affiliate_click" data-tool-id="{tool_id_html}" '
+            f'data-tool-name="{title_html}" data-placement="home_card"'
+        )
+        if old in html:
+            html = html.replace(old, new, 1)
+            updated += 1
+    print(f'    [OK] tool-grid: updated pre-rendered CTA tracking ({updated}/{len(tools)})')
     return html
 
 
