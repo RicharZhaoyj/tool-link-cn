@@ -26,6 +26,10 @@
       "use": "@vercel/static"
     },
     {
+      "src": "category/*.html",
+      "use": "@vercel/static"
+    },
+    {
       "src": "tools/*.html",
       "use": "@vercel/static"
     }
