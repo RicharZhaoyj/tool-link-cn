@@ -12,6 +12,7 @@ from datetime import datetime
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TOOLS_JSON = os.path.join(BASE_DIR, "tools.json")
+AFFILIATE_JSON = os.path.join(BASE_DIR, "affiliate-links.json")
 TOOLS_DIR = os.path.join(BASE_DIR, "tools")
 SITEMAP_XML = os.path.join(BASE_DIR, "sitemap.xml")
 INDEX_HTML = os.path.join(BASE_DIR, "index.html")
@@ -77,6 +78,26 @@ def esc_json(s):
     return json.dumps(str(s), ensure_ascii=False)
 
 
+def load_affiliate_links():
+    """读取已审核的联盟配置；缺失或异常时保持官网直链兜底。"""
+    try:
+        with open(AFFILIATE_JSON, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"警告：无法读取 affiliate-links.json：{exc}")
+        return {}
+
+
+def get_cta(tool, affiliate_links):
+    """只将 status=active 且有 URL 的条目视为可变现联盟 CTA。"""
+    tool_id = str(tool.get("id", ""))
+    affiliate = affiliate_links.get(tool_id, {})
+    if affiliate.get("status") == "active" and affiliate.get("affiliate_url"):
+        return f"/api/r/{tool_id}", "affiliate_click", "查看优惠 →", "active"
+    return tool.get("url", ""), "tool_click", "访问官网 →", "direct"
+
+
 def get_related_tools(tool, all_tools, n=4):
     """获取同分类的相关工具，不足时从其他分类补充。"""
     cat = tool.get("category_en", "")
@@ -110,7 +131,7 @@ def get_related_tools(tool, all_tools, n=4):
     return related[:n]
 
 
-def build_html(tool, all_tools):
+def build_html(tool, all_tools, affiliate_links):
     filename = make_filename(tool)
     canonical = f"{SITE_URL}/tools/{filename}"
     title = tool["title"]
@@ -121,6 +142,7 @@ def build_html(tool, all_tools):
     original = tool.get("originalPrice", "")
     url = tool.get("url", "")
     cat_en = tool.get("category_en", "")
+    cta_url, growth_event, cta_label, affiliate_status = get_cta(tool, affiliate_links)
 
     discount = calc_discount(price, original)
 
@@ -399,8 +421,8 @@ def build_html(tool, all_tools):
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3">
-                <a href="{esc(url)}" target="_blank" rel="nofollow noopener" data-growth-event="affiliate_click" data-tool-id="{esc(tool['id'])}" data-tool-name="{esc(title)}" data-placement="detail" class="flex-1 py-4 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">
-                    访问官网 →
+                <a href="{esc(cta_url)}" target="_blank" rel="nofollow noopener" data-growth-event="{growth_event}" data-monetization="{affiliate_status}" data-tool-id="{esc(tool['id'])}" data-tool-name="{esc(title)}" data-placement="detail" class="flex-1 py-4 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">
+                    {cta_label}
                 </a>
                 <a href="../index.html" class="flex-1 py-4 glass-card text-center text-sm font-bold rounded-2xl hover:border-blue-500/50 transition-all">
                     返回工具导航
@@ -516,6 +538,7 @@ def main():
 
     # 过滤掉 SYNC-INFO
     real_tools = [t for t in tools if t.get("id") != "SYNC-INFO"]
+    affiliate_links = load_affiliate_links()
     print(f"工具总数: {len(tools)}，实际生成: {len(real_tools)}（已跳过 SYNC-INFO）")
 
     os.makedirs(TOOLS_DIR, exist_ok=True)
@@ -524,7 +547,7 @@ def main():
     for tool in real_tools:
         filename = make_filename(tool)
         tools_with_files.append((tool, filename))
-        html_content = build_html(tool, real_tools)
+        html_content = build_html(tool, real_tools, affiliate_links)
         filepath = os.path.join(TOOLS_DIR, filename)
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(html_content)

@@ -18,6 +18,7 @@ if sys.platform == 'win32':
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 TOOLS_FILE = os.path.join(SCRIPT_DIR, 'tools.json')
+AFFILIATE_FILE = os.path.join(SCRIPT_DIR, 'affiliate-links.json')
 HTML_FILE = os.path.join(SCRIPT_DIR, 'index.html')
 SITEMAP_FILE = os.path.join(SCRIPT_DIR, 'sitemap.xml')
 ROBOTS_FILE = os.path.join(SCRIPT_DIR, 'robots.txt')
@@ -33,6 +34,26 @@ def load_tools():
     return [t for t in data if t.get('id') not in ('SYNC-INFO', 'STATUS', 'API-PENDING')]
 
 
+def load_affiliate_links():
+    """读取已审核的联盟配置；缺失或异常时保持官网直链兜底。"""
+    try:
+        with open(AFFILIATE_FILE, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f'    [WARN] affiliate-links.json unavailable: {exc}')
+        return {}
+
+
+def get_cta(tool, affiliate_links):
+    """只将 status=active 且有 URL 的条目视为可变现联盟 CTA。"""
+    tool_id = str(tool.get('id', ''))
+    affiliate = affiliate_links.get(tool_id, {})
+    if affiliate.get('status') == 'active' and affiliate.get('affiliate_url'):
+        return f'/api/r/{tool_id}', 'affiliate_click', '查看优惠 →', 'active'
+    return tool.get('url', ''), 'tool_click', '访问官网 →', 'direct'
+
+
 def get_discount(price, orig):
     try:
         p = float(re.sub(r'[^\d.]', '', str(price or '')))
@@ -44,7 +65,7 @@ def get_discount(price, orig):
     return None
 
 
-def build_tool_card(tool, index=0):
+def build_tool_card(tool, affiliate_links, index=0):
     discount = get_discount(tool.get('price'), tool.get('originalPrice'))
     ai_label = ''
     if tool.get('is_ai'):
@@ -57,6 +78,8 @@ def build_tool_card(tool, index=0):
     desc_html = tool.get('desc', '限时 Lifetime Deal').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     url_html = tool.get('url', '').replace('&', '&amp;')
     tool_id_html = html_lib.escape(str(tool.get('id', '')), quote=True)
+    cta_url, growth_event, cta_label, affiliate_status = get_cta(tool, affiliate_links)
+    cta_url_html = html_lib.escape(cta_url, quote=True)
 
     # price HTML
     price_html = ''
@@ -87,7 +110,7 @@ def build_tool_card(tool, index=0):
                             <p class="text-zinc-400 text-sm leading-relaxed mb-4">{desc_html}</p>
                             {price_html}
                         </div>
-                        <a href="{url_html}" target="_blank" rel="nofollow noopener" data-growth-event="affiliate_click" data-tool-id="{tool_id_html}" data-tool-name="{title_html}" data-placement="home_card" class="block w-full py-3.5 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">立即查看 →</a>
+                        <a href="{cta_url_html}" target="_blank" rel="nofollow noopener" data-growth-event="{growth_event}" data-monetization="{affiliate_status}" data-tool-id="{tool_id_html}" data-tool-name="{title_html}" data-placement="home_card" class="block w-full py-3.5 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">{cta_label}</a>
                     </div>'''
 
 
@@ -125,10 +148,10 @@ def build_item_list_schema(tools):
 
 
 # ---- 各个构建步骤 ----
-def build_tool_grid(html, tools):
+def build_tool_grid(html, tools, affiliate_links):
     """替换 tool-grid 内的占位符或已渲染内容为最新静态工具卡片"""
     import re
-    tools_html = '\n'.join(build_tool_card(t, i) for i, t in enumerate(tools))
+    tools_html = '\n'.join(build_tool_card(t, affiliate_links, i) for i, t in enumerate(tools))
 
     # 先尝试替换已有标记之间的内容（幂等：支持多次运行）
     pattern = r'<!-- STATIC_TOOLS_START -->.*?<!-- STATIC_TOOLS_END -->'
@@ -143,14 +166,15 @@ def build_tool_grid(html, tools):
     # 兼容早期已经预渲染的首页：按工具 URL 为现有 CTA 补齐增长埋点。
     updated = 0
     for tool in tools:
-        url_html = html_lib.escape(str(tool.get('url', '')), quote=True)
+        cta_url, growth_event, _, affiliate_status = get_cta(tool, affiliate_links)
+        url_html = html_lib.escape(str(cta_url), quote=True)
         title_html = html_lib.escape(str(tool.get('title', '')), quote=True)
         tool_id_html = html_lib.escape(str(tool.get('id', '')), quote=True)
         old = f'<a href="{url_html}" target="_blank" rel="nofollow"'
         new = (
             f'<a href="{url_html}" target="_blank" rel="nofollow noopener" '
-            f'data-growth-event="affiliate_click" data-tool-id="{tool_id_html}" '
-            f'data-tool-name="{title_html}" data-placement="home_card"'
+            f'data-growth-event="{growth_event}" data-monetization="{affiliate_status}" '
+            f'data-tool-id="{tool_id_html}" data-tool-name="{title_html}" data-placement="home_card"'
         )
         if old in html:
             html = html.replace(old, new, 1)
@@ -269,11 +293,12 @@ def build_all():
         return
 
     tools.sort(key=lambda t: (not t.get('is_ai'), t.get('id', '')))
+    affiliate_links = load_affiliate_links()
 
     with open(HTML_FILE, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    html = build_tool_grid(html, tools)
+    html = build_tool_grid(html, tools, affiliate_links)
     html = build_stats(html, tools)
     html = build_tags(html, tools)
     html = build_schema(html, tools)
