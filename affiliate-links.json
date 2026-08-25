@@ -1,0 +1,488 @@
+{
+  "CUR-001": {
+    "id": "CUR-001",
+    "name": "Jasper",
+    "program": "Jasper Affiliate Program / AppSumo",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Jasper有自有联盟计划，也在AppSumo上架过LTD"
+  },
+  "CUR-002": {
+    "id": "CUR-002",
+    "name": "Copy.ai",
+    "program": "Copy.ai Affiliate / AppSumo",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Copy.ai有自有联盟计划，也在AppSumo上架过LTD"
+  },
+  "CUR-003": {
+    "id": "CUR-003",
+    "name": "Writesonic",
+    "program": "Writesonic Affiliate / AppSumo",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Writesonic有自有联盟计划，也在AppSumo上架过"
+  },
+  "CUR-004": {
+    "id": "CUR-004",
+    "name": "Rytr",
+    "program": "Rytr Affiliate / AppSumo",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Rytr有自有联盟计划，AppSumo上有LTD"
+  },
+  "CUR-010": {
+    "id": "CUR-010",
+    "name": "Midjourney",
+    "program": "无官方联盟",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Midjourney没有官方联盟计划，可推广替代产品"
+  },
+  "CUR-011": {
+    "id": "CUR-011",
+    "name": "DALL·E 3 (ChatGPT Plus)",
+    "program": "无官方联盟",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "OpenAI没有公开联盟计划"
+  },
+  "CUR-012": {
+    "id": "CUR-012",
+    "name": "Leonardo.ai",
+    "program": "Leonardo Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Leonardo.ai有联盟计划，20%月佣"
+  },
+  "CUR-013": {
+    "id": "CUR-013",
+    "name": "Ideogram",
+    "program": "待确认",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "需查是否有联盟计划"
+  },
+  "CUR-014": {
+    "id": "CUR-014",
+    "name": "Flux (Black Forest Labs)",
+    "program": "待确认",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "需查是否有联盟计划"
+  },
+  "CUR-020": {
+    "id": "CUR-020",
+    "name": "Runway",
+    "program": "Runway Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Runway有联盟计划"
+  },
+  "CUR-021": {
+    "id": "CUR-021",
+    "name": "Pika",
+    "program": "待确认",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "需查是否有联盟计划"
+  },
+  "CUR-022": {
+    "id": "CUR-022",
+    "name": "可灵 (Kling AI)",
+    "program": "快手可灵推广",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "国内产品，可联系商务合作"
+  },
+  "CUR-023": {
+    "id": "CUR-023",
+    "name": "HeyGen",
+    "program": "HeyGen Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "HeyGen有联盟计划，30%佣金，有LTD"
+  },
+  "CUR-024": {
+    "id": "CUR-024",
+    "name": "Opus Clip",
+    "program": "Opus Clip Affiliate / AppSumo",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Opus Clip有联盟计划，AppSumo上有LTD"
+  },
+  "CUR-030": {
+    "id": "CUR-030",
+    "name": "ElevenLabs",
+    "program": "ElevenLabs Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "ElevenLabs有联盟计划，25%月佣"
+  },
+  "CUR-031": {
+    "id": "CUR-031",
+    "name": "Murf AI",
+    "program": "Murf AI Affiliate / AppSumo",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Murf有联盟计划，AppSumo上有LTD"
+  },
+  "CUR-032": {
+    "id": "CUR-032",
+    "name": "Suno",
+    "program": "待确认",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "需查是否有联盟计划"
+  },
+  "CUR-033": {
+    "id": "CUR-033",
+    "name": "Udio",
+    "program": "待确认",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "需查是否有联盟计划"
+  },
+  "CUR-040": {
+    "id": "CUR-040",
+    "name": "Notion AI",
+    "program": "Notion Affiliate Program",
+    "status": "active",
+    "affiliate_url": "https://www.notion.so/affiliate?ref=linkcn",
+    "commission": "50%首月/$5/人",
+    "note": "Notion有公开联盟计划，注册即得链接"
+  },
+  "CUR-041": {
+    "id": "CUR-041",
+    "name": "Motion",
+    "program": "Motion Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Motion有联盟计划"
+  },
+  "CUR-042": {
+    "id": "CUR-042",
+    "name": "Otter.ai",
+    "program": "Otter Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Otter有联盟计划"
+  },
+  "CUR-043": {
+    "id": "CUR-043",
+    "name": "Fireflies.ai",
+    "program": "Fireflies Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Fireflies有联盟计划"
+  },
+  "CUR-050": {
+    "id": "CUR-050",
+    "name": "GitHub Copilot",
+    "program": "Microsoft Affiliate",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "通过微软联盟计划推广"
+  },
+  "CUR-051": {
+    "id": "CUR-051",
+    "name": "Cursor",
+    "program": "Cursor Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Cursor有Referral计划"
+  },
+  "CUR-052": {
+    "id": "CUR-052",
+    "name": "v0.dev",
+    "program": "Vercel Affiliate",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "通过Vercel联盟计划推广"
+  },
+  "CUR-053": {
+    "id": "CUR-053",
+    "name": "Replit",
+    "program": "Replit Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Replit有联盟计划"
+  },
+  "CUR-054": {
+    "id": "CUR-054",
+    "name": "Bolt.new",
+    "program": "待确认",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "需查是否有联盟计划"
+  },
+  "CUR-060": {
+    "id": "CUR-060",
+    "name": "Surfer SEO",
+    "program": "Surfer Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Surfer有联盟计划，25%月佣"
+  },
+  "CUR-061": {
+    "id": "CUR-061",
+    "name": "Frase",
+    "program": "Frase Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Frase有联盟计划，30%月佣"
+  },
+  "CUR-063": {
+    "id": "CUR-063",
+    "name": "Canva Pro",
+    "program": "Canva Affiliate Program",
+    "status": "active",
+    "affiliate_url": "https://www.canva.com/join/pro?ref=linkcn",
+    "commission": "30%佣金",
+    "note": "Canva有公开联盟计划"
+  },
+  "CUR-063": {
+    "id": "CUR-063",
+    "name": "Descript",
+    "program": "Descript Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Descript有联盟计划"
+  },
+  "CUR-064": {
+    "id": "CUR-064",
+    "name": "Descript",
+    "program": "Descript Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "原 Fliki 配置与当前工具数据 ID 不一致，待重新确认后再启用联盟链接"
+  },
+  "CUR-070": {
+    "id": "CUR-070",
+    "name": "Apollo.io",
+    "program": "Apollo Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Apollo有联盟计划，PartnerStack"
+  },
+  "CUR-071": {
+    "id": "CUR-071",
+    "name": "Instantly.ai",
+    "program": "Instantly Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Instantly有联盟计划"
+  },
+  "CUR-072": {
+    "id": "CUR-072",
+    "name": "SmartLead.ai",
+    "program": "SmartLead Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "SmartLead有联盟计划"
+  },
+  "CUR-073": {
+    "id": "CUR-073",
+    "name": "Clay",
+    "program": "Clay Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Clay有联盟计划"
+  },
+  "CUR-074": {
+    "id": "CUR-074",
+    "name": "Taplio",
+    "program": "Taplio Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Taplio有联盟计划"
+  },
+  "CUR-080": {
+    "id": "CUR-080",
+    "name": "Hypefury",
+    "program": "Hypefury Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Hypefury有联盟计划"
+  },
+  "CUR-081": {
+    "id": "CUR-081",
+    "name": "ClickUp",
+    "program": "ClickUp Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "ClickUp有联盟计划"
+  },
+  "CUR-090": {
+    "id": "CUR-090",
+    "name": "Brevo",
+    "program": "Brevo Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Brevo有联盟计划"
+  },
+  "CUR-091": {
+    "id": "CUR-091",
+    "name": "Gamma",
+    "program": "Gamma Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Gamma有联盟计划"
+  },
+  "CUR-092": {
+    "id": "CUR-092",
+    "name": "Beautiful.ai",
+    "program": "Beautiful.ai Affiliate",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Beautiful.ai有联盟计划"
+  },
+  "CUR-100": {
+    "id": "CUR-100",
+    "name": "Perplexity",
+    "program": "Perplexity Referral",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Perplexity有推荐计划"
+  },
+  "CUR-101": {
+    "id": "CUR-101",
+    "name": "You.com",
+    "program": "待确认",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "需查是否有联盟计划"
+  },
+  "CUR-102": {
+    "id": "CUR-102",
+    "name": "NotebookLM",
+    "program": "无官方联盟",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Google产品，无公开联盟"
+  },
+  "CUR-110": {
+    "id": "CUR-110",
+    "name": "TidyCal",
+    "program": "TidyCal LTD / AppSumo",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "AppSumo上有LTD"
+  },
+  "CUR-111": {
+    "id": "CUR-111",
+    "name": "Breeze Doc",
+    "program": "AppSumo",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "AppSumo上有LTD"
+  },
+  "CUR-112": {
+    "id": "CUR-112",
+    "name": "Ahrefs",
+    "program": "Ahrefs Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Ahrefs有联盟计划，20%月佣"
+  },
+  "CUR-120": {
+    "id": "CUR-120",
+    "name": "Buffer",
+    "program": "Buffer Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Buffer有联盟计划"
+  },
+  "CUR-121": {
+    "id": "CUR-121",
+    "name": "Notion",
+    "program": "Notion Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Notion有联盟计划"
+  },
+  "CUR-130": {
+    "id": "CUR-130",
+    "name": "Nextstep.so",
+    "program": "AppSumo",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "AppSumo上可能有LTD"
+  },
+  "CUR-131": {
+    "id": "CUR-131",
+    "name": "ConvertKit",
+    "program": "ConvertKit Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "ConvertKit有联盟计划"
+  },
+  "CUR-132": {
+    "id": "CUR-132",
+    "name": "SendFox",
+    "program": "AppSumo",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "AppSumo上有LTD"
+  },
+  "CUR-133": {
+    "id": "CUR-133",
+    "name": "Figma",
+    "program": "Figma Affiliate Program",
+    "status": "direct",
+    "affiliate_url": "",
+    "commission": "",
+    "note": "Figma有联盟计划（Impact）"
+  }
+}
