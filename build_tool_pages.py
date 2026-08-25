@@ -101,7 +101,7 @@ def get_cta(tool, affiliate_links):
     tool_id = str(tool.get("id", ""))
     affiliate = affiliate_links.get(tool_id, {})
     if affiliate.get("status") == "active" and affiliate.get("affiliate_url"):
-        return f"/api/r/{tool_id}", "affiliate_click", "查看优惠 →", "active"
+        return affiliate["affiliate_url"], "affiliate_click", "查看优惠 →", "active"
     return tool.get("url", ""), "tool_click", "访问官网 →", "direct"
 
 
