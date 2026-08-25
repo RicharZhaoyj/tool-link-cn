@@ -14,12 +14,17 @@ export default async function handler(req, res) {
   }
 
   try {
+    // 顶层 GET 导航通常没有 Origin 头，不能只依赖 req.headers.origin。
+    const protocol = req.headers['x-forwarded-proto'] || 'https';
+    const host = req.headers.host || 'tool.link.cn';
+    const baseUrl = req.headers.origin || `${protocol}://${host}`;
+
     // 1. 获取工具直链（兜底）
     let directUrl = 'https://tool.link.cn';
     let toolName = '';
 
     try {
-      const toolsRes = await fetch(req.headers.origin + '/' + TOOLS_FILE);
+      const toolsRes = await fetch(`${baseUrl}/${TOOLS_FILE}`);
       if (toolsRes.ok) {
         const toolsData = await toolsRes.json();
         const tool = toolsData.find(t => t.id === toolId);
@@ -39,7 +44,7 @@ export default async function handler(req, res) {
     let program = '';
 
     try {
-      const affRes = await fetch(req.headers.origin + '/' + AFFILIATE_FILE);
+      const affRes = await fetch(`${baseUrl}/${AFFILIATE_FILE}`);
       if (affRes.ok) {
         const affData = await affRes.json();
         const aff = affData[toolId];

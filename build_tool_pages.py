@@ -8,7 +8,14 @@ import json
 import re
 import os
 import html as html_lib
+import sys
 from datetime import datetime
+
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TOOLS_JSON = os.path.join(BASE_DIR, "tools.json")
