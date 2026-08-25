@@ -165,10 +165,10 @@
     "id": "CUR-040",
     "name": "Notion AI",
     "program": "Notion Affiliate Program",
-    "status": "active",
-    "affiliate_url": "https://www.notion.so/affiliate?ref=linkcn",
-    "commission": "50%首月/$5/人",
-    "note": "Notion有公开联盟计划，注册即得链接"
+    "status": "pending",
+    "affiliate_url": "",
+    "commission": "待联盟后台确认",
+    "note": "官方要求使用 PartnerStack 生成的个性化链接；当前未提供可核验的账户链接，暂按普通官网访问处理"
   },
   "CUR-041": {
     "id": "CUR-041",
@@ -264,10 +264,10 @@
     "id": "CUR-063",
     "name": "Canva Pro",
     "program": "Canva Affiliate Program",
-    "status": "active",
-    "affiliate_url": "https://www.canva.com/join/pro?ref=linkcn",
-    "commission": "30%佣金",
-    "note": "Canva有公开联盟计划"
+    "status": "pending",
+    "affiliate_url": "",
+    "commission": "待联盟后台确认",
+    "note": "官方要求审核通过后使用 Impact 提供的个性化链接；当前 ref=linkcn 不能证明返佣归因，暂按普通官网访问处理"
   },
   "CUR-064": {
     "id": "CUR-064",

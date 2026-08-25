@@ -233,13 +233,33 @@ def build_tags(html, tools):
 
 
 def build_schema(html, tools):
-    """插入 ItemList 结构化数据"""
+    """幂等写入唯一一份 ItemList 结构化数据，并清理旧版重复块。"""
+    import re
+    start_marker = '<!-- ITEM_LIST_SCHEMA_START -->'
+    end_marker = '<!-- ITEM_LIST_SCHEMA_END -->'
     schema_script = (
-        '\n    <script type="application/ld+json">\n'
+        f'{start_marker}\n'
+        '    <script type="application/ld+json">\n'
         f'{build_item_list_schema(tools)}'
-        '\n    </script>\n</head>'
+        f'\n    </script>\n{end_marker}'
     )
-    return html.replace('</head>', schema_script)
+
+    marker_pattern = re.compile(
+        rf'{re.escape(start_marker)}.*?{re.escape(end_marker)}',
+        re.DOTALL,
+    )
+    if marker_pattern.search(html):
+        return marker_pattern.sub(schema_script, html, count=1)
+
+    legacy_pattern = re.compile(
+        r'\s*<script type="application/ld\+json">\s*'
+        r'(?=\{.*?"@type"\s*:\s*"ItemList").*?</script>',
+        re.DOTALL,
+    )
+    html, removed = legacy_pattern.subn('', html)
+    if removed:
+        print(f'    [OK] schema: removed {removed} legacy ItemList blocks')
+    return html.replace('</head>', f'\n    {schema_script}\n</head>', 1)
 
 
 def build_meta_description(html, tools):
@@ -275,24 +295,27 @@ def build_update_time(html):
 
 
 def build_growth_tracking(html):
-    """给首页外链 CTA 增加统一的 GA4 affiliate_click 事件监听。"""
+    """给首页外链 CTA 增加 GA4 事件监听，并区分联盟与普通官网访问。"""
+    import re
     marker = '<!-- LINK_GROWTH_TRACKING -->'
-    if marker in html:
-        return html
     script = f'''\n    {marker}
     <script>
       document.addEventListener('click', function (event) {{
         const link = event.target.closest('a[data-growth-event]');
         if (!link || typeof window.gtag !== 'function') return;
         window.gtag('event', link.dataset.growthEvent, {{
-          event_category: 'monetization',
+          event_category: link.dataset.monetization === 'active' ? 'monetization' : 'outbound',
           tool_id: link.dataset.toolId || '',
           tool_name: link.dataset.toolName || '',
+          has_affiliate: link.dataset.monetization === 'active',
           placement: link.dataset.placement || 'home_card',
           destination: link.href
         }});
       }});
     </script>'''
+    if marker in html:
+        pattern = re.compile(rf'{re.escape(marker)}.*?</script>', re.DOTALL)
+        return pattern.sub(script.strip(), html, count=1)
     return html.replace('</head>', script + '\n</head>', 1)
 
 
