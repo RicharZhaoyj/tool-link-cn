@@ -163,21 +163,31 @@ def build_tool_grid(html, tools, affiliate_links):
     if marker in html:
         return html.replace(marker, f'<!-- STATIC_TOOLS_START -->\n{tools_html}\n            <!-- STATIC_TOOLS_END -->')
 
-    # 兼容早期已经预渲染的首页：按工具 URL 为现有 CTA 补齐增长埋点。
+    # 兼容早期已经预渲染的首页：按 data-tool-id 更新 CTA，确保联盟配置真正生效。
     updated = 0
     for tool in tools:
-        cta_url, growth_event, _, affiliate_status = get_cta(tool, affiliate_links)
+        cta_url, growth_event, cta_label, affiliate_status = get_cta(tool, affiliate_links)
         url_html = html_lib.escape(str(cta_url), quote=True)
         title_html = html_lib.escape(str(tool.get('title', '')), quote=True)
         tool_id_html = html_lib.escape(str(tool.get('id', '')), quote=True)
-        old = f'<a href="{url_html}" target="_blank" rel="nofollow"'
-        new = (
-            f'<a href="{url_html}" target="_blank" rel="nofollow noopener" '
-            f'data-growth-event="{growth_event}" data-monetization="{affiliate_status}" '
-            f'data-tool-id="{tool_id_html}" data-tool-name="{title_html}" data-placement="home_card"'
+        anchor_pattern = (
+            rf'<a\b[^>]*data-tool-id="{re.escape(tool_id_html)}"'
+            rf'[^>]*data-placement="home_card"[^>]*>.*?</a>'
         )
-        if old in html:
-            html = html.replace(old, new, 1)
+
+        def update_anchor(match):
+            anchor = match.group(0)
+            anchor = re.sub(r'href="[^"]*"', f'href="{url_html}"', anchor, count=1)
+            anchor = re.sub(r'data-growth-event="[^"]*"', f'data-growth-event="{growth_event}"', anchor, count=1)
+            if 'data-monetization=' in anchor:
+                anchor = re.sub(r'data-monetization="[^"]*"', f'data-monetization="{affiliate_status}"', anchor, count=1)
+            else:
+                anchor = anchor.replace(f'data-growth-event="{growth_event}"', f'data-growth-event="{growth_event}" data-monetization="{affiliate_status}"', 1)
+            anchor = re.sub(r'>\s*[^<]*</a>', f'>{cta_label}</a>', anchor, count=1)
+            return anchor
+
+        html, count = re.subn(anchor_pattern, update_anchor, html, count=1, flags=re.DOTALL)
+        if count:
             updated += 1
     print(f'    [OK] tool-grid: updated pre-rendered CTA tracking ({updated}/{len(tools)})')
     return html
