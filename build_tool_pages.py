@@ -43,7 +43,7 @@ def make_slug(text):
 def make_filename(tool):
     """文件名格式：{id小写}-{title slug}.html"""
     id_lower = tool["id"].lower()
-    title_slug = make_slug(tool["title"])
+    title_slug = make_slug(tool.get("slug") or tool["title"])
     if title_slug:
         return f"{id_lower}-{title_slug}.html"
     return f"{id_lower}.html"
@@ -147,15 +147,24 @@ def build_html(tool, all_tools, affiliate_links):
     is_ai = tool.get("is_ai", False)
     price = tool.get("price", "")
     original = tool.get("originalPrice", "")
+    price_suffix = tool.get("priceSuffix", "/终身")
+    pricing_model = tool.get("pricingModel", "终身")
     url = tool.get("url", "")
     cat_en = tool.get("category_en", "")
     cta_url, growth_event, cta_label, affiliate_status = get_cta(tool, affiliate_links)
 
     discount = calc_discount(price, original)
 
-    # SEO title 包含工具名 + Lifetime Deal 关键词
-    seo_title = f"{title} 终身授权 Lifetime Deal {price} 买断 | Link.cn"
-    seo_desc = f"{desc}。{title} Lifetime Deal 终身买断方案，原价 {original}，现价 {price}，一次买断终身使用。Link.cn AI工具导航。"
+    if pricing_model == "订阅":
+        seo_title = f"{title} 价格与功能 {price}{price_suffix} | Link.cn"
+        seo_desc = f"{desc}。官方当前起价 {price}{price_suffix}，提供14天免费试用；价格可能随官方调整。Link.cn AI工具导航。"
+        seo_keywords = f"{title},SOP,工作流,订阅,项目管理,AI工具,Link.cn"
+        footer_description = "AI工具导航 · 订阅与价格信息"
+    else:
+        seo_title = f"{title} 终身授权 {price} 买断 | Link.cn"
+        seo_desc = f"{desc}。官方当前终身方案为 {price} 一次性买断；价格可能随官方调整。Link.cn AI工具导航。"
+        seo_keywords = f"{title},Lifetime Deal,终身授权,买断,{tag},AI工具,Link.cn"
+        footer_description = "AI工具导航 · Lifetime Deal 终身买断方案"
     if not seo_desc or len(seo_desc) < 50:
         seo_desc = f"{title} - {desc}"
 
@@ -164,7 +173,7 @@ def build_html(tool, all_tools, affiliate_links):
     # 价格展示
     price_display = ""
     if price:
-        price_display = f'<span class="price-tag text-white text-lg font-black px-4 py-2 rounded-xl">{esc(price)}<span class="text-xs font-normal opacity-70 ml-1">/终身</span></span>'
+        price_display = f'<span class="price-tag text-white text-lg font-black px-4 py-2 rounded-xl">{esc(price)}<span class="text-xs font-normal opacity-70 ml-1">{esc(price_suffix)}</span></span>'
     if original and original != price:
         price_display += f'<span class="text-zinc-600 text-base line-through">{esc(original)}</span>'
     if discount is not None and discount > 0:
@@ -305,7 +314,7 @@ def build_html(tool, all_tools, affiliate_links):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{esc(seo_title)}</title>
     <meta name="description" content="{esc(seo_desc)}">
-    <meta name="keywords" content="{esc(title)},Lifetime Deal,终身授权,买断,{esc(tag)},AI工具,Link.cn">
+    <meta name="keywords" content="{esc(seo_keywords)}">
     <meta name="author" content="Link.cn">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{canonical}">
@@ -419,12 +428,12 @@ def build_html(tool, all_tools, affiliate_links):
 
             <div class="mb-8 p-5 rounded-2xl bg-white/[0.02] border border-white/5">
                 <div class="flex items-center gap-3 mb-2">
-                    <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest">Lifetime Deal 终身买断</span>
+                    <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest">{esc('订阅方案' if pricing_model == '订阅' else 'Lifetime Deal 终身买断')}</span>
                 </div>
                 <div class="flex items-center gap-3 flex-wrap">
                     {price_display if price_display else '<span class="text-zinc-400">价格信息更新中</span>'}
                 </div>
-                {'<p class="text-xs text-zinc-500 mt-3">一次买断，终身使用，无需月费</p>' if discount and discount > 0 else ''}
+                {'<p class="text-xs text-zinc-500 mt-3">按月订阅；官方提供14天免费试用</p>' if pricing_model == '订阅' else '<p class="text-xs text-zinc-500 mt-3">官方终身方案；另有免费版与年度订阅</p>'}
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3">
@@ -469,7 +478,7 @@ def build_html(tool, all_tools, affiliate_links):
     </main>
 
     <footer class="border-t border-white/5 mt-16 py-8 px-4 text-center text-xs text-zinc-600">
-        <p>© {datetime.now().year} Link.cn · AI工具导航 · Lifetime Deal 终身买断方案</p>
+        <p>© {datetime.now().year} Link.cn · {esc(footer_description)}</p>
         <p class="mt-2"><a href="../index.html" class="hover:text-blue-400 transition-colors">返回首页</a></p>
     </footer>
 
@@ -505,13 +514,9 @@ def build_sitemap(tools_with_files):
 
 
 def add_browse_section_to_index(tools_with_files):
-    """在 index.html 的 </body> 前插入"浏览所有工具"区域。"""
+    """新增或刷新 index.html 的“浏览所有工具”区域。"""
     with open(INDEX_HTML, "r", encoding="utf-8") as f:
         content = f.read()
-
-    # 已存在则跳过
-    if 'id="all-tools-list"' in content:
-        return False
 
     links = "\n".join(
         f'            <a href="tools/{filename}" class="text-sm text-zinc-400 hover:text-blue-400 transition-colors glass-card px-3 py-2 rounded-lg text-center">{esc(t["title"])}</a>'
@@ -530,8 +535,14 @@ def add_browse_section_to_index(tools_with_files):
 
 '''
 
-    # 插入到 </body> 前
-    new_content = content.replace("</body>", section + "</body>", 1)
+    pattern = re.compile(
+        r'\s*<!-- Browse All Tools -->\s*<section id="all-tools-list".*?</section>\s*',
+        re.DOTALL,
+    )
+    if pattern.search(content):
+        new_content = pattern.sub("\n" + section.strip() + "\n", content, count=1)
+    else:
+        new_content = content.replace("</body>", section + "</body>", 1)
     if new_content == content:
         return False
     with open(INDEX_HTML, "w", encoding="utf-8") as f:
@@ -550,16 +561,21 @@ def main():
 
     os.makedirs(TOOLS_DIR, exist_ok=True)
 
-    tools_with_files = []
-    for tool in real_tools:
-        filename = make_filename(tool)
-        tools_with_files.append((tool, filename))
+    tools_with_files = [(tool, make_filename(tool)) for tool in real_tools]
+    selected_ids = {value.upper() for value in sys.argv[1:]}
+    tools_to_write = [
+        (tool, filename)
+        for tool, filename in tools_with_files
+        if not selected_ids or tool.get("id", "").upper() in selected_ids
+    ]
+
+    for tool, filename in tools_to_write:
         html_content = build_html(tool, real_tools, affiliate_links)
         filepath = os.path.join(TOOLS_DIR, filename)
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(html_content)
 
-    print(f"已生成 {len(tools_with_files)} 个工具详情页到 tools/ 目录")
+    print(f"已生成 {len(tools_to_write)} 个工具详情页到 tools/ 目录")
 
     # 检查文件名重复
     filenames = [fn for _, fn in tools_with_files]

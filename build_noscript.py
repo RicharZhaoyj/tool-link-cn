@@ -31,6 +31,7 @@ for item in items[:57]:  # max 57 to keep HTML reasonable
     desc = item.get('desc', '')
     price = item.get('price', '')
     original = item.get('originalPrice', '')
+    price_suffix = item.get('priceSuffix', '/终身')
     url = item.get('url', '#')
     is_ai = item.get('is_ai', False)
     discount = get_discount(price, original)
@@ -39,7 +40,7 @@ for item in items[:57]:  # max 57 to keep HTML reasonable
     
     price_html = ''
     if price:
-        parts = [f'<span class="price-tag">{price}<span style="font-size:10px;font-weight:400;opacity:0.7">/终身</span></span>']
+        parts = [f'<span class="price-tag">{price}<span style="font-size:10px;font-weight:400;opacity:0.7">{price_suffix}</span></span>']
         if original:
             parts.append(f'<span style="color:#71717a;font-size:12px;text-decoration:line-through;margin-left:4px;">{original}</span>')
         if discount:

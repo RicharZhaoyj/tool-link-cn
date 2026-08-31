@@ -80,6 +80,7 @@ def build_tool_card(tool, affiliate_links, index=0):
     tool_id_html = html_lib.escape(str(tool.get('id', '')), quote=True)
     cta_url, growth_event, cta_label, affiliate_status = get_cta(tool, affiliate_links)
     cta_url_html = html_lib.escape(cta_url, quote=True)
+    price_suffix_html = html_lib.escape(str(tool.get('priceSuffix', '/终身')), quote=True)
 
     # price HTML
     price_html = ''
@@ -87,7 +88,7 @@ def build_tool_card(tool, affiliate_links, index=0):
         price_html = (
             '<div class="flex items-center gap-2 mb-3">'
             f'<span class="price-tag text-white text-sm font-black px-3 py-1 rounded-lg">'
-            f'{tool["price"]}<span class="text-[10px] font-normal opacity-70">/终身</span></span>'
+            f'{tool["price"]}<span class="text-[10px] font-normal opacity-70">{price_suffix_html}</span></span>'
         )
         if tool.get('originalPrice') and tool['originalPrice'] != tool.get('price'):
             price_html += (
@@ -162,6 +163,17 @@ def build_tool_grid(html, tools, affiliate_links):
     marker = '<!-- STATIC_TOOLS -->'
     if marker in html:
         return html.replace(marker, f'<!-- STATIC_TOOLS_START -->\n{tools_html}\n            <!-- STATIC_TOOLS_END -->')
+
+    # 兼容早期已整块预渲染的首页：刷新完整卡片内容，而不只更新 CTA。
+    grid_pattern = r'(<div id="tool-grid"[^>]*>).*?(</div>\s*<!-- Empty State -->)'
+    if re.search(grid_pattern, html, re.DOTALL):
+        return re.sub(
+            grid_pattern,
+            rf'\1\n{tools_html}\n        \2',
+            html,
+            count=1,
+            flags=re.DOTALL,
+        )
 
     # 兼容早期已经预渲染的首页：按 data-tool-id 更新 CTA，确保联盟配置真正生效。
     updated = 0
