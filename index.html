@@ -991,14 +991,14 @@
       "position": 51,
       "item": {
         "@type": "SoftwareApplication",
-        "name": "ConvertKit",
-        "description": "创作者友好型邮件营销平台，自动化序列 + 表单 + 标签系统，订阅者变现首选",
+        "name": "Kit（原 ConvertKit）",
+        "description": "创作者邮件营销平台；免费版最高支持 10,000 名订阅者，付费方案随订阅者规模调整",
         "applicationCategory": "邮件营销",
         "operatingSystem": "Web",
-        "url": "https://convertkit.com/",
+        "url": "https://kit.com/pricing",
         "offers": {
           "@type": "Offer",
-          "price": "9",
+          "price": "0",
           "priceCurrency": "USD"
         }
       }
@@ -1982,11 +1982,11 @@
                                 <span class="text-[10px] font-bold bg-blue-500/20 text-blue-400 px-2 py-1 rounded tracking-widest uppercase border border-blue-500/30">邮件营销</span>
                                 
                             </div>
-                            <h3 class="text-xl md:text-2xl font-bold mb-2">ConvertKit</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed mb-4">创作者友好型邮件营销平台，自动化序列 + 表单 + 标签系统，订阅者变现首选</p>
-                            <div class="flex items-center gap-2 mb-3"><span class="price-tag text-white text-sm font-black px-3 py-1 rounded-lg">$9<span class="text-[10px] font-normal opacity-70">/终身</span></span><span class="text-zinc-600 text-xs line-through">$59</span><span class="discount-tag text-[10px] font-bold px-2 py-0.5 rounded">-85%</span></div>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2">Kit（原 ConvertKit）</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed mb-4">创作者邮件营销平台；免费版最高支持 10,000 名订阅者，付费方案随订阅者规模调整</p>
+                            <div class="flex items-center gap-2 mb-3"><span class="price-tag text-white text-sm font-black px-3 py-1 rounded-lg">$0<span class="text-[10px] font-normal opacity-70">/月起</span></span></div>
                         </div>
-                        <a href="https://convertkit.com/" target="_blank" rel="nofollow noopener" data-growth-event="tool_click" data-monetization="direct" data-tool-id="CUR-100" data-tool-name="ConvertKit" data-placement="home_card" class="block w-full py-3.5 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">访问官网 →</a>
+                        <a href="https://kit.com/pricing" target="_blank" rel="nofollow noopener" data-growth-event="tool_click" data-monetization="direct" data-tool-id="CUR-100" data-tool-name="Kit（原 ConvertKit）" data-placement="home_card" class="block w-full py-3.5 bg-white text-black text-center text-sm font-black rounded-2xl hover:bg-blue-600 hover:text-white transition-all active:scale-95">访问官网 →</a>
                     </div>
                     <div class="tool-card glass-card p-6 md:p-8 rounded-3xl flex flex-col h-full" style="animation-delay: 2550ms">
                         <div class="flex-grow">
@@ -2269,7 +2269,7 @@
                 const aiLabel = item.is_ai ? '<span class="ai-badge text-[10px] font-bold px-2 py-0.5 rounded tracking-widest uppercase ml-2">AI</span>' : '';
                 const priceHtml = item.price ? `
                     <div class="flex items-center gap-2 mb-3">
-                        <span class="price-tag text-white text-sm font-black px-3 py-1 rounded-lg">${item.price}<span class="text-[10px] font-normal opacity-70">/终身</span></span>
+                        <span class="price-tag text-white text-sm font-black px-3 py-1 rounded-lg">${item.price}<span class="text-[10px] font-normal opacity-70">${item.priceSuffix || '/终身'}</span></span>
                         ${item.originalPrice ? `<span class="text-zinc-600 text-xs line-through">${item.originalPrice}</span>` : ''}
                         ${discount ? `<span class="discount-tag text-[10px] font-bold px-2 py-0.5 rounded">-${discount}%</span>` : ''}
                     </div>
@@ -2363,7 +2363,7 @@
             <a href="tools/cur-090-clickup.html" class="text-sm text-zinc-400 hover:text-blue-400 transition-colors glass-card px-3 py-2 rounded-lg text-center">ClickUp</a>
             <a href="tools/cur-091-notion.html" class="text-sm text-zinc-400 hover:text-blue-400 transition-colors glass-card px-3 py-2 rounded-lg text-center">Notion</a>
             <a href="tools/cur-092-nextstep.html" class="text-sm text-zinc-400 hover:text-blue-400 transition-colors glass-card px-3 py-2 rounded-lg text-center">NextStep</a>
-            <a href="tools/cur-100-convertkit.html" class="text-sm text-zinc-400 hover:text-blue-400 transition-colors glass-card px-3 py-2 rounded-lg text-center">ConvertKit</a>
+            <a href="tools/cur-100-convertkit.html" class="text-sm text-zinc-400 hover:text-blue-400 transition-colors glass-card px-3 py-2 rounded-lg text-center">Kit（原 ConvertKit）</a>
             <a href="tools/cur-101-sendfox.html" class="text-sm text-zinc-400 hover:text-blue-400 transition-colors glass-card px-3 py-2 rounded-lg text-center">SendFox</a>
             <a href="tools/cur-102-brevo-sendinblue.html" class="text-sm text-zinc-400 hover:text-blue-400 transition-colors glass-card px-3 py-2 rounded-lg text-center">Brevo (原 Sendinblue)</a>
             <a href="tools/cur-110-figma.html" class="text-sm text-zinc-400 hover:text-blue-400 transition-colors glass-card px-3 py-2 rounded-lg text-center">Figma</a>
@@ -2757,10 +2757,10 @@
 <div style="margin-bottom:16px;">
 <span style="background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.3);color:#60a5fa;font-size:10px;font-weight:700;padding:4px 8px;border-radius:4px;">邮件营销</span>
 </div>
-<h3 style="font-size:20px;font-weight:700;margin-bottom:8px;">ConvertKit</h3>
-<p style="color:#a1a1aa;font-size:14px;line-height:1.6;margin-bottom:12px;">创作者友好型邮件营销平台，自动化序列 + 表单 + 标签系统，订阅者变现首选</p>
-<div style="margin-bottom:12px;"><span class="price-tag">$9<span style="font-size:10px;font-weight:400;opacity:0.7">/终身</span></span> <span style="color:#71717a;font-size:12px;text-decoration:line-through;margin-left:4px;">$59</span> <span class="discount-tag" style="margin-left:4px;">-85%</span></div>
-<a href="https://convertkit.com/" target="_blank" rel="nofollow" style="display:block;width:100%;padding:14px;background:#fff;color:#000;text-align:center;font-size:14px;font-weight:900;border-radius:16px;">立即查看 →</a>
+<h3 style="font-size:20px;font-weight:700;margin-bottom:8px;">Kit（原 ConvertKit）</h3>
+<p style="color:#a1a1aa;font-size:14px;line-height:1.6;margin-bottom:12px;">创作者邮件营销平台；免费版最高支持 10,000 名订阅者，付费方案随订阅者规模调整</p>
+<div style="margin-bottom:12px;"><span class="price-tag">$0<span style="font-size:10px;font-weight:400;opacity:0.7">/月起</span></span></div>
+<a href="https://kit.com/pricing" target="_blank" rel="nofollow" style="display:block;width:100%;padding:14px;background:#fff;color:#000;text-align:center;font-size:14px;font-weight:900;border-radius:16px;">立即查看 →</a>
 </div><div class="tool-card glass-card" style="padding:24px;margin:12px;display:inline-block;width:300px;vertical-align:top;border-radius:24px;">
 <div style="margin-bottom:16px;">
 <span style="background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.3);color:#60a5fa;font-size:10px;font-weight:700;padding:4px 8px;border-radius:4px;">邮件营销</span>

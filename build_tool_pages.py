@@ -158,7 +158,7 @@ def build_html(tool, all_tools, affiliate_links):
     if pricing_model == "订阅":
         seo_title = f"{title} 价格与功能 {price}{price_suffix} | Link.cn"
         seo_desc = f"{desc}。官方当前起价 {price}{price_suffix}，提供14天免费试用；价格可能随官方调整。Link.cn AI工具导航。"
-        seo_keywords = f"{title},SOP,工作流,订阅,项目管理,AI工具,Link.cn"
+        seo_keywords = f"{title},订阅,免费版,{tag},AI工具,Link.cn"
         footer_description = "AI工具导航 · 订阅与价格信息"
     else:
         seo_title = f"{title} 终身授权 {price} 买断 | Link.cn"
@@ -292,8 +292,7 @@ def build_html(tool, all_tools, affiliate_links):
       "applicationCategory": {esc_json(cat_en or tag or "AI Tool")},
       "operatingSystem": "Web",
       "url": {esc_json(url)},
-      "offers": {{"@type": "Offer", "price": "{offers_price if offers_price is not None else 0}", "priceCurrency": "USD"}},
-      "aggregateRating": {{"@type": "AggregateRating", "ratingValue": "4.5", "ratingCount": "100"}}
+      "offers": {{"@type": "Offer", "price": "{offers_price if offers_price is not None else 0}", "priceCurrency": "USD"}}
     }}'''
 
     # JSON-LD: BreadcrumbList
