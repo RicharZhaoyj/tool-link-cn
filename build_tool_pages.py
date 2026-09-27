@@ -149,6 +149,7 @@ def build_html(tool, all_tools, affiliate_links):
     original = tool.get("originalPrice", "")
     price_suffix = tool.get("priceSuffix", "/终身")
     pricing_model = tool.get("pricingModel", "终身")
+    pricing_note = str(tool.get("pricingNote", "")).strip()
     url = tool.get("url", "")
     cat_en = tool.get("category_en", "")
     cta_url, growth_event, cta_label, affiliate_status = get_cta(tool, affiliate_links)
@@ -157,7 +158,8 @@ def build_html(tool, all_tools, affiliate_links):
 
     if pricing_model == "订阅":
         seo_title = f"{title} 价格与功能 {price}{price_suffix} | Link.cn"
-        seo_desc = f"{desc}。官方当前起价 {price}{price_suffix}，提供14天免费试用；价格可能随官方调整。Link.cn AI工具导航。"
+        subscription_summary = pricing_note.rstrip("。；; ") or f"官方当前起价 {price}{price_suffix}；价格与试用政策以官网为准"
+        seo_desc = f"{desc}。{subscription_summary}。价格可能随官方调整。Link.cn AI工具导航。"
         seo_keywords = f"{title},订阅,免费版,{tag},AI工具,Link.cn"
         footer_description = "AI工具导航 · 订阅与价格信息"
     else:
@@ -432,7 +434,7 @@ def build_html(tool, all_tools, affiliate_links):
                 <div class="flex items-center gap-3 flex-wrap">
                     {price_display if price_display else '<span class="text-zinc-400">价格信息更新中</span>'}
                 </div>
-                {'<p class="text-xs text-zinc-500 mt-3">按月订阅；官方提供14天免费试用</p>' if pricing_model == '订阅' else '<p class="text-xs text-zinc-500 mt-3">官方终身方案；另有免费版与年度订阅</p>'}
+                {f'<p class="text-xs text-zinc-500 mt-3">{esc(pricing_note)}</p>' if pricing_model == '订阅' and pricing_note else '<p class="text-xs text-zinc-500 mt-3">按月订阅；方案与试用政策以官网为准</p>' if pricing_model == '订阅' else '<p class="text-xs text-zinc-500 mt-3">官方终身方案；另有免费版与年度订阅</p>'}
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3">
