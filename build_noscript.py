@@ -31,7 +31,7 @@ for item in items[:57]:  # max 57 to keep HTML reasonable
     desc = item.get('desc', '')
     price = item.get('price', '')
     original = item.get('originalPrice', '')
-    price_suffix = item.get('priceSuffix', '/终身')
+    price_suffix = item.get('priceSuffix') or '（计费周期待核验）'
     url = item.get('url', '#')
     is_ai = item.get('is_ai', False)
     discount = get_discount(price, original)
@@ -62,8 +62,8 @@ for item in items[:57]:  # max 57 to keep HTML reasonable
 noscript_html = f'''<!-- SEO_NOSCRIPT_START -->
 <noscript>
 <div style="max-width:1400px;margin:0 auto;padding:32px 16px;font-family:system-ui,-apple-system,sans-serif;background:#050505;color:#fff;">
-<h2 style="font-size:28px;font-weight:900;margin-bottom:8px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">{len(items)} 个 AI 工具 Lifetime Deal</h2>
-<p style="color:#a1a1aa;font-size:14px;margin-bottom:24px;">覆盖 AI 写作、绘图、视频、音频、开发、SEO、营销等15个分类 · 其中{ai_count}个AI工具 · 一次买断终身使用</p>
+<h2 style="font-size:28px;font-weight:900;margin-bottom:8px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">{len(items)} 个 AI 工具价格与优惠方案</h2>
+<p style="color:#a1a1aa;font-size:14px;margin-bottom:24px;">覆盖 AI 写作、绘图、视频、音频、开发、SEO、营销等15个分类 · 其中{ai_count}个AI工具 · 包含免费、订阅与终身方案，价格以品牌官网为准</p>
 <div style="display:flex;flex-wrap:wrap;justify-content:center;">
 {"".join(cards)}
 </div>
@@ -82,9 +82,6 @@ html = re.sub(r'<!-- SEO_NOSCRIPT_START -->.*?<!-- SEO_NOSCRIPT_END -->', '', ht
 # Inject before </body>
 if '<!-- SEO_NOSCRIPT' not in html:
     html = html.replace('</body>', f'{noscript_html}\n</body>')
-
-# Update meta description count
-html = html.replace('发现55个AI工具Lifetime Deal', f'发现{len(items)}个AI工具Lifetime Deal')
 
 # Write back
 with open(INDEX_PATH, 'w', encoding='utf-8') as f:

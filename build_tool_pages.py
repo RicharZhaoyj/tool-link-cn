@@ -147,8 +147,8 @@ def build_html(tool, all_tools, affiliate_links):
     is_ai = tool.get("is_ai", False)
     price = tool.get("price", "")
     original = tool.get("originalPrice", "")
-    price_suffix = tool.get("priceSuffix", "/终身")
-    pricing_model = tool.get("pricingModel", "终身")
+    price_suffix = tool.get("priceSuffix") or "（计费周期待核验）"
+    pricing_model = tool.get("pricingModel") or "待官网核验"
     pricing_note = str(tool.get("pricingNote", "")).strip()
     url = tool.get("url", "")
     cat_en = tool.get("category_en", "")
@@ -162,11 +162,23 @@ def build_html(tool, all_tools, affiliate_links):
         seo_desc = f"{desc}。{subscription_summary}。价格可能随官方调整。Link.cn AI工具导航。"
         seo_keywords = f"{title},订阅,免费版,{tag},AI工具,Link.cn"
         footer_description = "AI工具导航 · 订阅与价格信息"
-    else:
+        pricing_label = "订阅方案"
+        pricing_fallback_note = "方案与试用政策以官网为准。"
+    elif pricing_model == "终身":
         seo_title = f"{title} 终身授权 {price} 买断 | Link.cn"
         seo_desc = f"{desc}。官方当前终身方案为 {price} 一次性买断；价格可能随官方调整。Link.cn AI工具导航。"
         seo_keywords = f"{title},Lifetime Deal,终身授权,买断,{tag},AI工具,Link.cn"
         footer_description = "AI工具导航 · Lifetime Deal 终身买断方案"
+        pricing_label = "Lifetime Deal 终身买断"
+        pricing_fallback_note = "终身方案及相关条款以品牌官网为准。"
+    else:
+        seo_title = f"{title} 价格与方案 | Link.cn"
+        price_summary = f"当前记录参考价 {price}；" if price else "暂无可核验价格；"
+        seo_desc = f"{desc}。{price_summary}具体计费周期、额度和可用性请以品牌官网为准。Link.cn AI工具导航。"
+        seo_keywords = f"{title},价格,计费方式,免费版,{tag},AI工具,Link.cn"
+        footer_description = "AI工具导航 · 方案与价格信息"
+        pricing_label = "计费方式待核验"
+        pricing_fallback_note = "计费方式尚未核验；页面金额仅作参考，请到品牌官网确认周期、额度与可用性。"
     if not seo_desc or len(seo_desc) < 50:
         seo_desc = f"{title} - {desc}"
 
@@ -429,12 +441,12 @@ def build_html(tool, all_tools, affiliate_links):
 
             <div class="mb-8 p-5 rounded-2xl bg-white/[0.02] border border-white/5">
                 <div class="flex items-center gap-3 mb-2">
-                    <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest">{esc('订阅方案' if pricing_model == '订阅' else 'Lifetime Deal 终身买断')}</span>
+                    <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest">{esc(pricing_label)}</span>
                 </div>
                 <div class="flex items-center gap-3 flex-wrap">
                     {price_display if price_display else '<span class="text-zinc-400">价格信息更新中</span>'}
                 </div>
-                {f'<p class="text-xs text-zinc-500 mt-3">{esc(pricing_note)}</p>' if pricing_model == '订阅' and pricing_note else '<p class="text-xs text-zinc-500 mt-3">按月订阅；方案与试用政策以官网为准</p>' if pricing_model == '订阅' else '<p class="text-xs text-zinc-500 mt-3">官方终身方案；另有免费版与年度订阅</p>'}
+                {f'<p class="text-xs text-zinc-500 mt-3">{esc(pricing_note)}</p>' if pricing_model == '订阅' and pricing_note else f'<p class="text-xs text-zinc-500 mt-3">{esc(pricing_fallback_note)}</p>'}
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3">

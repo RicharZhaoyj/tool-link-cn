@@ -75,12 +75,12 @@ def build_tool_card(tool, affiliate_links, index=0):
         )
     tag = tool.get('tag', 'DEAL')
     title_html = tool.get('title', '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
-    desc_html = tool.get('desc', '限时 Lifetime Deal').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+    desc_html = tool.get('desc', '查看品牌当前方案与价格').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     url_html = tool.get('url', '').replace('&', '&amp;')
     tool_id_html = html_lib.escape(str(tool.get('id', '')), quote=True)
     cta_url, growth_event, cta_label, affiliate_status = get_cta(tool, affiliate_links)
     cta_url_html = html_lib.escape(cta_url, quote=True)
-    price_suffix_html = html_lib.escape(str(tool.get('priceSuffix', '/终身')), quote=True)
+    price_suffix_html = html_lib.escape(str(tool.get('priceSuffix') or '（计费周期待核验）'), quote=True)
 
     # price HTML
     price_html = ''
@@ -141,8 +141,8 @@ def build_item_list_schema(tools):
     return json.dumps({
         '@context': 'https://schema.org',
         '@type': 'ItemList',
-        'name': 'AI工具Lifetime Deal买断方案',
-        'description': '全球顶尖AI工具一次买断终身使用方案汇总',
+        'name': 'AI工具价格与优惠方案导航',
+        'description': '汇总AI工具免费版、订阅与终身方案，价格和计费周期以品牌官网为准',
         'numberOfItems': len(tools),
         'itemListElement': items,
     }, ensure_ascii=False, indent=2)
@@ -275,9 +275,8 @@ def build_schema(html, tools):
 
 
 def build_meta_description(html, tools):
-    """更新 meta description 包含工具名"""
-    top = [t['title'] for t in tools[:8]]
-    desc = f'发现{len(tools)}个AI工具Lifetime Deal：{", ".join(top)}...一次买断终身使用。'
+    """保持描述覆盖多种计费方案，避免将整个列表误写为买断产品。"""
+    desc = f'发现{len(tools)}款AI工具的价格、免费额度、订阅及终身方案；对照计费周期并直达品牌官网核验最新价格。'
     return re.sub(
         r'<meta name="description" content="[^"]*">',
         f'<meta name="description" content="{desc}">',
