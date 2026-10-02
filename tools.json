@@ -635,18 +635,6 @@
         "source": "curated"
     },
     {
-        "id": "CUR-121",
-        "tag": "效率工具",
-        "title": "Shareables",
-        "desc": "连接 Google Sheets/Airtable/Notion，零代码生成自定义网站",
-        "price": "$59",
-        "originalPrice": "$96",
-        "url": "https://shareables.co/",
-        "category_en": "Productivity",
-        "is_ai": false,
-        "source": "curated"
-    },
-    {
         "id": "CUR-130",
         "tag": "AI工具",
         "title": "Perplexity AI",

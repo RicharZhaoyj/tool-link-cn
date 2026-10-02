@@ -742,18 +742,6 @@ def get_manual_curated_deals():
             "is_ai": False,
             "source": "curated"
         },
-        {
-            "id": "CUR-121",
-            "tag": "效率工具",
-            "title": "Shareables",
-            "desc": "连接 Google Sheets/Airtable/Notion，零代码生成自定义网站",
-            "price": "$59",
-            "originalPrice": "$96",
-            "url": "https://shareables.co/",
-            "category_en": "Productivity",
-            "is_ai": False,
-            "source": "curated"
-        },
 
         # ===== AI 对话/搜索类 =====
         {
@@ -937,6 +925,11 @@ if __name__ == "__main__":
                     print(f"Preserved affiliate: {aff['title']} ({aff['url']})")
     except Exception as e:
         print(f"Preserve affiliate failed (non-critical): {e}")
+
+    # 2026-10-02: Shareables 的旧域名已跳转到无关用品站，须经人工核验才能重新上架。
+    all_items = [item for item in all_items
+                 if item.get('id') != 'CUR-121'
+                 and item.get('title', '').strip().casefold() != 'shareables']
 
     # 统计
     ai_count = sum(1 for item in all_items if item.get('is_ai'))
