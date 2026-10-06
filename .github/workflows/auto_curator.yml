@@ -16,6 +16,10 @@ env:
 permissions:
   contents: write
 
+concurrency:
+  group: tool-link-cn-main-writes
+  cancel-in-progress: false
+
 jobs:
   # ===== 工具同步任务（每12小时）=====
   sync:
@@ -24,6 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -64,11 +69,14 @@ jobs:
 
   # ===== 工具发现任务（每周一）=====
   discover:
+    needs: sync
     runs-on: ubuntu-latest
     if: github.event_name == 'schedule' && github.event.schedule == '0 0 * * 1'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Setup Python
         uses: actions/setup-python@v5
